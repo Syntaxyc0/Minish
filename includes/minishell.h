@@ -16,6 +16,8 @@
 # include "../libft/libft.h"
 # include <stdio.h>
 
+# define ERR_MALLOC "Failed to allocate memory."
+
 typedef struct s_env
 {
     char *key;
@@ -66,10 +68,21 @@ enum token_type
 
 //error
 
+void    free_mini(t_mini *mini);
 int	write_error_message(char *message);
+void	free_mini_exit_msg(t_mini *mini, char *message);
 
 //builtins
 
 int	is_builtin(char *arg);
+
+//parsing
+
+t_mini	*init_mini(void);
+
+//env
+
+char    *get_env_value(t_mini *mini, char *key);
+int   get_env(char **env, t_mini *mini);
 
 #endif
