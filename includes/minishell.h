@@ -15,8 +15,10 @@
 
 # include "../libft/libft.h"
 # include <stdio.h>
+# include <stdbool.h>
 
 # define ERR_MALLOC "Failed to allocate memory."
+# define ERR_SYNTAX "Invalid syntax."
 
 typedef struct s_env
 {
@@ -53,9 +55,8 @@ enum letter_type
     OUT = 3,
     DOLL = 4,
     PIPE = 5,
-    QUOTE = 6,
-    DQUOTE = 7,
-	QM = 8
+    SQUOTE = 6,
+    DQUOTE = 7
 };
 
 enum token_type
@@ -63,7 +64,7 @@ enum token_type
     HEREDOC = 8,
     APPEND = 9,
     COMMAND = 10,
-	DOLLQM = 11
+	SQUOTED = 11
 };
 
 //error
@@ -79,6 +80,8 @@ int	is_builtin(char *arg);
 //parsing
 
 t_mini	*init_mini(void);
+int	check_quote_syntax(char	*str);
+int	len_quote(char *str, int i);
 
 //env
 
