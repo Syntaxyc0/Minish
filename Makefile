@@ -12,12 +12,18 @@ BUILT_PATH = builtins
 
 ENV_PATH = env
 
+PARSE_PATH = parsing
+
 OBJ_PATH = obj
 
 HEADERS = includes \
 
 SRCS = 	write_error_message.c \
+		free_mini_exit_msg.c \
+		init_mini.c \
 		is_builtin.c \
+		get_env.c \
+		get_env_value.c \
 		main.c \
 		
 CC = gcc $(FSANITIZE)
@@ -35,6 +41,7 @@ vpath %.c $(SRCSPATH)\
  	$(SRCSPATH)/$(ERR_PATH) \
 	$(SRCSPATH)/$(BUILT_PATH) \
 	$(SRCSPATH)/$(ENV_PATH) \
+	$(SRCSPATH)/$(PARSE_PATH) \
 
 
 vpath %.o $(OBJ_PATH)
