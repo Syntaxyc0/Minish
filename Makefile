@@ -18,6 +18,7 @@ HEADERS = includes \
 
 SRCS = 	write_error_message.c \
 		is_builtin.c \
+		main.c \
 		
 CC = gcc $(FSANITIZE)
 
