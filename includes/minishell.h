@@ -41,10 +41,10 @@ typedef struct s_token
 
 typedef struct s_mini
 {
-    t_env   *myenv;
-    t_letters   *letters;
+	t_env		*myenv;
+	t_letters	*letters;
 	t_token		*tokens;
-}   t_mini;
+}	t_mini;
 
 enum letter_type
 {
@@ -82,7 +82,10 @@ t_mini	*init_mini(void);
 
 //env
 
-char    *get_env_value(t_mini *mini, char *key);
-int   get_env(char **env, t_mini *mini);
+char	*get_env_value(t_mini *mini, char *key);
+int		get_env(char **env, t_mini *mini);
+void	unset(t_mini *mini, int ac, char **av);
+void	lst_del_unset(t_env *tmp, t_env *previous);
+int		str_big(char *a, char *b);
 
 #endif

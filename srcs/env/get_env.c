@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_env.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gregoiregobert <gregoiregobert@student.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/22 15:52:13 by gregoiregob       #+#    #+#             */
+/*   Updated: 2022/09/22 15:52:13 by gregoiregob      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void    init_myenv(t_mini *mini, char *key, char *value)
@@ -44,12 +56,12 @@ int   get_env(char **env, t_mini *mini)
     int     i;
     int     j;
 
-    i = 0;
-    j = 0;
+    i = -1;
     if (!env ||!*env)
         return (0);
-    while (env[i])
+    while (env[++i])
     {
+        j = 0;
         while(env[i][j] != 0 && env[i][j] != '=')
             j++;
         key = ft_substr(env[i], 0, j);
@@ -60,8 +72,6 @@ int   get_env(char **env, t_mini *mini)
         add_envelem(mini, key, value);
         free(key);
         free(value);
-        j = 0;
-        i++;
     }
 	(void)mini;
 	return (1);
