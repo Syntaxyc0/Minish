@@ -61,13 +61,30 @@ void	parse_squote(t_mini *mini, char *str, int *i)
 	*i += j + 1;
 }
 
+void	parse_dquote(t_mini *mini, char *str, int *i)
+{
+	t_token	*token;
+	char	*value;
+	int	j;
+
+	j = len_quote(str, i);
+	value = ft_substr(str, i + 1, j);
+	if (!value)
+		free_mini_exit_msg(mini, ERR_MALLOC);
+	token = create_token(mini, value, DQUOTED);
+	addback_token(mini, token);
+	*i += j + 1;
+}
+
 void	parse_token(t_mini *mini, char *str)
 {
 	int	i;
 
 	i = 0;
 	if (get_type(str[i]) == SQUOTE)
-		parse_squote(mini, str, i);
+		parse_squote(mini, str, &i);
+	if (get_type(str[i]) == DQUOTE)
+		parse_dquote(mini, str, &i);
 
 }
 
