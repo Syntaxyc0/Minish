@@ -11,6 +11,7 @@ t_mini	*init_mini(void)
 		exit (1);
 	}
     mini->myenv = NULL;
+	mini->myexport = NULL;
     mini->letters = NULL;
 	mini->tokens = NULL;
 	return (mini);
