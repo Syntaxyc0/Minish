@@ -19,7 +19,7 @@ int main(int argc, char **argv, char **env)
 	}
 	test = mini->myenv;
 	unset(mini, argc, argv);
-	printf("__________________________________________________________\n");
+	printf(" __________________________________________________________\n");
 	while (test != NULL)
 	{
 		printf("key : %s\nvalue : %s\n\n", test->key, test->value);
