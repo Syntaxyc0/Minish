@@ -6,13 +6,14 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 15:08:10 by ggobert           #+#    #+#             */
-/*   Updated: 2022/09/26 15:25:43 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/09/26 16:31:07 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	sort_env_export;
+void	sort_env_export(t_mini *mini)
 {
-	
+	(void)mini;
+	return;
 }

@@ -28,6 +28,8 @@ SRCS = 	write_error_message.c \
 		get_env_value.c \
 		main.c \
 		unset.c \
+		export.c \
+		sort_env_export.c \
 		
 CC = gcc $(FSANITIZE)
 
