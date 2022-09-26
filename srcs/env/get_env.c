@@ -29,7 +29,7 @@ void    add_envelem(t_mini *mini, char *key, char *value)
     t_env   *ret;
     t_env   *tmp;
 
-    if (mini->myenv == NULL)
+    if (mini->myenv == 0)
     {
         init_myenv(mini, key, value);
         return ;
@@ -65,7 +65,7 @@ int   get_env(char **env, t_mini *mini)
         while(env[i][j] != 0 && env[i][j] != '=')
             j++;
         key = ft_substr(env[i], 0, j);
-        if (env[i][j] != '\0')
+        if (env[i][j + 1] != '\0')
             value = ft_substr(env[i], j + 1, ft_strlen(env[i]));
         else
             value = NULL;

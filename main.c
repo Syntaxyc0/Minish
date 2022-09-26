@@ -17,13 +17,5 @@ int main(int argc, char **argv, char **env)
 		printf("key : %s\nvalue : %s\n\n", test->key, test->value);
 		test = test->next;
 	}
-	test = mini->myenv;
-	unset(mini, argc, argv);
-	printf(" __________________________________________________________\n");
-	while (test != NULL)
-	{
-		printf("key : %s\nvalue : %s\n\n", test->key, test->value);
-		test = test->next;
-	}
 	free_mini(mini);
 }

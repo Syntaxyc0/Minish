@@ -18,12 +18,18 @@
 
 # define ERR_MALLOC "Failed to allocate memory."
 
-typedef struct s_env
+typedef struct	s_env
 {
-    char *key;
-    char *value;
-    struct s_env *next;
+	char			*key;
+	char			*value;
+	struct s_env	*next;
 }   t_env;
+
+typedef struct	s_export
+{
+    char			*key;
+	struct s_export	*next;
+}	t_export;
 
 typedef struct s_letters
 {
@@ -42,6 +48,7 @@ typedef struct s_token
 typedef struct s_mini
 {
 	t_env		*myenv;
+	t_export	*export;
 	t_letters	*letters;
 	t_token		*tokens;
 }	t_mini;
