@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gregoiregobert <gregoiregobert@student.    +#+  +:+       +#+        */
+/*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 15:34:16 by gregoiregob       #+#    #+#             */
-/*   Updated: 2022/09/22 18:13:59 by gregoiregob      ###   ########.fr       */
+/*   Updated: 2022/09/26 12:36:24 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,8 @@ void	lst_del_unset(t_env *tmp, t_env *previous)
 		free(tmp->key);
 	if (tmp->value)
 		free(tmp->value);
-	if (tmp->next)
+	if
 		previous->next = tmp->next;
-	else
-		previous->next = 0;
 	free(tmp);
 }
 
@@ -39,25 +37,24 @@ void	unset(t_mini *mini, int ac, char **av)
 	t_env	*tmp;
 	t_env	*previous;
 
-	i = 0;
+	i = 1;
 	tmp = mini->myenv;
-	//printf("myenv key = %s\n", tmp->key);
 	previous = 0;
+	printf("ac = %d\n", ac);
 	if (!ac)
 		write_error_message("not enough arguments");
 	while (ac--)
 	{
 		while (tmp)
 		{
-			if (ft_strncmp(av[i], tmp->key, str_big(av[i], tmp->key)))
+			if (ft_strncmp(av[i], tmp->key, str_big(av[i], tmp->key)) != 0)
 			{
-				printf("strncmp %d\n", ft_strncmp(av[i], tmp->key, str_big(av[i], tmp->key)));
 				previous = tmp;
 				tmp = tmp->next;
 			}
 			else
 			{
-				printf("enter now_____________________________________\n");
+				printf("ENTER now_____________________________________\n");
 				lst_del_unset(tmp, previous);
 			}
 		}
