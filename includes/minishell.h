@@ -17,8 +17,9 @@
 # include <stdio.h>
 # include <stdbool.h>
 
-# define ERR_MALLOC "Failed to allocate memory."
-# define ERR_SYNTAX "Invalid syntax."
+# define ERR_MALLOC "msh : Failed to allocate memory.\n"
+# define ERR_SYNTAX "msh : syntax error near unexpected token.\n"
+# define ERR_INPUT "msh : Invalid input.\n"
 
 typedef struct s_env
 {
@@ -36,7 +37,6 @@ typedef struct s_letters
 
 typedef struct s_token
 {
-    int type;
     char    *value;
     struct  s_token *next;
 }   t_token;
@@ -64,7 +64,8 @@ enum token_type
     HEREDOC = 8,
     APPEND = 9,
     COMMAND = 10,
-	SQUOTED = 11
+	SQUOTED = 11,
+    DQUOTED = 12
 };
 
 //error
@@ -80,8 +81,12 @@ int	is_builtin(char *arg);
 //parsing
 
 t_mini	*init_mini(void);
+int	len_quote(char *str, int i);
 int	check_quote_syntax(char	*str);
 int	len_quote(char *str, int i);
+void	check_tokens(t_mini *mini);
+void	expander(t_mini *mini);
+void	parse_token(t_mini *mini, char *str);
 
 //env
 
