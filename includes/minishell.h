@@ -50,7 +50,7 @@ typedef struct s_token
 typedef struct s_mini
 {
 	t_env		*myenv;
-	t_export	*myexport;
+	t_myexport	*myexport;
 	t_letters	*letters;
 	t_token		*tokens;
 }	t_mini;
