@@ -31,7 +31,7 @@ typedef struct	s_export
 {
 	char			*value;
 	struct s_export	*next;
-}	t_myexport;
+}	t_export;
 
 typedef struct	s_letters
 {
@@ -50,7 +50,7 @@ typedef struct	s_token
 typedef struct	s_mini
 {
 	t_env		*myenv;
-	t_myexport	*myexport;
+	t_export	*myexport;
 	t_letters	*letters;
 	t_token		*tokens;
 }	t_mini;

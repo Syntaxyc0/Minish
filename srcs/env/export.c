@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 13:44:07 by ggobert           #+#    #+#             */
-/*   Updated: 2022/09/26 16:29:13 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/09/27 11:38:25 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ void	import(t_mini *mini, int ac, char **av)
 
 void	import_export(t_mini *mini, char *s)
 {
-	t_myexport	*cursor;
+	t_export	*cursor;
 
 	cursor = mini->myexport;
 	while (cursor)
 		cursor = cursor->next;
-	cursor = malloc(sizeof(t_myexport));
+	cursor = malloc(sizeof(t_export));
 	cursor->value = ft_strdup(s);
 	cursor->next = 0;
 }
@@ -67,10 +67,13 @@ void	import_env(t_mini *mini, char *s)
 	while(s[j] != 0 && s[j] != '=')
 		j++;
 	key = ft_substr(s, 0, j);
-	if (s[j + 1] != 0)
+	if (!s[j + 1])
 		value = ft_substr(s, j + 1, ft_strlen(s));
 	else
+	{
+		value = malloc(sizeof(char));
 		value = 0;
+	}
 	add_envelem(mini, key, value);
 	free(key);
 	free(value);
