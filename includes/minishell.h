@@ -38,7 +38,7 @@ typedef struct	s_export
 {
 	char			*value;
 	struct s_export	*next;
-}	t_myexport;
+}	t_export;
 
 
 typedef struct	s_token
