@@ -265,7 +265,7 @@ int	contains_exp_sign(char *str)
 	return (-1);
 }
 
-void	expand(t_mini *mini, t_token *token, int i)
+/*void	expand(t_mini *mini, t_token *token, int i)
 {
 	char	*tmp;
 
@@ -283,11 +283,11 @@ void	expand(t_mini *mini, t_token *token, int i)
 	}
 	else if (ft_isalpha(token->value[i + 1]) || token->value == '_')
 	{
-		tmp = expand_env(mini, token->value);
+		tmp = expand(mini, token->value);
 	}
-}
+}*/
 
-void	expander(t_mini *mini)
+/*void	expander(t_mini *mini)
 {
 	t_token	*token;
 	int	index;
@@ -308,7 +308,7 @@ void	expander(t_mini *mini)
 		}
 		token = token->next;
 	}
-}
+}*/
 /*
 void	parse_line_into_tokens(t_mini *mini, char *str)
 {

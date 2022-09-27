@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 13:44:07 by ggobert           #+#    #+#             */
-/*   Updated: 2022/09/27 11:38:25 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/09/27 15:32:31 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,6 @@ int	is_egal(char *s)
 	return (0);
 }
 
-void	export(t_mini *mini, int ac, char **av)
-{
-	if (ac == 1)
-		sort_env_export(mini);
-	else
-		import(mini, ac, av);
-}
-
 void	import(t_mini *mini, int ac, char **av)
 {
 	int	i;
@@ -45,16 +37,35 @@ void	import(t_mini *mini, int ac, char **av)
 	}
 }
 
+void	init_myexport(t_mini *mini, char *s)
+{
+	mini->myexport = malloc(sizeof(t_export));
+	if (!mini->myexport)
+		free_mini_exit_msg(mini, ERR_MALLOC);
+	mini->myexport->key = ft_strdup(s);
+	mini->myexport->next = 0;
+}
+
 void	import_export(t_mini *mini, char *s)
 {
-	t_export	*cursor;
+	t_export	*tmp;
+	t_export	*ret;
 
-	cursor = mini->myexport;
-	while (cursor)
-		cursor = cursor->next;
-	cursor = malloc(sizeof(t_export));
-	cursor->value = ft_strdup(s);
-	cursor->next = 0;
+	if (!mini->myexport)
+	{
+		init_myexport(mini, s);
+		return;
+	}
+	tmp = mini->myexport;
+	ret = malloc(sizeof(t_export));
+	if (!ret)
+		free_mini_exit_msg(mini, ERR_MALLOC);
+	ret->key = ft_strdup(s);
+	ret->next = 0;
+	while (mini->myexport->next)
+		mini->myexport = mini->myexport->next;
+	mini->myexport->next = ret;
+	mini->myexport = tmp;
 }
 
 void	import_env(t_mini *mini, char *s)
@@ -77,4 +88,12 @@ void	import_env(t_mini *mini, char *s)
 	add_envelem(mini, key, value);
 	free(key);
 	free(value);
+}
+
+void	export(t_mini *mini, int ac, char **av)
+{
+	if (ac == 1)
+		sort_env_export(mini);
+	else
+		import(mini, ac, av);
 }

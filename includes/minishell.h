@@ -17,9 +17,8 @@
 # include <stdio.h>
 # include <stdbool.h>
 
-# define ERR_MALLOC "msh : Failed to allocate memory.\n"
-# define ERR_SYNTAX "msh : syntax error near unexpected token.\n"
-# define ERR_INPUT "msh : Invalid input.\n"
+# define ERR_MALLOC "Failed to allocate memory."
+# define ERR_SYNTAX "Invalid syntax."
 
 typedef struct	s_env
 {
@@ -28,9 +27,17 @@ typedef struct	s_env
 	struct s_env	*next;
 }	t_env;
 
+typedef struct	s_sort
+{
+	char			*key;
+	char			*value;
+	struct s_sort	*next;
+	struct s_sort	*previous;
+}	t_sort;
+
 typedef struct	s_export
 {
-	char			*value;
+	char			*key;
 	struct s_export	*next;
 }	t_export;
 
@@ -54,6 +61,7 @@ typedef struct	s_mini
 	t_export	*myexport;
 	t_letters	*letters;
 	t_token		*tokens;
+	t_sort		*sort;
 }	t_mini;
 
 enum	letter_type
@@ -69,11 +77,10 @@ enum	letter_type
 
 enum	token_type
 {
-    HEREDOC = 8,
-    APPEND = 9,
-    COMMAND = 10,
-	SQUOTED = 11,
-    DQUOTED = 12
+	HEREDOC = 8,
+	APPEND = 9,
+	COMMAND = 10,
+	SQUOTED = 11
 };
 
 //error
@@ -81,6 +88,10 @@ enum	token_type
 int		write_error_message(char *message);
 void    free_mini(t_mini *mini);
 void	free_mini_exit_msg(t_mini *mini, char *message);
+void    free_letters(t_mini *mini);
+void	free_tokens(t_mini *mini);
+void    free_env(t_mini *mini);
+void    free_export(t_mini *mini);
 
 //builtins
 
@@ -89,12 +100,8 @@ int	is_builtin(char *arg);
 //parsing
 
 t_mini	*init_mini(void);
-int	len_quote(char *str, int i);
-int	check_quote_syntax(char	*str);
-int	len_quote(char *str, int i);
-void	check_tokens(t_mini *mini);
-void	expander(t_mini *mini);
-void	parse_token(t_mini *mini, char *str);
+int		check_quote_syntax(char	*str);
+int		len_quote(char *str, int i);
 
 //env
 
@@ -104,6 +111,7 @@ void	import(t_mini *mini, int ac, char **av);
 void	import_env(t_mini *mini, char *s);
 void	import_export(t_mini *mini, char *s);
 void    init_myenv(t_mini *mini, char *key, char *value);
+void	init_myexport(t_mini *mini, char *s);
 void	lst_del_unset(t_env *tmp, t_env *previous);
 void	sort_env_export(t_mini *mini);
 void	unset(t_mini *mini, int ac, char **av);

@@ -14,5 +14,6 @@ t_mini	*init_mini(void)
 	mini->myexport = NULL;
     mini->letters = NULL;
 	mini->tokens = NULL;
+	mini->sort = NULL;
 	return (mini);
 }

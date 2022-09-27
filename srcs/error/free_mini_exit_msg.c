@@ -59,12 +59,12 @@ void    free_env(t_mini *mini)
 	}
 }
 
-void    free_export(t_mini *mini)
+void    free_sort(t_mini *mini)
 {
-	t_export	*tmp;
-	t_export	*tofree;
+	t_env *tmp;
+	t_env   *tofree;
 
-	tmp = mini->myenv;
+	tmp = mini->sort;
 	while (tmp != NULL)
 	{
 		if (tmp->key)
@@ -76,14 +76,36 @@ void    free_export(t_mini *mini)
 		free(tofree);
 	}
 }
+
+void    free_export(t_mini *mini)
+{
+	t_export	*tmp;
+	t_export	*tofree;
+
+	tmp = mini->myexport;
+	while (tmp)
+	{
+		if (tmp->value)
+			free(tmp->value);
+		tofree = tmp;
+		tmp = tmp->next;
+		free(tofree);
+	}
+}
+
 void    free_mini(t_mini *mini)
 {
 	if (mini->myenv)
 		free_env(mini);
+	if (mini->sort)
+		free_sort(mini);
+	if (mini->myexport)
+		free_export(mini);
 	if (mini->letters)
 		free_letters(mini);
 	if (mini->tokens)
 		free_tokens(mini);
+	
 	free(mini);
 }
 
