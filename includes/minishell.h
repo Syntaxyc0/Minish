@@ -16,9 +16,21 @@
 # include "../libft/libft.h"
 # include <stdio.h>
 # include <stdbool.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
+
+<<<<<<< HEAD
 # define ERR_MALLOC "Failed to allocate memory."
 # define ERR_SYNTAX "Invalid syntax."
+=======
+# define ERR_MALLOC "msh : Failed to allocate memory.\n"
+# define ERR_SYNTAX "msh : syntax error near unexpected token.\n"
+# define ERR_INPUT "msh : Invalid input.\n"
+# define ERR_QUOTES "msh : Unclosed quotes\n"
+
+extern int	g_exit_status;
+>>>>>>> a29d2a3906cb997f8243b1bd9b534b254e56ac08
 
 typedef struct	s_env
 {
@@ -41,16 +53,9 @@ typedef struct	s_export
 	struct s_export	*next;
 }	t_export;
 
-typedef struct	s_letters
-{
-	int type;
-	char    value;
-	struct s_letters    *next;
-}	t_letters;
 
 typedef struct	s_token
 {
-	int type;
 	char    *value;
 	struct  s_token *next;
 }	t_token;
@@ -58,12 +63,12 @@ typedef struct	s_token
 typedef struct	s_mini
 {
 	t_env		*myenv;
-	t_export	*myexport;
-	t_letters	*letters;
+	t_myexport	*myexport;
 	t_token		*tokens;
 	t_sort		*sort;
 }	t_mini;
 
+<<<<<<< HEAD
 enum	letter_type
 {
 	WORD = 1,
@@ -83,6 +88,8 @@ enum	token_type
 	SQUOTED = 11
 };
 
+=======
+>>>>>>> a29d2a3906cb997f8243b1bd9b534b254e56ac08
 //error
 
 int		write_error_message(char *message);
@@ -100,8 +107,19 @@ int	is_builtin(char *arg);
 //parsing
 
 t_mini	*init_mini(void);
+<<<<<<< HEAD
 int		check_quote_syntax(char	*str);
 int		len_quote(char *str, int i);
+=======
+int	len_quote(char *str, int i);
+int	check_quote_syntax(char	*str);
+int	len_quote(char *str, int i);
+void	check_tokens(t_mini *mini);
+void	expander(t_mini *mini);
+void	parse_token(t_mini *mini, char *str);
+int	contains_exp_sign(char *str);
+void	expand_env(t_mini *mini, t_token *token, int i);
+>>>>>>> a29d2a3906cb997f8243b1bd9b534b254e56ac08
 
 //env
 

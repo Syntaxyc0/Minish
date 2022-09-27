@@ -12,6 +12,8 @@
 
 #include "minishell.h"
 
+<<<<<<< HEAD
+=======
 void    free_letters(t_mini *mini)
 {
 	t_letters   *tmp;
@@ -26,6 +28,7 @@ void    free_letters(t_mini *mini)
 	}
 }
 
+>>>>>>> 1388cb75644aab5bd4c1971dd0bf042c675a6f03
 void	free_tokens(t_mini *mini)
 {
 	t_token	*tmp;
@@ -97,12 +100,15 @@ void    free_mini(t_mini *mini)
 {
 	if (mini->myenv)
 		free_env(mini);
+<<<<<<< HEAD
 	if (mini->sort)
 		free_sort(mini);
 	if (mini->myexport)
 		free_export(mini);
 	if (mini->letters)
 		free_letters(mini);
+=======
+>>>>>>> a29d2a3906cb997f8243b1bd9b534b254e56ac08
 	if (mini->tokens)
 		free_tokens(mini);
 	

@@ -24,7 +24,9 @@ SRCS = 	write_error_message.c \
 		free_mini_exit_msg.c \
 		init_mini.c \
 		check_quote.c \
-		tokens.c \
+		parse_tokens.c \
+		check_tokens.c \
+		expander.c \
 		is_builtin.c \
 		get_env.c \
 		get_env_value.c \
@@ -35,7 +37,7 @@ SRCS = 	write_error_message.c \
 		
 CC = gcc $(FSANITIZE)
 
-CFLAGS = -MMD -Wall -Werror -Wextra
+CFLAGS = -MMD -Wall -Werror -Wextra -lreadline
 
 RM = rm -rf
 

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_mini.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jbesnier <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/27 16:55:18 by jbesnier          #+#    #+#             */
+/*   Updated: 2022/09/27 16:55:21 by jbesnier         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 t_mini	*init_mini(void)
@@ -10,9 +22,8 @@ t_mini	*init_mini(void)
 		write_error_message(ERR_MALLOC);
 		exit (1);
 	}
-    mini->myenv = NULL;
+	mini->myenv = NULL;
 	mini->myexport = NULL;
-    mini->letters = NULL;
 	mini->tokens = NULL;
 	mini->sort = NULL;
 	return (mini);
