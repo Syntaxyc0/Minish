@@ -6,7 +6,7 @@ int	len_quote(char *str, int i)
 	int	len;
 
 	quote = str[i];
-	len = 0;
+	len = 1;
 	while (str[i + len] && str[i + len] != quote)
 		len++;
 	return (len);
