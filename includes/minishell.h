@@ -16,10 +16,16 @@
 # include "../libft/libft.h"
 # include <stdio.h>
 # include <stdbool.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+
 
 # define ERR_MALLOC "msh : Failed to allocate memory.\n"
 # define ERR_SYNTAX "msh : syntax error near unexpected token.\n"
 # define ERR_INPUT "msh : Invalid input.\n"
+# define ERR_QUOTES "msh : Unclosed quotes\n"
+
+extern int	g_exit_status;
 
 typedef struct	s_env
 {
@@ -34,16 +40,9 @@ typedef struct	s_export
 	struct s_export	*next;
 }	t_myexport;
 
-typedef struct	s_letters
-{
-	int type;
-	char    value;
-	struct s_letters    *next;
-}	t_letters;
 
 typedef struct	s_token
 {
-	int type;
 	char    *value;
 	struct  s_token *next;
 }	t_token;
@@ -52,29 +51,8 @@ typedef struct	s_mini
 {
 	t_env		*myenv;
 	t_myexport	*myexport;
-	t_letters	*letters;
 	t_token		*tokens;
 }	t_mini;
-
-enum	letter_type
-{
-	WORD = 1,
-	IN = 2,
-	OUT = 3,
-	DOLL = 4,
-	PIPE = 5,
-	SQUOTE = 6,
-	DQUOTE = 7
-};
-
-enum	token_type
-{
-    HEREDOC = 8,
-    APPEND = 9,
-    COMMAND = 10,
-	SQUOTED = 11,
-    DQUOTED = 12
-};
 
 //error
 
@@ -95,6 +73,8 @@ int	len_quote(char *str, int i);
 void	check_tokens(t_mini *mini);
 void	expander(t_mini *mini);
 void	parse_token(t_mini *mini, char *str);
+int	contains_exp_sign(char *str);
+void	expand_env(t_mini *mini, t_token *token, int i);
 
 //env
 

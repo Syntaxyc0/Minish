@@ -38,14 +38,29 @@ int main(int argc, char **argv, char **env)
 	free_mini(mini);
 }
 */
+int	g_exit_status;
 
-int main(int argc, char **argv)
+int main(int argc, char **argv, char **env)
 {
 	t_mini *mini;
+	t_token	*token;
+	char	*line;
 
+	g_exit_status = 0;
 	mini = init_mini();
 	(void)argc;
-	parse_token(mini, argv[1]);
-	expander(mini);	
+	(void)argv;
+	line = readline("Minishell: ");
+	parse_token(mini, line);
+	check_tokens(mini);
+	get_env(env, mini);
+	expander(mini);
+	token = mini->tokens;
+	while (token)
+	{
+		printf("token value : %s\n\n", token->value);
+		token = token->next;
+	}
+	free(line);
 	free_mini(mini);
 }
