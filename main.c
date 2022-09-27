@@ -3,17 +3,10 @@
 /*
 int main(int argc, char **argv, char **env)
 {
-<<<<<<< HEAD
 	t_mini		 *mini;
 	int			env_set;
 	t_env 		*test;
 	t_export	*test2;
-=======
-	t_mini *mini;
-	int		env_set;
-	t_token *token;
-	t_env *test;
->>>>>>> e1f1db1d2fafdfd9a1cd6612117464d3ceedb680
 
 	mini = init_mini();
 	
@@ -55,14 +48,4 @@ int main(int argc, char **argv, char **env)
 }
 */
 
-int main(int argc, char **argv)
-{
-	t_mini *mini;
 
-	mini = init_mini();
-	(void)argc;
-	parse_token(mini, argv[1]);
-	expander(mini);	
->>>>>>> e1f1db1d2fafdfd9a1cd6612117464d3ceedb680
-	free_mini(mini);
-}
