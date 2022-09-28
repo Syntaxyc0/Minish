@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 13:44:07 by ggobert           #+#    #+#             */
-/*   Updated: 2022/09/27 15:32:31 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/09/28 15:34:47 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,17 @@ int	is_egal(char *s)
 	return (0);
 }
 
+int	is_space_before_egal(char *s)
+{
+	int	i;
+
+	i = -1;
+	while (s[++i] && s[i] != '=')
+		if (s[i] == ' ')
+			return (1);
+	return (0);
+}
+
 void	import(t_mini *mini, int ac, char **av)
 {
 	int	i;
@@ -30,6 +41,11 @@ void	import(t_mini *mini, int ac, char **av)
 	i = 0;
 	while (++i < ac)
 	{
+		if (is_space_before_egal(av[i]) == 1)
+		{
+			printf("export: not valid in this context\n");
+			return;
+		}
 		if (is_egal(av[i]))
 			import_env(mini, av[i]);
 		else
@@ -44,6 +60,8 @@ void	init_myexport(t_mini *mini, char *s)
 		free_mini_exit_msg(mini, ERR_MALLOC);
 	mini->myexport->key = ft_strdup(s);
 	mini->myexport->next = 0;
+	if (!mini->myexport->key)
+		free_mini_exit_msg(mini, ERR_MALLOC);
 }
 
 void	import_export(t_mini *mini, char *s)
@@ -78,13 +96,11 @@ void	import_env(t_mini *mini, char *s)
 	while(s[j] != 0 && s[j] != '=')
 		j++;
 	key = ft_substr(s, 0, j);
-	if (!s[j + 1])
+	if (s[j + 1])
 		value = ft_substr(s, j + 1, ft_strlen(s));
 	else
-	{
-		value = malloc(sizeof(char));
 		value = 0;
-	}
+	printf("value : %s\n", value);
 	add_envelem(mini, key, value);
 	free(key);
 	free(value);
@@ -93,7 +109,7 @@ void	import_env(t_mini *mini, char *s)
 void	export(t_mini *mini, int ac, char **av)
 {
 	if (ac == 1)
-		sort_env_export(mini);
+		printf("cf man export\n");
 	else
 		import(mini, ac, av);
 }

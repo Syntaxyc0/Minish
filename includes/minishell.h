@@ -16,9 +16,16 @@
 # include "../libft/libft.h"
 # include <stdio.h>
 # include <stdbool.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
-# define ERR_MALLOC "Failed to allocate memory."
-# define ERR_SYNTAX "Invalid syntax."
+
+# define ERR_MALLOC "msh : Failed to allocate memory.\n"
+# define ERR_SYNTAX "msh : syntax error near unexpected token.\n"
+# define ERR_INPUT "msh : Invalid input.\n"
+# define ERR_QUOTES "msh : Unclosed quotes\n"
+
+extern int	g_exit_status;
 
 typedef struct	s_env
 {
@@ -41,16 +48,9 @@ typedef struct	s_export
 	struct s_export	*next;
 }	t_export;
 
-typedef struct	s_letters
-{
-	int type;
-	char    value;
-	struct s_letters    *next;
-}	t_letters;
 
 typedef struct	s_token
 {
-	int type;
 	char    *value;
 	struct  s_token *next;
 }	t_token;
@@ -59,29 +59,8 @@ typedef struct	s_mini
 {
 	t_env		*myenv;
 	t_export	*myexport;
-	t_letters	*letters;
 	t_token		*tokens;
-	t_sort		*sort;
 }	t_mini;
-
-enum	letter_type
-{
-	WORD = 1,
-	IN = 2,
-	OUT = 3,
-	DOLL = 4,
-	PIPE = 5,
-	SQUOTE = 6,
-	DQUOTE = 7
-};
-
-enum	token_type
-{
-	HEREDOC = 8,
-	APPEND = 9,
-	COMMAND = 10,
-	SQUOTED = 11
-};
 
 //error
 
@@ -95,29 +74,40 @@ void    free_export(t_mini *mini);
 
 //builtins
 
-int	is_builtin(char *arg);
-
-//parsing
-
-t_mini	*init_mini(void);
-int		check_quote_syntax(char	*str);
-int		len_quote(char *str, int i);
-
-//env
-
-void    add_envelem(t_mini *mini, char *key, char *value);
+void	pwd(t_mini	*mini);
+void	env(t_mini *mini);
 void	export(t_mini *mini, int ac, char **av);
 void	import(t_mini *mini, int ac, char **av);
 void	import_env(t_mini *mini, char *s);
 void	import_export(t_mini *mini, char *s);
 void    init_myenv(t_mini *mini, char *key, char *value);
 void	init_myexport(t_mini *mini, char *s);
-void	lst_del_unset(t_env *tmp, t_env *previous);
-void	sort_env_export(t_mini *mini);
+void	lst_del_unset_env(t_env *tmp, t_env *previous);
+void	lst_del_unset_export(t_export *tmp, t_export *previous);
 void	unset(t_mini *mini, int ac, char **av);
+void	unset_in_env(t_mini *mini, char **av);
+void	unset_in_export(t_mini *mini, char **av);
+int		is_builtin(char *arg);
+int		is_egal(char *s);
+int		is_space_before_egal(char *s);
+int		str_big(char *a, char *b);
+
+//parsing
+
+t_mini	*init_mini(void);
+int	len_quote(char *str, int i);
+int	check_quote_syntax(char	*str);
+int	len_quote(char *str, int i);
+void	check_tokens(t_mini *mini);
+void	expander(t_mini *mini);
+void	parse_token(t_mini *mini, char *str);
+int	contains_exp_sign(char *str);
+void	expand_env(t_mini *mini, t_token *token, int i);
+
+//env
+
+void    add_envelem(t_mini *mini, char *key, char *value);
 char	*get_env_value(t_mini *mini, char *key);
 int		get_env(char **env, t_mini *mini);
-int		is_egal(char *s);
-int		str_big(char *a, char *b);
 
 #endif

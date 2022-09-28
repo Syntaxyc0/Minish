@@ -12,20 +12,6 @@
 
 #include "minishell.h"
 
-void    free_letters(t_mini *mini)
-{
-	t_letters   *tmp;
-	t_letters   *save;
-
-	tmp = mini->letters;
-	while (tmp != NULL)
-	{
-		save = tmp;
-		tmp = tmp->next;
-		free(save);
-	}
-}
-
 void	free_tokens(t_mini *mini)
 {
 	t_token	*tmp;
@@ -59,24 +45,6 @@ void    free_env(t_mini *mini)
 	}
 }
 
-void    free_sort(t_mini *mini)
-{
-	t_env *tmp;
-	t_env   *tofree;
-
-	tmp = mini->sort;
-	while (tmp != NULL)
-	{
-		if (tmp->key)
-			free(tmp->key);
-		if (tmp->value)
-			free(tmp->value);
-		tofree = tmp;
-		tmp = tmp->next;
-		free(tofree);
-	}
-}
-
 void    free_export(t_mini *mini)
 {
 	t_export	*tmp;
@@ -85,8 +53,8 @@ void    free_export(t_mini *mini)
 	tmp = mini->myexport;
 	while (tmp)
 	{
-		if (tmp->value)
-			free(tmp->value);
+		if (tmp->key)
+			free(tmp->key);
 		tofree = tmp;
 		tmp = tmp->next;
 		free(tofree);
@@ -97,12 +65,8 @@ void    free_mini(t_mini *mini)
 {
 	if (mini->myenv)
 		free_env(mini);
-	if (mini->sort)
-		free_sort(mini);
 	if (mini->myexport)
 		free_export(mini);
-	if (mini->letters)
-		free_letters(mini);
 	if (mini->tokens)
 		free_tokens(mini);
 	
