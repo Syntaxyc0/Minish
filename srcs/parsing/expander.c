@@ -94,7 +94,9 @@ void	expand(t_mini *mini, t_token *token, int i)
 		return ;
 	else if (token->value[i + 1] == '\'' || token->value[i + 1] == '\"')
 	{
-		token->value = replace_string(token->value, NULL, i, i);
+		token->value = replace_string(token->value, NULL,
+		 i + len_quote(token->value, i + 1) + 1, i + len_quote(token->value, i + 1) + 1);
+		token->value = replace_string(token->value, NULL, i, i + 1);
 	}
 	else if (token->value[i + 1] == '?')
 	{

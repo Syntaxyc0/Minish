@@ -20,6 +20,7 @@ t_token	*create_token(char *value)
 	if (!ret)
 		return (NULL);
 	ret->value = value;
+	ret->type = 0;
 	ret->next = NULL;
 	return (ret);
 }
@@ -58,6 +59,8 @@ void	add_token(t_mini *mini, char *str, int *start, int *i)
 	if (!ret)
 		free_mini_exit_msg(mini, ERR_MALLOC);
 	token = create_token(ret);
+	if (!token)
+		free_mini_exit_msg(mini, ERR_MALLOC);
 	addback_token(mini, token);
 	*start = *i;
 }
@@ -93,4 +96,5 @@ void	parse_token(t_mini *mini, char *str)
 		token = create_token(ret);
 		addback_token(mini, token);
 	}
+	get_token_type(mini);
 }
