@@ -20,17 +20,12 @@
 # include <readline/history.h>
 
 
-<<<<<<< HEAD
-# define ERR_MALLOC "Failed to allocate memory."
-# define ERR_SYNTAX "Invalid syntax."
-=======
 # define ERR_MALLOC "msh : Failed to allocate memory.\n"
 # define ERR_SYNTAX "msh : syntax error near unexpected token.\n"
 # define ERR_INPUT "msh : Invalid input.\n"
 # define ERR_QUOTES "msh : Unclosed quotes\n"
 
 extern int	g_exit_status;
->>>>>>> a29d2a3906cb997f8243b1bd9b534b254e56ac08
 
 typedef struct	s_env
 {
@@ -68,28 +63,6 @@ typedef struct	s_mini
 	t_sort		*sort;
 }	t_mini;
 
-<<<<<<< HEAD
-enum	letter_type
-{
-	WORD = 1,
-	IN = 2,
-	OUT = 3,
-	DOLL = 4,
-	PIPE = 5,
-	SQUOTE = 6,
-	DQUOTE = 7
-};
-
-enum	token_type
-{
-	HEREDOC = 8,
-	APPEND = 9,
-	COMMAND = 10,
-	SQUOTED = 11
-};
-
-=======
->>>>>>> a29d2a3906cb997f8243b1bd9b534b254e56ac08
 //error
 
 int		write_error_message(char *message);
@@ -107,10 +80,6 @@ int	is_builtin(char *arg);
 //parsing
 
 t_mini	*init_mini(void);
-<<<<<<< HEAD
-int		check_quote_syntax(char	*str);
-int		len_quote(char *str, int i);
-=======
 int	len_quote(char *str, int i);
 int	check_quote_syntax(char	*str);
 int	len_quote(char *str, int i);
@@ -119,7 +88,6 @@ void	expander(t_mini *mini);
 void	parse_token(t_mini *mini, char *str);
 int	contains_exp_sign(char *str);
 void	expand_env(t_mini *mini, t_token *token, int i);
->>>>>>> a29d2a3906cb997f8243b1bd9b534b254e56ac08
 
 //env
 

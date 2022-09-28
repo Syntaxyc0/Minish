@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 15:34:16 by gregoiregob       #+#    #+#             */
-/*   Updated: 2022/09/26 13:36:09 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/09/28 14:52:38 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	str_big(char *a, char *b)
 		return(ft_strlen(b));
 }
 
-void	lst_del_unset(t_env *tmp, t_env *previous)
+void	lst_del_unset_env(t_env *tmp, t_env *previous)
 {
 	if (tmp->key)
 		free(tmp->key);
@@ -31,32 +31,74 @@ void	lst_del_unset(t_env *tmp, t_env *previous)
 	free(tmp);
 }
 
+void	lst_del_unset_export(t_export *tmp, t_export *previous)
+{
+	if (tmp->key)
+		free(tmp->key);
+	if (previous)
+		previous->next = tmp->next;
+	free(tmp);
+}
+
 void	unset(t_mini *mini, int ac, char **av)
 {
-	int		i;
+	if (ac == 1)
+		write_error_message("not enough arguments");
+	while (ac-- > 1)
+	{
+		unset_in_env(mini, av);
+		unset_in_export(mini, av);
+	}
+}
+
+void	unset_in_env(t_mini *mini, char **av)
+{
+	int	i;
 	t_env	*tmp;
 	t_env	*previous;
 
 	i = 1;
 	previous = 0;
-	if (!ac)
-		write_error_message("not enough arguments");
-	while (ac-- > 1)
+	tmp = mini->myenv;
+	while (tmp)
 	{
-		tmp = mini->myenv;
-		while (tmp)
+		if (ft_strncmp(av[i], tmp->key, str_big(av[i], tmp->key)) != 0)
 		{
-			if (ft_strncmp(av[i], tmp->key, str_big(av[i], tmp->key)) != 0)
-			{
-				previous = tmp;
-				tmp = tmp->next;
-			}
-			else
-			{
-				lst_del_unset(tmp, previous);
-				tmp = previous;
-			}
+			previous = tmp;
+			tmp = tmp->next;
 		}
-		i++;
+		else
+		{
+			lst_del_unset_env(tmp, previous);
+			tmp = previous;
+		}
 	}
+	i++;
+}
+
+void	unset_in_export(t_mini *mini, char **av)
+{
+	int			i;
+	t_export	*tmp;
+	t_export	*previous;
+
+	i = 1;
+	previous = 0;
+	tmp = mini->myexport;
+	while (tmp)
+	{
+		if (ft_strncmp(av[i], tmp->key, str_big(av[i], tmp->key)) != 0)
+		{
+			previous = tmp;
+			tmp = tmp->next;
+		}
+		else
+		{
+			lst_del_unset_export(tmp, previous);
+			if (!previous)
+				mini->myexport = 0;
+			tmp = previous;
+		}
+	}
+	i++;
 }

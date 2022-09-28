@@ -25,6 +25,5 @@ t_mini	*init_mini(void)
 	mini->myenv = NULL;
 	mini->myexport = NULL;
 	mini->tokens = NULL;
-	mini->sort = NULL;
 	return (mini);
 }
