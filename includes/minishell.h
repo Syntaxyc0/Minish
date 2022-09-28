@@ -44,6 +44,7 @@ typedef struct	s_export
 typedef struct	s_token
 {
 	char    *value;
+	int		type;
 	struct  s_token *next;
 }	t_token;
 
@@ -53,6 +54,14 @@ typedef struct	s_mini
 	t_myexport	*myexport;
 	t_token		*tokens;
 }	t_mini;
+
+enum e_type
+{
+	REDIR = 1,
+	PIPE = 2,
+	WORD = 3
+};
+
 
 //error
 
@@ -71,10 +80,14 @@ int	len_quote(char *str, int i);
 int	check_quote_syntax(char	*str);
 int	len_quote(char *str, int i);
 void	check_tokens(t_mini *mini);
-void	expander(t_mini *mini);
+t_token	*create_token(char *value);
 void	parse_token(t_mini *mini, char *str);
-int	contains_exp_sign(char *str);
+void	get_token_type(t_mini *mini);
+char	*replace_string(char *value, char *str, int start, int end);
+int		contains_exp_sign(char *str);
 void	expand_env(t_mini *mini, t_token *token, int i);
+void	expander(t_mini *mini);
+void	parse_spaces(t_mini *mini);
 
 //env
 

@@ -55,10 +55,11 @@ int main(int argc, char **argv, char **env)
 	check_tokens(mini);
 	get_env(env, mini);
 	expander(mini);
+	parse_spaces(mini);
 	token = mini->tokens;
 	while (token)
 	{
-		printf("token value : %s\n\n", token->value);
+		printf("token value : %s\ntoken type : %d\n\n", token->value, token->type);
 		token = token->next;
 	}
 	free(line);

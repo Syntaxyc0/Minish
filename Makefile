@@ -27,6 +27,7 @@ SRCS = 	write_error_message.c \
 		parse_tokens.c \
 		check_tokens.c \
 		expander.c \
+		parse_spaces.c \
 		is_builtin.c \
 		get_env.c \
 		get_env_value.c \
@@ -34,6 +35,7 @@ SRCS = 	write_error_message.c \
 		unset.c \
 		export.c \
 		sort_env_export.c \
+		get_token_type.c \
 		
 CC = gcc $(FSANITIZE)
 

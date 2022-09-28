@@ -33,11 +33,13 @@ int	check_quote_syntax(char	*str)
 	{
 		if (str[i] == '\'')
 		{
+			i++;
 			while (str[i] && str[i] != '\'')
 				i++;
 		}
 		else if (str[i] == '\"')
 		{
+			i++;
 			while (str[i] && str[i] != '\"')
 				i++;
 		}
