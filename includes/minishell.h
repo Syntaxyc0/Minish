@@ -45,6 +45,7 @@ typedef struct	s_token
 {
 	char    *value;
 	int		type;
+	int		needs_expansion;
 	struct  s_token *next;
 }	t_token;
 
@@ -57,9 +58,13 @@ typedef struct	s_mini
 
 enum e_type
 {
-	REDIR = 1,
+	WORD = 1,
 	PIPE = 2,
-	WORD = 3
+	REDIR = 3,
+	REDIRIN = 4,
+	HEREDOC = 5,
+	REDIROUT = 6,
+	APPEND = 7
 };
 
 
@@ -83,9 +88,12 @@ void	check_tokens(t_mini *mini);
 t_token	*create_token(char *value);
 void	parse_token(t_mini *mini, char *str);
 void	get_token_type(t_mini *mini);
+int		check_syntax(t_mini *mini);
+void	get_redir_types(t_mini *mini);
 char	*replace_string(char *value, char *str, int start, int end);
 int		contains_exp_sign(char *str);
 void	expand_env(t_mini *mini, t_token *token, int i);
+void	get_expansion_needs(t_mini *mini);
 void	expander(t_mini *mini);
 void	parse_spaces(t_mini *mini);
 

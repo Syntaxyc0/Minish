@@ -26,16 +26,19 @@ SRCS = 	write_error_message.c \
 		check_quote.c \
 		parse_tokens.c \
 		check_tokens.c \
+		get_token_type.c \
+		check_syntax.c \
+		get_redir_types.c \
+		get_expansion_needs.c \
 		expander.c \
 		parse_spaces.c \
 		is_builtin.c \
 		get_env.c \
 		get_env_value.c \
-		main.c \
 		unset.c \
 		export.c \
 		sort_env_export.c \
-		get_token_type.c \
+		main.c \
 		
 CC = gcc $(FSANITIZE)
 

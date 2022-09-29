@@ -53,7 +53,11 @@ int main(int argc, char **argv, char **env)
 	line = readline("Minishell: ");
 	parse_token(mini, line);
 	check_tokens(mini);
+	if (!check_syntax(mini))
+		free_mini_exit_msg(mini, ERR_SYNTAX);
 	get_env(env, mini);
+	get_redir_types(mini);
+	get_expansion_needs(mini);
 	expander(mini);
 	parse_spaces(mini);
 	token = mini->tokens;

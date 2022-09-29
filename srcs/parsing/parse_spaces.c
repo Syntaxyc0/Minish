@@ -39,20 +39,24 @@ char	*split_token(t_mini *mini, t_token *token)
 		start ++;
 	end = start;
 	while (token->value[end] != ' ' && token->value[end])
-		end++;
-	ret = ft_substr(token->value, start, end);
+	{
+		if (token->value[end] == '\"' || token->value[end] == '\'')
+			end += len_quote(token->value, end);
+		else
+			end++;
+	}
+	ret = ft_substr(token->value, start, end - start);
 	if (!ret)
 		free_mini_exit_msg(mini, ERR_MALLOC);
 	if (check_only_space(token->value, end))
 	{
 		free(token->value);
 		token->value = ret;
+		return (NULL);
 	}
-	tmp = replace_string(token->value, NULL, start, end);
+	tmp = replace_string(token->value, NULL, 0, end - 1);
 	if (!tmp)
 		free_mini_exit_msg(mini, ERR_MALLOC);
-	printf("ret : %s\n", ret);
-	printf("tmp : %s\n", tmp);
 	token->value = ret;
 	return (tmp);
 }

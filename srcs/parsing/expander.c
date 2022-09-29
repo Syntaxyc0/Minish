@@ -126,12 +126,15 @@ void	expander(t_mini *mini)
 		free_mini_exit_msg(mini, ERR_INPUT);
 	while (token != NULL)
 	{
-		index = contains_exp_sign(token->value);
-		while (index != -1)
+		if (token->needs_expansion == 1)
 		{
-			if (index >= 0)
-				expand(mini, token, index);
 			index = contains_exp_sign(token->value);
+			while (index != -1)
+			{
+				if (index >= 0)
+					expand(mini, token, index);
+				index = contains_exp_sign(token->value);
+			}
 		}
 		token = token->next;
 	}

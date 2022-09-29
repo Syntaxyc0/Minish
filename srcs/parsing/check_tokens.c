@@ -43,9 +43,9 @@ int	check_redirin(t_mini *mini, t_token *token)
 
 	if (token->next == NULL)
 		return (0);
-	if (ft_strncmp(token->next->value, ">", 2) == 0)
+	else if (ft_strncmp(token->next->value, ">", 2) == 0)
 		return (0);
-	if (ft_strncmp(token->next->value, "<", 2) == 0)
+	else if (ft_strncmp(token->next->value, "<", 2) == 0)
 	{
 		if (token->next->next == NULL)
 			return (0);
@@ -61,6 +61,15 @@ int	check_redirin(t_mini *mini, t_token *token)
 		delete_token(mini, token->next);
 		return (1);
 	}
+	else if (ft_strncmp(token->next->value, " ", 2) == 0)
+	{
+		if (token->next->next == NULL)
+			return (0);
+		if (ft_strncmp(token->next->next->value, "<", 2) == 0)
+			return (0);
+		if (ft_strncmp(token->next->next->value, ">", 2) == 0)
+			return (0);
+	}
 	return (1);
 }
 
@@ -72,7 +81,7 @@ int	check_redirout(t_mini *mini, t_token *token)
 		return (0);
 	if (ft_strncmp(token->next->value, "<", 2) == 0)
 		return (0);
-	if (ft_strncmp(token->next->value, ">", 2) == 0)
+	else if (ft_strncmp(token->next->value, ">", 2) == 0)
 	{
 		if (token->next->next == NULL)
 			return (0);
@@ -87,6 +96,15 @@ int	check_redirout(t_mini *mini, t_token *token)
 		token->value = tmp;
 		delete_token(mini, token->next);
 		return (1);
+	}
+	else if (ft_strncmp(token->next->value, " ", 2) == 0)
+	{
+		if (token->next->next == NULL)
+			return (0);
+		if (ft_strncmp(token->next->next->value, "<", 2) == 0)
+			return (0);
+		if (ft_strncmp(token->next->next->value, ">", 2) == 0)
+			return (0);
 	}
 	return (1);
 }
