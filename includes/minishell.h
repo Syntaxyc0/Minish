@@ -34,9 +34,17 @@ typedef struct	s_env
 	struct s_env	*next;
 }	t_env;
 
+typedef struct	s_sort
+{
+	char			*key;
+	char			*value;
+	struct s_sort	*next;
+	struct s_sort	*previous;
+}	t_sort;
+
 typedef struct	s_export
 {
-	char			*value;
+	char			*key;
 	struct s_export	*next;
 }	t_export;
 
@@ -53,6 +61,7 @@ typedef struct	s_mini
 	t_env		*myenv;
 	t_myexport	*myexport;
 	t_token		*tokens;
+	t_sort		*sort;
 }	t_mini;
 
 enum e_type
@@ -68,6 +77,10 @@ enum e_type
 int		write_error_message(char *message);
 void    free_mini(t_mini *mini);
 void	free_mini_exit_msg(t_mini *mini, char *message);
+void    free_letters(t_mini *mini);
+void	free_tokens(t_mini *mini);
+void    free_env(t_mini *mini);
+void    free_export(t_mini *mini);
 
 //builtins
 
@@ -97,6 +110,7 @@ void	import(t_mini *mini, int ac, char **av);
 void	import_env(t_mini *mini, char *s);
 void	import_export(t_mini *mini, char *s);
 void    init_myenv(t_mini *mini, char *key, char *value);
+void	init_myexport(t_mini *mini, char *s);
 void	lst_del_unset(t_env *tmp, t_env *previous);
 void	sort_env_export(t_mini *mini);
 void	unset(t_mini *mini, int ac, char **av);
