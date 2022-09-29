@@ -39,9 +39,16 @@ void    add_envelem(t_mini *mini, char *key, char *value)
 	if (!ret)
 		free_mini_exit_msg(mini, ERR_MALLOC);
 	ret->key = ft_strdup(key);
-	ret->value = ft_strdup(value);
+	if (value)
+	{
+		ret->value = ft_strdup(value);
+		if (!ret->value)
+			free_mini_exit_msg(mini, ERR_MALLOC);
+	}
+	else
+		ret->value = 0;
 	ret->next = NULL;
-	if (!ret->key || !ret->value)
+	if (!ret->key)
 		free_mini_exit_msg(mini, ERR_MALLOC);
 	while (mini->myenv->next != NULL)
 		mini->myenv = mini->myenv->next;
