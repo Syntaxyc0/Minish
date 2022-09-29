@@ -15,6 +15,7 @@
 
 # include "../libft/libft.h"
 # include <stdio.h>
+# include <stdlib.h>
 # include <unistd.h>
 # include <stdbool.h>
 # include <readline/readline.h>
@@ -131,6 +132,7 @@ void	expand_env(t_mini *mini, t_token *token, int i);
 void	get_expansion_needs(t_mini *mini);
 void	expander(t_mini *mini);
 void	parse_spaces(t_mini *mini);
+int		remove_quotes(t_mini *mini);
 
 //env
 

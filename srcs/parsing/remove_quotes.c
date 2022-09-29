@@ -1,24 +1,33 @@
 #include "minishell.h"
 
-int	contains_quote(char	*str)
+int	contains_quote(char	*str, int start)
 {
 	int	i;
 
-	i = 0;
+	i = start;
 	while (str[i])
 	{
 		if (str[i] == '\'')
 			return (1);
-		if (str[i] == "\"")
+		if (str[i] == '\"')
 			return (2);
 		i++;
 	}
 	return (0);
 }
 
-get_next_quote_index(char	*str, int start, char quote)
+int	get_next_quote_index(char	*str, int start, char quote)
 {
+	int	i;
 
+	i = start;
+	while (str[i])
+	{
+		if (str[i] == quote)
+			return (i);
+		i++;
+	}
+	return (-1);
 }
 
 int	remove_quotes(t_mini *mini)
@@ -27,18 +36,25 @@ int	remove_quotes(t_mini *mini)
 	int		start;
 	int		end;
 
-	start = 0;
-	end = 0;
 	token = mini->tokens;
 	while (token != NULL)
 	{
+		start = 0;
+		end = 0;
 		if (token->type == WORD)
 		{
-			if (contains_quote(token->value))
+			while (contains_quote(token->value, start) == 1)
 			{
-
+				start = get_next_quote_index(token->value, start, '\'');
+				end = get_next_quote_index(token->value, start + 1, '\'');
+				printf("start : %d\nend : %d\n", start, end);
+				token->value = replace_string(token->value, NULL, start, start);
+				token->value = replace_string(token->value, NULL, end - 1, end - 1);
+				printf("token value : %s\n", token->value);
+				start = end - 2;
 			}
 		}
 		token = token->next;
 	}
+	return (EXIT_SUCCESS);
 }
