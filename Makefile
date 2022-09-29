@@ -32,6 +32,8 @@ SRCS = 	write_error_message.c \
 		unset.c \
 		export.c \
 		env.c	\
+		pwd.c \
+		cd.c	\
 		
 CC = gcc $(FSANITIZE)
 

@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 15:34:16 by gregoiregob       #+#    #+#             */
-/*   Updated: 2022/09/28 14:52:38 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/09/29 14:48:40 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	str_big(char *a, char *b)
 	if (ft_strlen(a) > ft_strlen(b))
 		return (ft_strlen(a));
 	else
-		return(ft_strlen(b));
+		return (ft_strlen(b));
 }
 
 void	lst_del_unset_env(t_env *tmp, t_env *previous)
@@ -53,7 +53,7 @@ void	unset(t_mini *mini, int ac, char **av)
 
 void	unset_in_env(t_mini *mini, char **av)
 {
-	int	i;
+	int		i;
 	t_env	*tmp;
 	t_env	*previous;
 

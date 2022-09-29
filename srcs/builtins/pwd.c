@@ -6,24 +6,25 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 15:38:35 by ggobert           #+#    #+#             */
-/*   Updated: 2022/09/28 15:50:52 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/09/29 14:26:01 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	pwd(t_mini	*mini)
-{
-	t_env	*tmp;
+#include "minishell.h"
 
-	tmp = mini->myenv;
-	while (tmp)
+void	pwd(void)
+{
+	int		i;
+	char	*path;
+
+	i = 256;
+	path = malloc(i);
+	while (getcwd(path, i) == 0)
 	{
-		if (ft_strncmp(tmp->value, "PWD", ft_strlen(tmp->key)) == 0)
-		{
-			while (*tmp->value != '=')
-				tmp->value++;
-			tmp->value++;
-			printf("%s\n", tmp->value);
-		}
-		tmp = tmp->next;
+		free(path);
+		i *= 2;
+		path = malloc(i);
 	}
+	printf("%s\n", path);
+	free(path);
 }
