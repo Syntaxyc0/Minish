@@ -52,6 +52,8 @@ typedef struct	s_export
 typedef struct	s_token
 {
 	char    *value;
+	int		type;
+	int		needs_expansion;
 	struct  s_token *next;
 }	t_token;
 
@@ -60,7 +62,20 @@ typedef struct	s_mini
 	t_env		*myenv;
 	t_export	*myexport;
 	t_token		*tokens;
+	t_sort		*sort;
 }	t_mini;
+
+enum e_type
+{
+	WORD = 1,
+	PIPE = 2,
+	REDIR = 3,
+	REDIRIN = 4,
+	HEREDOC = 5,
+	REDIROUT = 6,
+	APPEND = 7
+};
+
 
 //error
 
@@ -74,23 +89,7 @@ void    free_export(t_mini *mini);
 
 //builtins
 
-void	pwd(t_mini	*mini);
-void	env(t_mini *mini);
-void	export(t_mini *mini, int ac, char **av);
-void	import(t_mini *mini, int ac, char **av);
-void	import_env(t_mini *mini, char *s);
-void	import_export(t_mini *mini, char *s);
-void    init_myenv(t_mini *mini, char *key, char *value);
-void	init_myexport(t_mini *mini, char *s);
-void	lst_del_unset_env(t_env *tmp, t_env *previous);
-void	lst_del_unset_export(t_export *tmp, t_export *previous);
-void	unset(t_mini *mini, int ac, char **av);
-void	unset_in_env(t_mini *mini, char **av);
-void	unset_in_export(t_mini *mini, char **av);
-int		is_builtin(char *arg);
-int		is_egal(char *s);
-int		is_space_before_egal(char *s);
-int		str_big(char *a, char *b);
+int	is_builtin(char *arg);
 
 //parsing
 
@@ -99,15 +98,33 @@ int	len_quote(char *str, int i);
 int	check_quote_syntax(char	*str);
 int	len_quote(char *str, int i);
 void	check_tokens(t_mini *mini);
-void	expander(t_mini *mini);
+t_token	*create_token(char *value);
 void	parse_token(t_mini *mini, char *str);
-int	contains_exp_sign(char *str);
+void	get_token_type(t_mini *mini);
+int		check_syntax(t_mini *mini);
+void	get_redir_types(t_mini *mini);
+char	*replace_string(char *value, char *str, int start, int end);
+int		contains_exp_sign(char *str);
 void	expand_env(t_mini *mini, t_token *token, int i);
+void	get_expansion_needs(t_mini *mini);
+void	expander(t_mini *mini);
+void	parse_spaces(t_mini *mini);
 
 //env
 
 void    add_envelem(t_mini *mini, char *key, char *value);
+void	export(t_mini *mini, int ac, char **av);
+void	import(t_mini *mini, int ac, char **av);
+void	import_env(t_mini *mini, char *s);
+void	import_export(t_mini *mini, char *s);
+void    init_myenv(t_mini *mini, char *key, char *value);
+void	init_myexport(t_mini *mini, char *s);
+void	lst_del_unset(t_env *tmp, t_env *previous);
+void	sort_env_export(t_mini *mini);
+void	unset(t_mini *mini, int ac, char **av);
 char	*get_env_value(t_mini *mini, char *key);
 int		get_env(char **env, t_mini *mini);
+int		is_egal(char *s);
+int		str_big(char *a, char *b);
 
 #endif
