@@ -37,7 +37,8 @@ SRCS = 	write_error_message.c \
 		get_env_value.c \
 		unset.c \
 		export.c \
-		sort_env_export.c \
+		get_token_type.c \
+		env.c	\
 		main.c \
 		
 CC = gcc $(FSANITIZE)
