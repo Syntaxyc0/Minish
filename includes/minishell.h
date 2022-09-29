@@ -25,7 +25,8 @@
 # define ERR_SYNTAX "msh : syntax error near unexpected token.\n"
 # define ERR_INPUT "msh : Invalid input.\n"
 # define ERR_QUOTES "msh : Unclosed quotes\n"
-# define ERR_ARG "msh : too many arguments"
+# define ERR_ARG "msh : too many arguments\n"
+# define ERR_NOFILE "msh : no such file or directory\n"
 
 extern int	g_exit_status;
 
@@ -103,10 +104,12 @@ void	init_myexport(t_mini *mini, char *s);
 void	lst_del_unset_env(t_env *tmp, t_env *previous);
 void	lst_del_unset_export(t_export *tmp, t_export *previous);
 void	old_pwd(t_mini *mini);
+void	push_in_env(t_mini *mini, char *curpath);
 void	pwd(void);
 void	unset(t_mini *mini, int ac, char **av);
 void	unset_in_env(t_mini *mini, char **av);
 void	unset_in_export(t_mini *mini, char **av);
+char	*back_repo(char *curpath);
 char	*home_env(t_mini *mini);
 int		is_builtin(char *arg);
 int		is_egal(char *s);
