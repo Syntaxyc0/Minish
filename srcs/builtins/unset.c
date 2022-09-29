@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 15:34:16 by gregoiregob       #+#    #+#             */
-/*   Updated: 2022/09/29 14:48:40 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/09/29 15:56:36 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,6 @@ void	lst_del_unset_export(t_export *tmp, t_export *previous)
 	free(tmp);
 }
 
-void	unset(t_mini *mini, int ac, char **av)
-{
-	if (ac == 1)
-		write_error_message("not enough arguments");
-	while (ac-- > 1)
-	{
-		unset_in_env(mini, av);
-		unset_in_export(mini, av);
-	}
-}
 
 void	unset_in_env(t_mini *mini, char **av)
 {
@@ -101,4 +91,15 @@ void	unset_in_export(t_mini *mini, char **av)
 		}
 	}
 	i++;
+}
+
+void	unset(t_mini *mini, int ac, char **av)
+{
+	if (ac == 1)
+		write_error_message("not enough arguments");
+	while (ac-- > 1)
+	{
+		unset_in_env(mini, av);
+		unset_in_export(mini, av);
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 11:53:22 by ggobert           #+#    #+#             */
-/*   Updated: 2022/09/27 11:53:22 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/09/28 15:57:44 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ void    free_mini(t_mini *mini)
 		free_export(mini);
 	if (mini->tokens)
 		free_tokens(mini);
-	
 	free(mini);
 }
 

@@ -24,20 +24,25 @@ SRCS = 	write_error_message.c \
 		free_mini_exit_msg.c \
 		init_mini.c \
 		check_quote.c \
-		tokens.c \
+		parse_tokens.c \
+		check_tokens.c \
+		get_token_type.c \
+		check_syntax.c \
+		get_redir_types.c \
+		get_expansion_needs.c \
+		expander.c \
+		parse_spaces.c \
 		is_builtin.c \
 		get_env.c \
 		get_env_value.c \
-		main.c \
 		unset.c \
 		export.c \
 		env.c	\
-		pwd.c \
-		cd.c	\
+		main.c \
 		
 CC = gcc $(FSANITIZE)
 
-CFLAGS = -MMD -Wall -Werror -Wextra
+CFLAGS = -MMD -Wall -Werror -Wextra -lreadline
 
 RM = rm -rf
 
