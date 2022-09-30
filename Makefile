@@ -14,6 +14,8 @@ ENV_PATH = env
 
 PARSE_PATH = parsing
 
+EXEC_PATH = exec
+
 OBJ_PATH = obj
 
 UTILS_PATH = utils
@@ -61,6 +63,7 @@ vpath %.c $(SRCSPATH)\
 	$(SRCSPATH)/$(BUILT_PATH) \
 	$(SRCSPATH)/$(ENV_PATH) \
 	$(SRCSPATH)/$(PARSE_PATH) \
+	$(SRCSPATH)/$(EXEC_PATH) \
 
 
 vpath %.o $(OBJ_PATH)
