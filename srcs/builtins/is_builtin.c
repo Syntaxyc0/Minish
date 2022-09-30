@@ -16,7 +16,7 @@ int	is_builtin(char *arg)
 {
 	if (!arg)
 		return (0);
-	if (!ft_strncmp(arg, "echo", str_big(arg, "echo"))
+	if (!ft_strncmp(arg, "echo", str_big(arg, "echo")))
 		return (1);
 	if (!ft_strncmp(arg, "cd", str_big(arg, "cd")))
 		return (1);
