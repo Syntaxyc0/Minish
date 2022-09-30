@@ -113,6 +113,8 @@ void	expand(t_mini *mini, t_token *token, int i)
 	}
 	else if (ft_isalpha(token->value[i + 1]) || token->value[i + 1] == '_')
 		expand_env(mini, token, i);
+	else
+		free_mini_exit_msg(mini, ERR_SYNTAX);
 }
 
 void	expander(t_mini *mini)

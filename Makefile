@@ -32,6 +32,7 @@ SRCS = 	write_error_message.c \
 		get_expansion_needs.c \
 		expander.c \
 		parse_spaces.c \
+		remove_empty_tokens.c \
 		remove_quotes.c \
 		is_builtin.c \
 		get_env.c \

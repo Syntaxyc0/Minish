@@ -4,6 +4,8 @@ int	contains_quote(char	*str, int start)
 {
 	int	i;
 
+	if (start < 0)
+		return (0);
 	i = start;
 	while (str[i])
 	{
@@ -43,15 +45,25 @@ int	remove_quotes(t_mini *mini)
 		end = 0;
 		if (token->type == WORD)
 		{
-			while (contains_quote(token->value, start) == 1)
+			while (contains_quote(token->value, start))
 			{
-				start = get_next_quote_index(token->value, start, '\'');
-				end = get_next_quote_index(token->value, start + 1, '\'');
-				printf("start : %d\nend : %d\n", start, end);
-				token->value = replace_string(token->value, NULL, start, start);
-				token->value = replace_string(token->value, NULL, end - 1, end - 1);
-				printf("token value : %s\n", token->value);
-				start = end - 2;
+				if (contains_quote(token->value, start) == 1)
+				{
+					start = get_next_quote_index(token->value, start, '\'');
+					end = get_next_quote_index(token->value, start + 1, '\'');
+
+					token->value = replace_string(token->value, NULL, start, start);
+					token->value = replace_string(token->value, NULL, end - 1, end - 1);
+					start = end - 2;
+				}
+				else if (contains_quote(token->value, start) == 2)
+				{
+					start = get_next_quote_index(token->value, start, '\"');
+					end = get_next_quote_index(token->value, start + 1, '\"');
+					token->value = replace_string(token->value, NULL, start, start);
+					token->value = replace_string(token->value, NULL, end - 1, end - 1);
+				}
+				start = end - 1;
 			}
 		}
 		token = token->next;

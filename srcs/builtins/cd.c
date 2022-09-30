@@ -91,16 +91,14 @@ char	*back_repo(char *curpath, int dot_count)
 	char	*tmp;
 
 	i = 0;
-	tmp = ft_strdup(curpath);
-	while (tmp[i] != '.')
+	while (curpath[i] && curpath[i] != '.')
 		i++;
 	while (dot_count)
-		if (tmp[i--] == '/')
+		if (curpath[i] && curpath[i--] == '/')
 			dot_count--;
+	tmp = ft_substr(curpath, 0, i + 1);
 	free(curpath);
-	curpath = ft_substr(tmp, 0, i + 1);
-	free(tmp);
-	return (curpath);
+	return (tmp);
 }
 
 char	*two_dot(char *curpath)
@@ -159,6 +157,4 @@ void	cd(t_mini *mini, int ac, char **av)
 	}
 	else
 		push_in_env(mini, curpath);
-	if (ac != 1)
-		free (curpath);
 }
