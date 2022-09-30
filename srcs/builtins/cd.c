@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 11:49:48 by ggobert           #+#    #+#             */
-/*   Updated: 2022/09/30 13:48:02 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/09/30 17:23:53 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,7 @@ char	*back_repo(char *curpath, int dot_count)
 	char	*tmp;
 
 	i = 0;
-	tmp = ft_strdup(curpath);
-	while (tmp[i] != '.')
+	while (curpath[i] && curpath[i] != '.')
 		i++;
 	while (dot_count)
 		if (tmp[--i] == '/')
@@ -167,8 +166,6 @@ void	cd(t_mini *mini, int ac, char **av)
 	}
 	else
 		push_in_env(mini, curpath);
-	if (ac != 1)
-		free (curpath);
 }
 
 /* Les erreurs gérées sont : 
