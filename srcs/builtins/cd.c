@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 11:49:48 by ggobert           #+#    #+#             */
-/*   Updated: 2022/09/29 17:58:14 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/09/30 11:54:42 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,46 +85,53 @@ char	*get_path(char **av)
 	}
 }
 
-char	*back_repo(char *curpath)
+char	*back_repo(char *curpath, int dot_count)
 {
 	int		i;
-	int		counter;
+	char	*tmp;
 
-	counter = 2;
-	i = ft_strlen(curpath);
-	while (curpath[i] != '.')
-		i--;
-	while (counter)
-		if (curpath[i--] == '/')
-			counter--;
-	return (ft_substr(curpath, 0, i + 1));
+	i = 0;
+	tmp = ft_strdup(curpath);
+	while (tmp[i] != '.')
+		i++;
+	while (dot_count)
+		if (tmp[i--] == '/')
+			dot_count--;
+	free(curpath);
+	curpath = ft_substr(tmp, 0, i + 1);
+	free(tmp);
+	return (curpath);
 }
 
 char	*two_dot(char *curpath)
 {
 	int		i;
+	int		dot_count;
 
+	dot_count = 1;
 	i = -1;
 	while (curpath[++i])
 		if (curpath[i] == '.' && curpath[i + 1])
-			if (curpath[i + 1] == '.')
-				return (back_repo(curpath));
+			if (curpath[++i] == '.')
+				dot_count++;
+	if (dot_count == 1)
+		return(curpath);
+	curpath = back_repo(curpath, dot_count);
 	return (curpath);
 }
 
 void	push_in_env(t_mini *mini, char *curpath)
 {
 	t_env	*tmp;
-	char	*temp;
 	
 	tmp = mini->myenv;
-	temp = two_dot(curpath);
+	curpath = two_dot(curpath);
 	while (tmp)
 	{
 		if (!ft_strncmp("PWD", tmp->key, str_big("PWD", tmp->key)))
 		{
 			free(tmp->value);
-			tmp->value = ft_strdup(temp);
+			tmp->value = ft_strdup(curpath);
 		}
 		tmp = tmp->next;
 	}
@@ -149,7 +156,6 @@ void	cd(t_mini *mini, int ac, char **av)
 	{
 		if (errno == 20)
 			write_error_message(ERR_NOFILE);
-		printf("\nNop...\n\n");
 	}
 	else
 		push_in_env(mini, curpath);
