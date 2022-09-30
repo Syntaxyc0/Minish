@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 15:34:16 by gregoiregob       #+#    #+#             */
-/*   Updated: 2022/09/29 15:56:36 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/09/30 14:41:55 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,11 @@ void	unset_in_export(t_mini *mini, char **av)
 void	unset(t_mini *mini, int ac, char **av)
 {
 	if (ac == 1)
-		write_error_message("not enough arguments");
+		write_error_message(ERR_ARG);
 	while (ac-- > 1)
 	{
+		if (check_args(ac, av) != 1)
+			return;
 		unset_in_env(mini, av);
 		unset_in_export(mini, av);
 	}

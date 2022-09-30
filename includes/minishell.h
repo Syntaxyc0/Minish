@@ -27,6 +27,8 @@
 # define ERR_QUOTES "msh : Unclosed quotes\n"
 # define ERR_ARG "msh : too many arguments\n"
 # define ERR_NOFILE "msh : no such file or directory\n"
+# define ERR_NORIGHT "msh : permission denied\n"
+# define ERR_VALIDARG "msh : not a valid identifier\n"
 
 extern int	g_exit_status;
 
@@ -92,6 +94,7 @@ void	Sfree_export(t_mini *mini);
 //builtins
 
 void	cd(t_mini *mini, int ac, char **av);
+void	echo(int ac, char **av);
 void	env(t_mini *mini);
 void	export(t_mini *mini, int ac, char **av);
 void	import(t_mini *mini, int ac, char **av);
@@ -111,6 +114,7 @@ char	*back_repo(char *curpath, int dot_count);
 char	*get_path(char **av);
 char	*get_pwd();
 char	*home_env(t_mini *mini);
+int		check_args(int ac, char **av);
 int		is_builtin(char *arg);
 int		is_egal(char *s);
 int		is_space_before_egal(char *s);

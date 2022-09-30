@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 13:44:07 by ggobert           #+#    #+#             */
-/*   Updated: 2022/09/28 15:34:47 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/09/30 14:38:36 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,16 +100,44 @@ void	import_env(t_mini *mini, char *s)
 		value = ft_substr(s, j + 1, ft_strlen(s));
 	else
 		value = 0;
-	printf("value : %s\n", value);
 	add_envelem(mini, key, value);
 	free(key);
 	free(value);
 }
 
+int	check_args(int ac, char **av)
+{
+	int	i;
+
+	while (--ac > 0)
+	{
+		if (av[ac][0] == '=')
+		{
+			write_error_message(ERR_VALIDARG);
+			return(1);
+		}
+		i = 0;
+		while (av[ac][i] != '=' && av[ac][i])
+		{
+			if (ft_isalpha(av[ac][i]) != 1 && av[ac][i] != '_')
+			{
+				write_error_message(ERR_VALIDARG);
+				return (1);
+			}
+			i++;
+		}
+	}
+	return (0);
+}
+
 void	export(t_mini *mini, int ac, char **av)
 {
 	if (ac == 1)
-		printf("cf man export\n");
+		write_error_message("Unspecified behaviour (cf man export)\n");
 	else
+	{
+		if (check_args(ac, av) == 1)
+			return;
 		import(mini, ac, av);
+	}
 }

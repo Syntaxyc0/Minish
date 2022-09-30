@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 11:49:48 by ggobert           #+#    #+#             */
-/*   Updated: 2022/09/30 11:54:42 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/09/30 13:48:02 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,9 @@ char	*back_repo(char *curpath, int dot_count)
 	while (tmp[i] != '.')
 		i++;
 	while (dot_count)
-		if (tmp[i--] == '/')
+		if (tmp[--i] == '/')
 			dot_count--;
-	free(curpath);
-	curpath = ft_substr(tmp, 0, i + 1);
+	curpath = ft_substr(tmp, 0, i);
 	free(tmp);
 	return (curpath);
 }
@@ -107,6 +106,7 @@ char	*two_dot(char *curpath)
 {
 	int		i;
 	int		dot_count;
+	char	*tmp;
 
 	dot_count = 1;
 	i = -1;
@@ -115,26 +115,31 @@ char	*two_dot(char *curpath)
 			if (curpath[++i] == '.')
 				dot_count++;
 	if (dot_count == 1)
-		return(curpath);
-	curpath = back_repo(curpath, dot_count);
-	return (curpath);
+	{
+		tmp = ft_strdup(curpath);
+		return (tmp);
+	}
+	tmp = back_repo(curpath, dot_count);
+	return (tmp);
 }
 
 void	push_in_env(t_mini *mini, char *curpath)
 {
 	t_env	*tmp;
-	
+	char	*temp;
+
 	tmp = mini->myenv;
-	curpath = two_dot(curpath);
+	temp = two_dot(curpath);
 	while (tmp)
 	{
 		if (!ft_strncmp("PWD", tmp->key, str_big("PWD", tmp->key)))
 		{
 			free(tmp->value);
-			tmp->value = ft_strdup(curpath);
+			tmp->value = ft_strdup(temp);
 		}
 		tmp = tmp->next;
 	}
+	free(temp);
 }
 
 void	cd(t_mini *mini, int ac, char **av)
@@ -154,11 +159,21 @@ void	cd(t_mini *mini, int ac, char **av)
 		curpath = get_path(av);
 	if (chdir(curpath) < 0)
 	{
-		if (errno == 20)
+		printf("%u\n", errno);
+		if (errno == 2 || errno == 20)
 			write_error_message(ERR_NOFILE);
+		if (errno == 13)
+			write_error_message(ERR_NORIGHT);
 	}
 	else
 		push_in_env(mini, curpath);
 	if (ac != 1)
 		free (curpath);
 }
+
+/* Les erreurs gérées sont : 
+		fichier inexistant
+		non-droit sur un dossier
+		element du path n'est pas un dossier
+Pas de leaks, point et 2points gérés 
+NON GEREE : cd dans un dossier puis le suppr (comportement indefini) */
