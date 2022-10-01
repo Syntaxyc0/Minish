@@ -60,7 +60,7 @@ void	addback_redir(t_command *cmd, t_redir *redir)
 	tmp->next = redir;
 }
 
-int	parse_redir(t_mini	*mini, t_token *token, t_command command)
+int	parse_redir(t_mini	*mini, t_token *token, t_command *command)
 {
 	t_redir	*new;
 
@@ -114,6 +114,41 @@ int	parse_redir(t_mini	*mini, t_token *token, t_command command)
 	return (EXIT_SUCCESS);
 }
 
+int	get_args_size(t_token *token)
+{
+	t_token	*tmp;
+	int		ret;
+
+	ret - 0;
+	tmp = token;
+	while (token->type == WORD)
+	{
+		ret += 1;
+		token = token->next;
+	}
+	return (ret);
+}
+
+int	parse_args(t_mini *mini, t_token *token, t_command *command)
+{
+	char	**args;
+	t_token	*tmp;
+	int		i;
+
+	i = 0;
+	tmp = token;
+	args = malloc(sizeof(get_args_size(token)));
+	if (!args)
+		return (EXIT_FAILURE);
+	while (token->type == WORD)
+	{
+		args[i] = ft_strdup(token->value);
+		if (!args[i])
+			{
+				free_array()
+			}
+}
+
 int	parse_cmd(t_mini *mini)
 {
 	t_command	*new;
@@ -132,6 +167,10 @@ int	parse_cmd(t_mini *mini)
 				free(new);
 				return (EXIT_FAILURE);
 			}
+		}
+		else if (token->type == WORD)
+		{
+
 		}
 		else // TODO: gerer les mots et pipe
 			token = token->next;
