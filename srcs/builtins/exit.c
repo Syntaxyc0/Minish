@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 15:19:01 by ggobert           #+#    #+#             */
-/*   Updated: 2022/09/30 17:26:50 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/03 11:17:43 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_exit(t_mini *mini, int ac, char **av)
 		{
 			write_error_message("msh : numeric argument required");
 			free_mini(mini);
-			exit;
+			exit(g_exit_status);
 		}
 	}
 	free_mini(mini);
