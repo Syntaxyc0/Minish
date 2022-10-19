@@ -16,19 +16,19 @@ int	is_builtin(char *arg)
 {
 	if (!arg)
 		return (0);
-	if (!ft_strncmp(arg, "echo", ft_strlen(arg)))
+	if (!ft_strncmp(arg, "echo", str_big(arg, "echo")))
 		return (1);
-	if (!ft_strncmp(arg, "cd", ft_strlen(arg)))
+	if (!ft_strncmp(arg, "cd", str_big(arg, "cd")))
 		return (1);
-	if (!ft_strncmp(arg, "pwd", ft_strlen(arg)))
+	if (!ft_strncmp(arg, "pwd", str_big(arg, "pwd")))
 		return (1);
-	if (!ft_strncmp(arg, "export", ft_strlen(arg)))
+	if (!ft_strncmp(arg, "export", str_big(arg, "export")))
 		return (1);
-	if (!ft_strncmp(arg, "unset", ft_strlen(arg)))
+	if (!ft_strncmp(arg, "unset", str_big(arg, "unset")))
 		return (1);
-	if (!ft_strncmp(arg, "env", ft_strlen(arg)))
+	if (!ft_strncmp(arg, "env", str_big(arg, "env")))
 		return (1);
-	if (!ft_strncmp(arg, "exit", ft_strlen(arg)))
+	if (!ft_strncmp(arg, "exit", str_big(arg, "exit")))
 		return (1);
 	return (0);
 }

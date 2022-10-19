@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	get_type(char	*str)
+int	get_type(char *str)
 {
 	if (*str == '<' || *str == '>')
 		return (REDIR);
@@ -24,7 +24,7 @@ int	get_type(char	*str)
 
 void	get_token_type(t_mini *mini)
 {
-	t_token *token;
+	t_token	*token;
 
 	token = mini->tokens;
 	while (token != NULL)

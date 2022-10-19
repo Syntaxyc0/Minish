@@ -94,11 +94,11 @@ char	*back_repo(char *curpath, int dot_count)
 	while (curpath[i] && curpath[i] != '.')
 		i++;
 	while (dot_count)
-		if (tmp[--i] == '/')
+		if (curpath[i] && curpath[i--] == '/')
 			dot_count--;
-	curpath = ft_substr(tmp, 0, i);
-	free(tmp);
-	return (curpath);
+	tmp = ft_substr(curpath, 0, i + 1);
+	free(curpath);
+	return (tmp);
 }
 
 char	*two_dot(char *curpath)

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_spaces.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jbesnier <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/29 17:22:16 by jbesnier          #+#    #+#             */
+/*   Updated: 2022/09/29 17:22:18 by jbesnier         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	contains_space(char *str)
@@ -28,10 +40,10 @@ int	check_only_space(char *str, int start)
 
 char	*split_token(t_mini *mini, t_token *token)
 {
-	int	end;
+	int		end;
 	char	*ret;
 	char	*tmp;
-	int	start;
+	int		start;
 
 	start = 0;
 	end = 0;
@@ -63,10 +75,10 @@ char	*split_token(t_mini *mini, t_token *token)
 
 void	parse_spaces(t_mini *mini)
 {
-	t_token *token;
+	t_token	*token;
 	t_token	*new;
 	char	*value;
-	
+
 	token = mini->tokens;
 	while (token != NULL)
 	{
@@ -74,9 +86,9 @@ void	parse_spaces(t_mini *mini)
 		{
 			value = split_token(mini, token);
 			if (value == NULL)
-				break;
+				break ;
 			new = create_token(value);
-			new->type = WORD; 
+			new->type = WORD;
 			new->next = token->next;
 			token->next = new;
 		}

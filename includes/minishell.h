@@ -15,6 +15,7 @@
 
 # include "../libft/libft.h"
 # include <stdio.h>
+# include <stdlib.h>
 # include <unistd.h>
 # include <stdbool.h>
 # include <readline/readline.h>
@@ -61,12 +62,30 @@ typedef struct s_token
 	struct  s_token *next;
 }	t_token;
 
+typedef	struct s_redir
+{
+	int				type;
+	int				heredoc_expands;
+	char			*filename;
+	int				fd[2];
+	struct s_redir *next;
+}	t_redir;
+
+typedef	struct s_command
+{
+	char				*fullpath;
+	char				**args;
+	struct s_redir		*redir;
+	struct s_command	*next;
+}	t_command;
+
 typedef struct s_mini
 {
 	t_env		*myenv;
 	t_export	*myexport;
 	t_token		*tokens;
 	t_sort		*sort;
+	t_command	*commands;
 }	t_mini;
 
 enum e_type
@@ -128,6 +147,7 @@ int		check_quote_syntax(char	*str);
 int		len_quote(char *str, int i);
 void	check_tokens(t_mini *mini);
 t_token	*create_token(char *value);
+void	delete_token(t_mini *mini, t_token *token);
 void	parse_token(t_mini *mini, char *str);
 void	get_token_type(t_mini *mini);
 int		check_syntax(t_mini *mini);
@@ -138,6 +158,8 @@ void	expand_env(t_mini *mini, t_token *token, int i);
 void	get_expansion_needs(t_mini *mini);
 void	expander(t_mini *mini);
 void	parse_spaces(t_mini *mini);
+void	remove_empty_tokens(t_mini *mini);
+int		remove_quotes(t_mini *mini);
 
 //env
 
