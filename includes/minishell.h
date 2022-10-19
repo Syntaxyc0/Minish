@@ -21,6 +21,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <errno.h>
+# include <fcntl.h>
 
 # define ERR_MALLOC "msh : Failed to allocate memory.\n"
 # define ERR_SYNTAX "msh : syntax error near unexpected token.\n"
@@ -65,9 +66,7 @@ typedef struct s_token
 typedef	struct s_redir
 {
 	int				type;
-	int				heredoc_expands;
 	char			*filename;
-	int				fd[2];
 	struct s_redir *next;
 }	t_redir;
 
@@ -75,6 +74,8 @@ typedef	struct s_command
 {
 	char				*fullpath;
 	char				**args;
+	int					fd[2];
+	int					pid;
 	struct s_redir		*redir;
 	struct s_command	*next;
 }	t_command;
