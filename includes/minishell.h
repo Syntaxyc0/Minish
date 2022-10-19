@@ -58,14 +58,12 @@ typedef struct s_token
 {
 	char    *value;
 	int		type;
-	int		needs_expansion;
 	struct  s_token *next;
 }	t_token;
 
 typedef	struct s_redir
 {
 	int				type;
-	int				heredoc_expands;
 	char			*filename;
 	int				fd[2];
 	struct s_redir *next;
@@ -76,7 +74,7 @@ typedef	struct s_command
 	char				*fullpath;
 	char				**args;
 	struct s_redir		*redir;
-	struct s_command	*next;
+	struct s_command	*next;	
 }	t_command;
 
 typedef struct s_mini
@@ -108,7 +106,8 @@ void	free_mini_exit_msg(t_mini *mini, char *message);
 void	free_letters(t_mini *mini);
 void	free_tokens(t_mini *mini);
 void	free_env(t_mini *mini);
-void	Sfree_export(t_mini *mini);
+void	free_export(t_mini *mini);
+void	free_array(char **array);
 
 //builtins
 
@@ -155,11 +154,11 @@ void	get_redir_types(t_mini *mini);
 char	*replace_string(char *value, char *str, int start, int end);
 int		contains_exp_sign(char *str);
 void	expand_env(t_mini *mini, t_token *token, int i);
-void	get_expansion_needs(t_mini *mini);
 void	expander(t_mini *mini);
 void	parse_spaces(t_mini *mini);
 void	remove_empty_tokens(t_mini *mini);
 int		remove_quotes(t_mini *mini);
+int		parse_exec_form(t_mini	*mini);
 
 //env
 

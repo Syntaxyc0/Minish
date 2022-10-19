@@ -21,7 +21,6 @@ t_token	*create_token(char *value)
 		return (NULL);
 	ret->value = value;
 	ret->type = 0;
-	ret->needs_expansion = 1;
 	ret->next = NULL;
 	return (ret);
 }
