@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:25:17 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/20 17:00:17 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/20 17:05:05 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	processes(t_mini *mini)
 				return (-1);
 			}
 		if (cmd->pid == 0)
-			execution(cmd);
+			execution(cmd, mini);
 	}
 	return (0);
 }
