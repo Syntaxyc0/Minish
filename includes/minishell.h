@@ -32,6 +32,14 @@
 # define ERR_NORIGHT "msh : permission denied\n"
 # define ERR_VALIDARG "msh : not a valid identifier\n"
 
+/*
+DEFINE io :
+io = 0	-> !redir !first !last
+io = -1	-> only (redir_out || !last)
+io = 1	-> only (redir_in || !first)
+io = 2	-> (redir_in || first) && (redir_out || last)
+*/
+
 extern int	g_exit_status;
 
 typedef struct s_env
@@ -76,6 +84,7 @@ typedef	struct s_command
 	char				**args;
 	int					fd[2];
 	int					pid;
+	int					io;
 	struct s_redir		*redir;
 	struct s_command	*next;
 }	t_command;

@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:55:03 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/19 15:26:41 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/20 13:11:09 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,10 @@ int	redir_in(t_command *cmd)
 		perror(NULL);
 		return (-1);
 	}
+	if (cmd->io == -1)
+		cmd->io = 2;
+	else
+		cmd->io = 1;
 	return (0);
 }
 
@@ -61,6 +65,10 @@ void	redir_out(t_command *cmd)
 		g_exit_status = errno;
 		perror(NULL);
 	}
+	if (cmd->io == 1)
+		cmd->io = 2;
+	else
+		cmd->io = -1;
 }
 
 void	ft_append(t_command *cmd)
@@ -71,4 +79,8 @@ void	ft_append(t_command *cmd)
 		g_exit_status = errno;
 		perror(NULL);
 	}
+	if (cmd->io == 1)
+		cmd->io = 2;
+	else
+		cmd->io = -1;
 }
