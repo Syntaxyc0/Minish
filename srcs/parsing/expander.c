@@ -70,7 +70,7 @@ void	expand_env(t_mini *mini, t_token *token, int i)
 
 	j = 1;
 	while (token->value[i + j] && token->value[i + j] != '\''
-		&& token->value[i + j] != '\"' && token->value[i + j] != '$')
+		&& token->value[i + j] != '\"' && token->value[i + j] != '$' && token->value[i + j] != ' ')
 		j++;
 	tmp = ft_substr(token->value, i + 1, j - 1);
 	if (!tmp)

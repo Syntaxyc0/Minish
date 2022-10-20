@@ -82,7 +82,7 @@ void	free_array(char **array)
 	int	i;
 
 	i = 0;
-	while (array[i])
+	while (array[i] != NULL)
 	{
 		free(array[i]);
 		i++;
@@ -98,12 +98,12 @@ void	free_commands(t_mini *mini)
 	cmd = mini->commands;
 	while (cmd != NULL)
 	{
-		if (cmd->args)
-			free_array(cmd->args);
 		if (cmd->fullpath)
 			free(cmd->fullpath);
 		if (cmd->redir)
 			free_redir(cmd->redir);
+		if (cmd->args)
+			free_array(cmd->args);
 		tmp = cmd->next;
 		free(cmd);
 		cmd = tmp;
