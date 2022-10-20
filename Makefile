@@ -48,9 +48,8 @@ SRCS = 	write_error_message.c \
 		pwd.c	\
 		echo.c	\
 		utils.c \
-		exec.c  \
-		fork_execution.c \
-		open_redir.c  \
+		# fork_execution.c \
+		# open_redir.c  \
 		
 CC = gcc $(FSANITIZE)
 

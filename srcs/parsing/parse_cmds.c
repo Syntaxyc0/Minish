@@ -29,8 +29,6 @@ t_redir	*init_redir(void)
 	}
 	ret->type = 0;
 	ret->filename = NULL;
-	ret->fd[0] = 1;
-	ret->fd[1] = 0;
 	ret->next = NULL;
 	return (ret);
 }
@@ -218,6 +216,5 @@ int	parse_exec_form(t_mini	*mini)
 			delete_token(mini, tmp);
 		tmp = mini->tokens;
 	}
-		
 	return (0);
 }
