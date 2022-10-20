@@ -195,7 +195,7 @@ int		processes(t_mini *mini);
 int		ft_access(t_command *cmd, t_mini *mini);
 int		ft_close_all(t_mini *mini);
 int		ft_heredoc(t_command *cmd);
-int		ft_open_all(t_mini *mini);/int		
+int		ft_open_all(t_mini *mini);		
 int		redir_in(t_command *cmd);
 
 //utils

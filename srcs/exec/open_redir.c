@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:55:03 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/20 17:23:18 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/20 18:25:53 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,11 @@ int	ft_open_all(t_mini *mini)
 	cmd = mini->commands;
 	while (cmd)
 	{
+		cmd->fd[0] = 0;
+		cmd->fd[1] = 0;
 		while (cmd->redir)
 		{
+			cmd->io = 0;
 			if (cmd->redir->type == 4)
 				if (redir_in(cmd) == -1)
 					return (-1);
