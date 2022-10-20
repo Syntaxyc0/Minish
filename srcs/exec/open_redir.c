@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:55:03 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/20 13:47:53 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/20 16:49:36 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int	redir_in(t_command *cmd)
 
 int	ft_heredoc(t_command *cmd)
 {	
+	return (0);
 }
 
 void	redir_out(t_command *cmd)
