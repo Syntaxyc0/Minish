@@ -70,7 +70,7 @@ void	expand_env(t_mini *mini, t_token *token, int i)
 
 	j = 1;
 	while (token->value[i + j] && token->value[i + j] != '\''
-		&& token->value[i + j] != '\"' && token->value[i + j] != '$')
+		&& token->value[i + j] != '\"' && token->value[i + j] != '$' && token->value[i + j] != ' ')
 		j++;
 	tmp = ft_substr(token->value, i + 1, j - 1);
 	if (!tmp)
@@ -127,15 +127,12 @@ void	expander(t_mini *mini)
 		free_mini_exit_msg(mini, ERR_INPUT);
 	while (token != NULL)
 	{
-		if (token->needs_expansion == 1)
+		index = contains_exp_sign(token->value);
+		while (index != -1)
 		{
+			if (index >= 0)
+				expand(mini, token, index);
 			index = contains_exp_sign(token->value);
-			while (index != -1)
-			{
-				if (index >= 0)
-					expand(mini, token, index);
-				index = contains_exp_sign(token->value);
-			}
 		}
 		token = token->next;
 	}

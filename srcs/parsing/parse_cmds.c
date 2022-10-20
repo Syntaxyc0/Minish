@@ -6,8 +6,11 @@ t_command	*init_cmd(void)
 
 	ret = malloc(sizeof(t_command));
 	if (!ret)
+	{
+		write_error_message(ERR_MALLOC);
 		return (NULL);
-	ret->fullpath  NULL;
+	}
+	ret->fullpath = NULL;
 	ret->args = NULL;
 	ret->redir = NULL;
 	ret->next = NULL;
@@ -20,29 +23,16 @@ t_redir	*init_redir(void)
 
 	ret = malloc(sizeof(t_redir));
 	if (!ret)
+	{
+		write_error_message(ERR_MALLOC);
 		return (NULL);
+	}
 	ret->type = 0;
-	ret->heredoc_expands = 0;
-	ret->filename = 0;
+	ret->filename = NULL;
 	ret->fd[0] = 1;
 	ret->fd[1] = 0;
 	ret->next = NULL;
-}
-
-int	get_heredoc_expand(t_token *token)
-{
-	char	*str;
-	int		i;
-
-	str = token->value;
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '"' || str[i] == '\'')
-			return (1);
-		i++;
-	}
-	return (0);
+	return (ret);
 }
 
 void	addback_redir(t_command *cmd, t_redir *redir)
@@ -65,16 +55,16 @@ int	parse_redir(t_mini	*mini, t_token *token, t_command *command)
 	t_redir	*new;
 
 	new = init_redir();
-	if (new)
+	if (!new)
 		return (EXIT_FAILURE);
 	if (token->type == HEREDOC)
 	{
 		new->type = HEREDOC;
-		new->heredoc_expands = get_heredoc_expand(token->next);
 		new->filename = ft_strdup(token->next->value);
 		if (!new->filename)
 		{
 			free(new);
+			write_error_message(ERR_MALLOC);
 			return (EXIT_FAILURE);
 		}
 	}
@@ -85,6 +75,7 @@ int	parse_redir(t_mini	*mini, t_token *token, t_command *command)
 		if (!new->filename)
 		{
 			free(new);
+			write_error_message(ERR_MALLOC);
 			return (EXIT_FAILURE);
 		}
 	}
@@ -94,6 +85,7 @@ int	parse_redir(t_mini	*mini, t_token *token, t_command *command)
 		new->filename = ft_strdup(token->next->value);
 		if (!new->filename)
 		{
+			write_error_message(ERR_MALLOC);
 			free(new);
 			return (EXIT_FAILURE);
 		}
@@ -104,6 +96,7 @@ int	parse_redir(t_mini	*mini, t_token *token, t_command *command)
 		new->filename = ft_strdup(token->next->value);
 		if (!new->filename)
 		{
+			write_error_message(ERR_MALLOC);
 			free(new);
 			return (EXIT_FAILURE);
 		}
@@ -119,12 +112,12 @@ int	get_args_size(t_token *token)
 	t_token	*tmp;
 	int		ret;
 
-	ret - 0;
+	ret = 0;
 	tmp = token;
-	while (token->type == WORD)
+	while (tmp != NULL && tmp->type == WORD)
 	{
 		ret += 1;
-		token = token->next;
+		tmp = tmp->next;
 	}
 	return (ret);
 }
@@ -132,21 +125,48 @@ int	get_args_size(t_token *token)
 int	parse_args(t_mini *mini, t_token *token, t_command *command)
 {
 	char	**args;
-	t_token	*tmp;
 	int		i;
+	t_token	*tmp;
 
 	i = 0;
-	tmp = token;
-	args = malloc(sizeof(get_args_size(token)));
+	args = malloc(sizeof(char *) * (get_args_size(token) + 1));
 	if (!args)
+	{
+		write_error_message(ERR_MALLOC);
 		return (EXIT_FAILURE);
-	while (token->type == WORD)
+	}
+	while (token != NULL && token->type == WORD)
 	{
 		args[i] = ft_strdup(token->value);
 		if (!args[i])
-			{
-				free_array()
-			}
+		{	
+			write_error_message(ERR_MALLOC);
+			free_array(args);
+			return (1);
+		}
+		tmp = token->next;
+		delete_token(mini, token);
+		token = tmp;
+		i++;
+	}
+	args[i] = NULL;
+	command->args = args;
+	return (0);
+}
+
+void	add_command(t_mini *mini, t_command *cmd)
+{
+	t_command *tmp;
+
+	tmp = mini->commands;
+	if (tmp == NULL)
+	{
+		mini->commands = cmd;
+		return ;
+	}
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	tmp->next = cmd;
 }
 
 int	parse_cmd(t_mini *mini)
@@ -154,38 +174,50 @@ int	parse_cmd(t_mini *mini)
 	t_command	*new;
 	t_token		*token;
 
+	token = mini->tokens;
+	if (token != NULL && token->type == PIPE)
+		return (0);
 	new = init_cmd();
-	if (!new)
-		return (EXIT_FAILURE);
-	while (token->next != NULL && token->type != PIPE)
+	while (token != NULL && token->type != PIPE)
 	{
-		token = mini->tokens;
+		if (!new)
+			return (EXIT_FAILURE);
 		if (token->type == REDIRIN || token->type == REDIROUT || token->type == HEREDOC || token->type == APPEND)
 		{
-			if (!parse_redir(mini, token, new))
+			if (parse_redir(mini, token, new))
 			{
 				free(new);
 				return (EXIT_FAILURE);
 			}
+			token = mini->tokens;
 		}
-		else if (token->type == WORD)
-		{
-
-		}
-		else // TODO: gerer les mots et pipe
+		else
 			token = token->next;
 	}
+	token = mini->tokens;
+	if (parse_args(mini, token, new))
+	{
+		free(new);
+		return (EXIT_FAILURE);
+	}
+	add_command(mini, new);
+	return (0);
 }
 
 int	parse_exec_form(t_mini	*mini)
 {
-	t_token		*token;
-	t_command	*cmd;
+	t_token	*tmp;
 
-	token = mini->tokens;
-	while (token != NULL)
+	tmp = mini->tokens;
+	while (tmp != NULL && tmp->type != PIPE)
 	{
-		if (!parse_cmd(mini, token))
+		if (parse_cmd(mini))
 			return (EXIT_FAILURE);
+		tmp = mini->tokens;
+		if (tmp != NULL)
+			delete_token(mini, tmp);
+		tmp = mini->tokens;
 	}
+		
+	return (0);
 }

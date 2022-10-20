@@ -23,14 +23,14 @@
 # include <errno.h>
 # include <fcntl.h>
 
-# define ERR_MALLOC "msh : Failed to allocate memory.\n"
-# define ERR_SYNTAX "msh : syntax error near unexpected token.\n"
-# define ERR_INPUT "msh : Invalid input.\n"
-# define ERR_QUOTES "msh : Unclosed quotes\n"
-# define ERR_ARG "msh : too many arguments\n"
-# define ERR_NOFILE "msh : no such file or directory\n"
-# define ERR_NORIGHT "msh : permission denied\n"
-# define ERR_VALIDARG "msh : not a valid identifier\n"
+# define ERR_MALLOC "msh : Failed to allocate memory."
+# define ERR_SYNTAX "msh : syntax error near unexpected token "
+# define ERR_INPUT ""
+# define ERR_QUOTES "msh : Unclosed quotes"
+# define ERR_ARG "msh : too many arguments"
+# define ERR_NOFILE "msh : no such file or directory"
+# define ERR_NORIGHT "msh : permission denied"
+# define ERR_VALIDARG "msh : not a valid identifier"
 
 /*
 DEFINE io :
@@ -67,7 +67,6 @@ typedef struct s_token
 {
 	char    *value;
 	int		type;
-	int		needs_expansion;
 	struct  s_token *next;
 }	t_token;
 
@@ -86,7 +85,7 @@ typedef	struct s_command
 	int					pid;
 	int					io;
 	struct s_redir		*redir;
-	struct s_command	*next;
+	struct s_command	*next;	
 }	t_command;
 
 typedef struct s_mini
@@ -120,7 +119,10 @@ void	free_mini_exit_msg(t_mini *mini, char *message);
 void	free_letters(t_mini *mini);
 void	free_tokens(t_mini *mini);
 void	free_env(t_mini *mini);
-void	Sfree_export(t_mini *mini);
+void	free_export(t_mini *mini);
+void	free_array(char **array);
+void	free_commands(t_mini *mini);
+int		error_redisplay_line(char *msg, char *token, int errcode);
 
 //builtins
 
@@ -156,7 +158,7 @@ t_mini	*init_mini(void);
 int		len_quote(char *str, int i);
 int		check_quote_syntax(char	*str);
 int		len_quote(char *str, int i);
-void	check_tokens(t_mini *mini);
+int		check_tokens(t_mini *mini);
 t_token	*create_token(char *value);
 void	delete_token(t_mini *mini, t_token *token);
 void	parse_token(t_mini *mini, char *str);
@@ -166,11 +168,11 @@ void	get_redir_types(t_mini *mini);
 char	*replace_string(char *value, char *str, int start, int end);
 int		contains_exp_sign(char *str);
 void	expand_env(t_mini *mini, t_token *token, int i);
-void	get_expansion_needs(t_mini *mini);
 void	expander(t_mini *mini);
 void	parse_spaces(t_mini *mini);
 void	remove_empty_tokens(t_mini *mini);
 int		remove_quotes(t_mini *mini);
+int		parse_exec_form(t_mini	*mini);
 
 //env
 

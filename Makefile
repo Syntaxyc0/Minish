@@ -24,6 +24,7 @@ HEADERS = includes \
 
 SRCS = 	write_error_message.c \
 		free_mini_exit_msg.c \
+		error_redisplay_line.c \
 		init_mini.c \
 		check_quote.c \
 		parse_tokens.c \
@@ -31,8 +32,8 @@ SRCS = 	write_error_message.c \
 		get_token_type.c \
 		check_syntax.c \
 		get_redir_types.c \
-		get_expansion_needs.c \
 		expander.c \
+		parse_cmds.c \
 		parse_spaces.c \
 		remove_empty_tokens.c \
 		remove_quotes.c \

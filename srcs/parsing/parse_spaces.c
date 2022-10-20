@@ -82,7 +82,7 @@ void	parse_spaces(t_mini *mini)
 	token = mini->tokens;
 	while (token != NULL)
 	{
-		if (contains_space(token->value))
+		while (contains_space(token->value))
 		{
 			value = split_token(mini, token);
 			if (value == NULL)

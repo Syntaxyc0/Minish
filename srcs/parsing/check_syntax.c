@@ -19,23 +19,32 @@ int	check_syntax(t_mini *mini)
 	token = mini->tokens;
 	while (token != NULL)
 	{
-		if (token->type == REDIR)
+		if (token->type == REDIRIN || token->type == HEREDOC)
 		{
 			if (token->next == NULL)
-				return (0);
-			if (token->next->type == REDIR)
-				return (0);
+				return (error_redisplay_line(ERR_SYNTAX, "'<'", 2));
+			if (token->next->type == REDIROUT)
+				return (error_redisplay_line(ERR_SYNTAX, "'<'", 2));
 			if (token->next->type == PIPE)
-				return (0);
+				return (error_redisplay_line(ERR_SYNTAX, "'<'", 2));
 		}
-		if (token->type == PIPE)
+		else if (token->type == REDIROUT ||  token->type == APPEND)
 		{
 			if (token->next == NULL)
-				return (0);
+				return (error_redisplay_line(ERR_SYNTAX, "'>'", 2));
+			if (token->next->type == REDIRIN)
+				return (error_redisplay_line(ERR_SYNTAX, "'>'", 2));
 			if (token->next->type == PIPE)
-				return (0);
+				return (error_redisplay_line(ERR_SYNTAX, "'>'", 2));
+		}
+		else if (token->type == PIPE)
+		{
+			if (token->next == NULL)
+				return (error_redisplay_line(ERR_SYNTAX, "'|'", 2));
+			if (token->next->type == PIPE)
+				return (error_redisplay_line(ERR_SYNTAX, "'|'", 2));
 		}
 		token = token->next;
 	}
-	return (1);
+	return (0);
 }
