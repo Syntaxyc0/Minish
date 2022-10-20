@@ -25,6 +25,7 @@ void	free_tokens(t_mini *mini)
 		free(tofree->value);
 		free(tofree);
 	}
+	mini->tokens = NULL;
 }
 
 void    free_env(t_mini *mini)
@@ -101,13 +102,20 @@ void	free_commands(t_mini *mini)
 		if (cmd->fullpath)
 			free(cmd->fullpath);
 		if (cmd->redir)
+		{
 			free_redir(cmd->redir);
+			cmd->redir = NULL;
+		}
 		if (cmd->args)
+		{
 			free_array(cmd->args);
+			cmd->args = NULL;
+		}
 		tmp = cmd->next;
 		free(cmd);
 		cmd = tmp;
 	}
+	mini->commands = NULL;
 }
 
 void    free_mini(t_mini *mini)

@@ -22,14 +22,14 @@
 # include <readline/history.h>
 # include <errno.h>
 
-# define ERR_MALLOC "msh : Failed to allocate memory.\n"
-# define ERR_SYNTAX "msh : syntax error near unexpected token.\n"
-# define ERR_INPUT "msh : Invalid input.\n"
-# define ERR_QUOTES "msh : Unclosed quotes\n"
-# define ERR_ARG "msh : too many arguments\n"
-# define ERR_NOFILE "msh : no such file or directory\n"
-# define ERR_NORIGHT "msh : permission denied\n"
-# define ERR_VALIDARG "msh : not a valid identifier\n"
+# define ERR_MALLOC "msh : Failed to allocate memory."
+# define ERR_SYNTAX "msh : syntax error near unexpected token "
+# define ERR_INPUT ""
+# define ERR_QUOTES "msh : Unclosed quotes"
+# define ERR_ARG "msh : too many arguments"
+# define ERR_NOFILE "msh : no such file or directory"
+# define ERR_NORIGHT "msh : permission denied"
+# define ERR_VALIDARG "msh : not a valid identifier"
 
 extern int	g_exit_status;
 
@@ -108,6 +108,8 @@ void	free_tokens(t_mini *mini);
 void	free_env(t_mini *mini);
 void	free_export(t_mini *mini);
 void	free_array(char **array);
+void	free_commands(t_mini *mini);
+int		error_redisplay_line(char *msg, char *token, int errcode);
 
 //builtins
 
@@ -144,7 +146,7 @@ t_mini	*init_mini(void);
 int		len_quote(char *str, int i);
 int		check_quote_syntax(char	*str);
 int		len_quote(char *str, int i);
-void	check_tokens(t_mini *mini);
+int		check_tokens(t_mini *mini);
 t_token	*create_token(char *value);
 void	delete_token(t_mini *mini, t_token *token);
 void	parse_token(t_mini *mini, char *str);

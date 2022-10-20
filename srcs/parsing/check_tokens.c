@@ -109,7 +109,7 @@ int	check_redirout(t_mini *mini, t_token *token)
 	return (1);
 }
 
-void	check_tokens(t_mini *mini)
+int	check_tokens(t_mini *mini)
 {
 	t_token	*tokens;
 
@@ -125,18 +125,19 @@ void	check_tokens(t_mini *mini)
 		{
 			if (tokens->next == NULL
 				|| ft_strncmp(tokens->next->value, "|", 2) == 0)
-				free_mini_exit_msg(mini, ERR_SYNTAX);
+				return (error_redisplay_line(ERR_SYNTAX, "'|'", 2));
 		}
 		else if (ft_strncmp(tokens->value, "<", 2) == 0)
 		{
 			if (!check_redirin(mini, tokens))
-				free_mini_exit_msg(mini, ERR_SYNTAX);
+				return (error_redisplay_line(ERR_SYNTAX, "'<'", 2));
 		}
 		else if (ft_strncmp(tokens->value, ">", 2) == 0)
 		{
 			if (!check_redirout(mini, tokens))
-				free_mini_exit_msg(mini, ERR_SYNTAX);
+				return (error_redisplay_line(ERR_SYNTAX, "'>'", 2));
 		}
 		tokens = tokens->next;
 	}
+	return (0);
 }
