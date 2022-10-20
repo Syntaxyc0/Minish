@@ -216,6 +216,5 @@ int	parse_exec_form(t_mini	*mini)
 			delete_token(mini, tmp);
 		tmp = mini->tokens;
 	}
-		
 	return (0);
 }
