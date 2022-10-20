@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:50:41 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/20 14:05:49 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/20 16:45:06 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,10 @@ void	execution(t_command *cmd, t_mini *mini)
 	//access
 	if (ft_access(mini) == -1)
 		return ;
-	//execve	
+	//execve
+	if (execve(cmd->fullpath, cmd->args, mini->environment) == -1)
+	{
+		g_exit_status = errno;
+		perror(NULL);
+	}
 }

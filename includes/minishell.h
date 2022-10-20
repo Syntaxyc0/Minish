@@ -97,6 +97,7 @@ typedef struct s_mini
 	t_sort		*sort;
 	t_command	*commands;
 	char		**all_path;
+	char 		**environment;
 }	t_mini;
 
 enum e_type
@@ -177,7 +178,21 @@ void	add_envelem(t_mini *mini, char *key, char *value);
 char	*get_env_value(t_mini *mini, char *key);
 int		get_env(char **env, t_mini *mini);
 int		is_egal(char *s);
-int		str_big(char *a, char *b);
+
+//exec
+
+int		init_pipe(t_mini *mini);
+int		processes(t_mini *mini);
+int		exec(t_mini *mini);
+int 	dup_io(t_command *cmd);
+int		ft_close_all(t_mini *mini);
+int		ft_access(t_command *cmd, t_mini *mini);
+int		ft_open_all(t_mini *mini);
+int		redir_in(t_command *cmd);
+int		ft_heredoc(t_command *cmd);
+void	execution(t_command *cmd, t_mini *mini);
+void	redir_out(t_command *cmd);
+void	ft_append(t_command *cmd);
 
 //utils
 

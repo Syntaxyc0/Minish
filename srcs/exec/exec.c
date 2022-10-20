@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:25:17 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/20 14:41:40 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/20 16:30:20 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	exec(t_mini *mini)
 
 	cmd = mini->commands;
 	//les path -> char ** (optionnel, may init ailleur)
-	
+	get_all_path(mini);
 	//pipe init (REMPLIR fd par les pipes) ___(KILL EXEC si err) (WARNING une seule execution non géré)
 	if (init_pipe(mini) == -1)
 		return (-1);

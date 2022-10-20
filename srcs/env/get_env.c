@@ -80,6 +80,6 @@ int   get_env(char **env, t_mini *mini)
 		free(key);
 		free(value);
 	}
-	(void)mini;
+	mini->environment = env;
 	return (1);
 }
