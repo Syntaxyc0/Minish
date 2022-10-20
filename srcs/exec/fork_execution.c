@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:50:41 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/20 16:58:12 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/20 17:08:26 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,9 @@ void	execution(t_command *cmd, t_mini *mini)
 	if (ft_close_all(mini) == -1)
 		return ;
 	//access
-	if (ft_access(mini) == -1)
+	if (ft_access(cmd, mini) == -1)
 		return ;
-	//execve
+	//execve (WARNING mini->environment n'est plus valide si une modif de l'env est effectue)
 	if (execve(cmd->fullpath, cmd->args, mini->environment) == -1)
 	{
 		g_exit_status = errno;
