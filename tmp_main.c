@@ -31,6 +31,7 @@ int main(int argc, char **argv, char **env)
 			free_mini_exit_msg(mini, ERR_MALLOC);
 		if (parse_exec_form(mini))
 			free_mini_exit_msg(mini, NULL);
+		exec(mini);
 		if (line)
 			add_history(line);
 		free_commands(mini);

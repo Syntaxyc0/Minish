@@ -43,7 +43,7 @@ SRCS = 	write_error_message.c \
 		unset.c \
 		export.c \
 		env.c	\
-		main.c \
+		tmp_main.c \
 		cd.c	\
 		pwd.c	\
 		echo.c	\

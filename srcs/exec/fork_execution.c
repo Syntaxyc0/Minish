@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:50:41 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/20 17:08:26 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/20 17:21:03 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int dup_io(t_command *cmd)
 			return (-1); 
 		}
 	}
+	return (0);
 }
 
 int	ft_close_all(t_mini *mini)
@@ -53,6 +54,7 @@ int	ft_close_all(t_mini *mini)
 		}
 		
 	}
+	return (0);
 }
 
 int	ft_access(t_command *cmd, t_mini *mini)

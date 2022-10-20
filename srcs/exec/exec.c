@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:25:17 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/20 17:05:05 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/20 17:20:32 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	init_pipe(t_mini *mini)
 			}
 		cmd = cmd->next;
 	}
+	return (0);
 }
 
 int	processes(t_mini *mini)
@@ -52,17 +53,15 @@ int	processes(t_mini *mini)
 int	exec(t_mini *mini)
 {
 	int			i;
-	t_command	*cmd;
 
 	i = -1;
-	cmd = mini->commands;
 	//les path -> char ** (optionnel, may init ailleur)
 	get_all_path(mini);
 	//pipe init (REMPLIR fd par les pipes) ___(KILL EXEC si err) (WARNING une seule execution non géré)
 	if (init_pipe(mini) == -1)
 		return (-1);
 	//ft_open_all(REMPLACER les fd par les redir) ____(KILL EXEC si err SEULEMENT sur fd in)
-	if (ft_open_all(mini)== -1)
+	if (ft_open_all(mini) == -1)
 		return (-1);
 	//fork
 		//process ____(KILL EXEC si err)
