@@ -1,34 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   close_redir.c                                      :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/20 13:11:23 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/20 13:14:51 by ggobert          ###   ########.fr       */
+/*   Created: 2022/10/20 14:26:11 by ggobert           #+#    #+#             */
+/*   Updated: 2022/10/20 14:44:14 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_close_all(t_mini *mini)
+int	str_big(char *a, char *b)
 {
-	t_command *cmd;
+	if (ft_strlen(a) > ft_strlen(b))
+		return (ft_strlen(a));
+	else
+		return (ft_strlen(b));
+}
 
-	cmd = mini->commands;
-	while (cmd)	
-	{
-		if (close(cmd->fd[0]) == -1)
-		{
-			g_exit_status = errno;
-			perror(NULL);
-		}
-		if (close(cmd->fd[1]) == -1)
-		{
-			g_exit_status = errno;
-			perror(NULL);
-		}
-		
-	}
+void	get_all_path(t_mini *mini)
+{
+	t_env	*ev;
+
+	ev = mini->myenv;
+	while (ft_strncmp(ev->key, "PATH", str_big(ev->key, "PATH")))
+		ev = ev->next;
+	mini->all_path = ft_split(ev->value, ':');
 }

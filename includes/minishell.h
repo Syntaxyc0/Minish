@@ -96,6 +96,7 @@ typedef struct s_mini
 	t_token		*tokens;
 	t_sort		*sort;
 	t_command	*commands;
+	char		**all_path;
 }	t_mini;
 
 enum e_type
@@ -147,7 +148,6 @@ int		check_args(int ac, char **av);
 int		is_builtin(char *arg);
 int		is_egal(char *s);
 int		is_space_before_egal(char *s);
-int		str_big(char *a, char *b);
 
 //parsing
 
@@ -177,6 +177,11 @@ void	add_envelem(t_mini *mini, char *key, char *value);
 char	*get_env_value(t_mini *mini, char *key);
 int		get_env(char **env, t_mini *mini);
 int		is_egal(char *s);
+int		str_big(char *a, char *b);
+
+//utils
+
+void	get_all_path(t_mini *mini);
 int		str_big(char *a, char *b);
 
 #endif

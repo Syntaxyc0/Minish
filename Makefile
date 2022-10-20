@@ -46,6 +46,7 @@ SRCS = 	write_error_message.c \
 		cd.c	\
 		pwd.c	\
 		echo.c	\
+		utils.c \
 		
 CC = gcc $(FSANITIZE)
 
@@ -58,12 +59,13 @@ OBJS =  $(addprefix $(OBJ_PATH)/,$(SRCS:.c=.o))
 DEPS = $(OBJS:.o=.d)
 
 vpath %.h $(HEADERS)
-vpath %.c $(SRCSPATH)\
- 	$(SRCSPATH)/$(ERR_PATH) \
-	$(SRCSPATH)/$(BUILT_PATH) \
-	$(SRCSPATH)/$(ENV_PATH) \
-	$(SRCSPATH)/$(PARSE_PATH) \
-	$(SRCSPATH)/$(EXEC_PATH) \
+vpath %.c $(SRCSPATH)			\
+ 	$(SRCSPATH)/$(ERR_PATH) 	\
+	$(SRCSPATH)/$(BUILT_PATH) 	\
+	$(SRCSPATH)/$(ENV_PATH) 	\
+	$(SRCSPATH)/$(PARSE_PATH) 	\
+	$(SRCSPATH)/$(EXEC_PATH) 	\
+	$(SRCSPATH)/$(UTILS_PATH) 	\
 
 
 vpath %.o $(OBJ_PATH)

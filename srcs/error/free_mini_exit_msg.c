@@ -63,12 +63,21 @@ void    free_export(t_mini *mini)
 
 void    free_mini(t_mini *mini)
 {
+	int	i;
+
+	i = -1;
 	if (mini->myenv)
 		free_env(mini);
 	if (mini->myexport)
 		free_export(mini);
 	if (mini->tokens)
 		free_tokens(mini);
+	if (mini->all_path)
+	{
+		while (mini->all_path[++i])
+			free(mini->all_path[i]);
+		free(mini->all_path);
+	}
 	free(mini);
 }
 

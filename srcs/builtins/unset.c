@@ -6,19 +6,11 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 15:34:16 by gregoiregob       #+#    #+#             */
-/*   Updated: 2022/09/30 14:41:55 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/20 14:30:14 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	str_big(char *a, char *b)
-{
-	if (ft_strlen(a) > ft_strlen(b))
-		return (ft_strlen(a));
-	else
-		return (ft_strlen(b));
-}
 
 void	lst_del_unset_env(t_env *tmp, t_env *previous)
 {

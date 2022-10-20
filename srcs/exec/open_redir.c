@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:55:03 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/20 13:28:37 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/20 13:47:53 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int	ft_heredoc(t_command *cmd)
 
 void	redir_out(t_command *cmd)
 {
+	//les fd init à 0 ?
 	if (cmd->fd[1])
 	{
 		if (close(cmd->fd[1]) == -1)
@@ -91,6 +92,7 @@ void	redir_out(t_command *cmd)
 
 void	ft_append(t_command *cmd)
 {
+	//les fd init à 0 ?
 	if (cmd->fd[1])
 	{
 		if (close(cmd->fd[1]) == -1)

@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:50:41 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/20 13:24:48 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/20 14:05:49 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,37 @@ int dup_io(t_command *cmd)
 	}
 }
 
+int	ft_close_all(t_mini *mini)
+{
+	t_command *cmd;
+
+	cmd = mini->commands;
+	while (cmd)	
+	{
+		if (close(cmd->fd[0]) == -1)
+		{
+			g_exit_status = errno;
+			perror(NULL);
+		}
+		if (close(cmd->fd[1]) == -1)
+		{
+			g_exit_status = errno;
+			perror(NULL);
+		}
+		
+	}
+}
+
 void	execution(t_command *cmd, t_mini *mini)
 {
 	//dup2 in _ out
 	if (dup_io(cmd) == -1)
 		return ;
 	//close all fd
-	if (ft_close_all(cmd) == -1)
-		return ;	
+	if (ft_close_all(mini) == -1)
+		return ;
+	//access
+	if (ft_access(mini) == -1)
+		return ;
+	//execve	
 }
