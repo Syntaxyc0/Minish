@@ -93,7 +93,7 @@ void	free_array(char **array)
 void	free_commands(t_mini *mini)
 {
 	t_command	*cmd;
-	t_command	* tmp;
+	t_command	*tmp;
 
 	cmd = mini->commands;
 	while (cmd != NULL)

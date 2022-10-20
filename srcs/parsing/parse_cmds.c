@@ -190,14 +190,10 @@ int	parse_cmd(t_mini *mini)
 			token = token->next;
 	}
 	token = mini->tokens;
-	while (token != NULL && token->type != PIPE)
+	if (parse_args(token, new))
 	{
-		if (parse_args(token, new))
-		{
-			free(new);
-			return (EXIT_FAILURE);
-		}
-		token = token->next;
+		free(new);
+		return (EXIT_FAILURE);
 	}
 	add_command(mini, new);
 	return (0);
