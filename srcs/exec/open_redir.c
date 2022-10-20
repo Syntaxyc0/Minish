@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:55:03 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/20 13:11:09 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/20 13:28:37 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,15 @@ int	ft_open_all(t_mini *mini)
 
 int	redir_in(t_command *cmd)
 {
+	if (cmd->fd[0])
+	{
+		if (close(cmd->fd[0]) == -1)
+		{
+			g_exit_status == errno;
+			perror(NULL);
+			return (-1);
+		}
+	}
 	cmd->fd[0] = open(cmd->redir->filename, O_CREAT | O_WRONLY | O_TRUNC, 0644)
 	if (cmd->fd[0] < 0)
 	{
@@ -59,6 +68,15 @@ int	ft_heredoc(t_command *cmd)
 
 void	redir_out(t_command *cmd)
 {
+	if (cmd->fd[1])
+	{
+		if (close(cmd->fd[1]) == -1)
+		{
+			g_exit_status == errno;
+			perror(NULL);
+			return (-1);
+		}
+	}
 	cmd->fd[1] = open(cmd->redir->filename, O_RDONLY)
 	if (cmd->fd[1] < 0)
 	{
@@ -73,6 +91,15 @@ void	redir_out(t_command *cmd)
 
 void	ft_append(t_command *cmd)
 {
+	if (cmd->fd[1])
+	{
+		if (close(cmd->fd[1]) == -1)
+		{
+			g_exit_status == errno;
+			perror(NULL);
+			return (-1);
+		}
+	}
 	cmd->fd[0] = open(cmd->redir->filename, O_CREAT | O_WRONLY | O_APPEND, 0644)
 	if (cmd->fd[0] < 0)
 	{

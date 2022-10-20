@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:50:41 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/20 13:15:56 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/20 13:24:48 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,5 @@ void	execution(t_command *cmd, t_mini *mini)
 		return ;
 	//close all fd
 	if (ft_close_all(cmd) == -1)
-		return ;
-	
+		return ;	
 }

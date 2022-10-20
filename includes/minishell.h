@@ -34,10 +34,10 @@
 
 /*
 DEFINE io :
-io = 0	-> !redir !first !last
+io = 0	-> !redir && first && last
 io = -1	-> only (redir_out || !last)
 io = 1	-> only (redir_in || !first)
-io = 2	-> (redir_in || first) && (redir_out || last)
+io = 2	-> (redir_in || !first) && (redir_out || !last)
 */
 
 extern int	g_exit_status;
