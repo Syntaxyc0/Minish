@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:25:17 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/20 16:30:20 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/20 17:00:17 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	init_pipe(t_mini *mini)
 
 int	processes(t_mini *mini)
 {
-	t_command	cmd;
+	t_command	*cmd;
 
 	cmd = mini->commands;
 	while (cmd)
@@ -46,12 +46,15 @@ int	processes(t_mini *mini)
 		if (cmd->pid == 0)
 			execution(cmd);
 	}
+	return (0);
 }
 
 int	exec(t_mini *mini)
 {
+	int			i;
 	t_command	*cmd;
 
+	i = -1;
 	cmd = mini->commands;
 	//les path -> char ** (optionnel, may init ailleur)
 	get_all_path(mini);
@@ -65,6 +68,9 @@ int	exec(t_mini *mini)
 		//process ____(KILL EXEC si err)
 	if (processes(mini) == -1)
 		return (-1);
+	while (++i < cmd_len(mini))
+		wait(NULL);
 	//close
 	ft_close_all(mini);
+	return (0);
 }
