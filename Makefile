@@ -14,6 +14,8 @@ ENV_PATH = env
 
 PARSE_PATH = parsing
 
+SIGNAL_PATH = signals
+
 EXEC_PATH = exec
 
 OBJ_PATH = obj
@@ -22,7 +24,9 @@ UTILS_PATH = utils
 
 HEADERS = includes \
 
-SRCS = 	write_error_message.c \
+SRCS = 	ft_signal.c \
+		ft_sigint_handle.c \
+		write_error_message.c \
 		free_mini_exit_msg.c \
 		error_redisplay_line.c \
 		init_mini.c \
@@ -69,6 +73,7 @@ vpath %.c $(SRCSPATH)			\
 	$(SRCSPATH)/$(ENV_PATH) 	\
 	$(SRCSPATH)/$(PARSE_PATH) 	\
 	$(SRCSPATH)/$(EXEC_PATH) 	\
+	$(SRCSPATH)/$(SIGNAL_PATH) 	\
 	$(SRCSPATH)/$(UTILS_PATH) 	\
 
 

@@ -114,6 +114,11 @@ enum e_type
 };
 
 
+//signals
+
+void	ft_signal(int signal);
+void	ft_sigint_handle(void);
+
 //error
 
 int		write_error_message(char *message);
