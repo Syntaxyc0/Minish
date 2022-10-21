@@ -184,7 +184,6 @@ int		contains_exp_sign(char *str);
 void	expand_env(t_mini *mini, t_token *token, int i);
 int		expander(t_mini *mini);
 void	parse_spaces(t_mini *mini);
-void	remove_empty_tokens(t_mini *mini);
 int		remove_quotes(t_mini *mini);
 int		parse_exec_form(t_mini	*mini);
 int		parser(t_mini *mini, char *line);
