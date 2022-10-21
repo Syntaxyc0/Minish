@@ -65,7 +65,7 @@ void	add_token(t_mini *mini, char *str, int *start, int *i)
 	*start = *i;
 }
 
-void	parse_token(t_mini *mini, char *str)
+int	parse_token(t_mini *mini, char *str)
 {
 	int		i;
 	int		start;
@@ -75,7 +75,7 @@ void	parse_token(t_mini *mini, char *str)
 	i = 0;
 	start = 0;
 	if (!check_quote_syntax(str))
-		free_mini_exit_msg(mini, ERR_QUOTES);
+		return(error_redisplay_line(ERR_QUOTES, NULL, 1));
 	while (str[i])
 	{
 		if (str[i] == '\'' || str[i] == '"')
@@ -97,4 +97,5 @@ void	parse_token(t_mini *mini, char *str)
 		addback_token(mini, token);
 	}
 	get_token_type(mini);
+	return (0);
 }

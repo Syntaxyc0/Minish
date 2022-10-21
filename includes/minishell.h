@@ -24,6 +24,7 @@
 # include <fcntl.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <signal.h>
 
 # define ERR_MALLOC "msh : Failed to allocate memory."
 # define ERR_SYNTAX "msh : syntax error near unexpected token "
@@ -163,14 +164,14 @@ int		len_quote(char *str, int i);
 int		check_tokens(t_mini *mini);
 t_token	*create_token(char *value);
 void	delete_token(t_mini *mini, t_token *token);
-void	parse_token(t_mini *mini, char *str);
+int		parse_token(t_mini *mini, char *str);
 void	get_token_type(t_mini *mini);
 int		check_syntax(t_mini *mini);
 void	get_redir_types(t_mini *mini);
 char	*replace_string(char *value, char *str, int start, int end);
 int		contains_exp_sign(char *str);
 void	expand_env(t_mini *mini, t_token *token, int i);
-void	expander(t_mini *mini);
+int		expander(t_mini *mini);
 void	parse_spaces(t_mini *mini);
 void	remove_empty_tokens(t_mini *mini);
 int		remove_quotes(t_mini *mini);
@@ -195,7 +196,7 @@ int		processes(t_mini *mini);
 int		ft_access(t_command *cmd, t_mini *mini);
 int		ft_close_all(t_mini *mini);
 int		ft_heredoc(t_command *cmd);
-int		ft_open_all(t_mini *mini);/int		
+int		ft_open_all(t_mini *mini);
 int		redir_in(t_command *cmd);
 
 //utils

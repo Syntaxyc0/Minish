@@ -117,14 +117,14 @@ void	expand(t_mini *mini, t_token *token, int i)
 		free_mini_exit_msg(mini, ERR_SYNTAX);
 }
 
-void	expander(t_mini *mini)
+int	expander(t_mini *mini)
 {
 	t_token	*token;
 	int		index;
 
 	token = mini->tokens;
 	if (mini->tokens == NULL)
-		free_mini_exit_msg(mini, ERR_INPUT);
+		return (error_redisplay_line(NULL, NULL, 0));
 	while (token != NULL)
 	{
 		index = contains_exp_sign(token->value);
@@ -136,4 +136,5 @@ void	expander(t_mini *mini)
 		}
 		token = token->next;
 	}
+	return (0);
 }

@@ -42,8 +42,9 @@ SRCS = 	write_error_message.c \
 		get_env_value.c \
 		unset.c \
 		export.c \
+		exec.c \
 		env.c	\
-		tmp_main.c \
+		main.c \
 		cd.c	\
 		pwd.c	\
 		echo.c	\
@@ -51,9 +52,9 @@ SRCS = 	write_error_message.c \
 		fork_execution.c \
 		open_redir.c  \
 		
-CC = gcc $(FSANITIZE)
+CC = gcc
 
-CFLAGS = -MMD -Wall -Werror -Wextra -lreadline
+CFLAGS = -MMD -Wall -Werror -Wextra
 
 RM = rm -rf
 
@@ -77,10 +78,10 @@ all: $(NAME)
 
 $(NAME):		$(OBJS)
 			make -C $(FT_PATH)
-			$(CC) $(CFLAGS) $(OBJS) -I $(HEADERS) -I libft/include -L$(FT_PATH) -lft -o $(NAME)
+			$(CC) $(CFLAGS) $(OBJS) -I $(HEADERS) -I libft/include -L$(FT_PATH) -lft -lreadline -o $(NAME)
 
 $(OBJ_PATH)/%.o:		%.c
-			$(CC) $(CFLAGS) -I $(HEADERS) -I libft/include -I/usr/include -c $< -o $@
+			$(CC) $(CFLAGS) -I $(HEADERS) -I libft/include -I/usr/include -lreadline -c $< -o $@
 
 
 $(OBJS):	| $(OBJ_PATH)
