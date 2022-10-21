@@ -51,9 +51,12 @@ int	remove_quotes(t_mini *mini)
 				{
 					start = get_next_quote_index(token->value, start, '\'');
 					end = get_next_quote_index(token->value, start + 1, '\'');
-
 					token->value = replace_string(token->value, NULL, start, start);
+					if (!token->value)
+						return (1);
 					token->value = replace_string(token->value, NULL, end - 1, end - 1);
+					if (!token->value)
+						return (1);
 					start = end - 2;
 				}
 				else if (contains_quote(token->value, start) == 2)
@@ -61,7 +64,11 @@ int	remove_quotes(t_mini *mini)
 					start = get_next_quote_index(token->value, start, '\"');
 					end = get_next_quote_index(token->value, start + 1, '\"');
 					token->value = replace_string(token->value, NULL, start, start);
+					if (!token->value)
+						return (1);
 					token->value = replace_string(token->value, NULL, end - 1, end - 1);
+					if (!token->value)
+						return (1);
 				}
 				start = end - 1;
 			}
