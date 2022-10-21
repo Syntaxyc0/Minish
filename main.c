@@ -1,17 +1,8 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/21 13:27:06 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/21 15:06:11 by ggobert          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
+//Il est plus beau comme ca hein ??!
+// Bon j'ai pas encore mis l'exec
+// putain de norminette..
 
 int	g_exit_status;
 
@@ -20,6 +11,7 @@ int main(int argc, char **argv, char **env)
 	t_mini *mini;
 	char	*line;
 
+
 	g_exit_status = 0;
 	mini = init_mini();
 	get_env(env, mini);
@@ -27,25 +19,15 @@ int main(int argc, char **argv, char **env)
 	(void)argv;
 	while(1)
 	{
-		line = readline("Minishell: ");
+		ft_sigint_handle();
+		line = readline(MINI);
 		if (!line)
-			break;
-		parse_token(mini, line);
-		if (check_tokens(mini))
-			free_tokens(mini);
-		get_redir_types(mini);
-		if (check_syntax(mini))
-			free_tokens(mini);
-		parse_spaces(mini);
-		expander(mini);
-		parse_spaces(mini);
-		if (remove_quotes(mini))
-			free_mini_exit_msg(mini, ERR_MALLOC);
-		if (parse_exec_form(mini))
-			free_mini_exit_msg(mini, NULL);
-		exec(mini);
-		if (line)
+			ft_handle_exit(mini);
+		else
 			add_history(line);
+		if (parser(mini, line))
+			continue ;
+		exec(mini);
 		free_commands(mini);
 	}
 	free_mini(mini);
