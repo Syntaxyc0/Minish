@@ -5,6 +5,8 @@ void	ft_sigint_handle(void)
 	struct sigaction	sa;
 
 	sa.sa_handler = ft_signal;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
 	sigaction(SIGINT, &sa, NULL);
 }
 

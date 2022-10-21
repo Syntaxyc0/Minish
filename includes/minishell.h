@@ -72,19 +72,19 @@ typedef struct s_export
 
 typedef struct s_token
 {
-	char    *value;
-	int		type;
-	struct  s_token *next;
+	char			*value;
+	int				type;
+	struct s_token	*next;
 }	t_token;
 
-typedef	struct s_redir
+typedef struct s_redir
 {
 	int				type;
 	char			*filename;
-	struct s_redir *next;
+	struct s_redir	*next;
 }	t_redir;
 
-typedef	struct s_command
+typedef struct s_command
 {
 	char				*fullpath;
 	char				**args;
@@ -103,7 +103,7 @@ typedef struct s_mini
 	t_sort		*sort;
 	t_command	*commands;
 	char		**all_path;
-	char 		**environment;
+	char		**environment;
 }	t_mini;
 
 enum e_type
@@ -116,7 +116,6 @@ enum e_type
 	REDIROUT = 6,
 	APPEND = 7
 };
-
 
 //signals
 
@@ -159,7 +158,7 @@ void	unset_in_env(t_mini *mini, char **av);
 void	unset_in_export(t_mini *mini, char **av);
 char	*back_repo(char *curpath, int dot_count);
 char	*get_path(char **av);
-char	*get_pwd();
+char	*get_pwd(void);
 char	*home_env(t_mini *mini);
 int		check_args(int ac, char **av);
 int		is_builtin(char *arg);
@@ -203,7 +202,7 @@ void	builtin_process(t_command *cmd, t_mini *mini);
 void	execution(t_command *cmd, t_mini *mini);
 void	redir_out(t_command *cmd);
 void	ft_append(t_command *cmd);
-int 	dup_io(t_command *cmd);
+int		dup_io(t_command *cmd);
 int		exec(t_mini *mini);
 int		init_pipe(t_mini *mini);
 int		processes(t_mini *mini);
@@ -217,7 +216,7 @@ int		redir_in(t_command *cmd);
 
 void	get_all_path(t_mini *mini);
 int		str_big(char *a, char *b);
-int 	cmd_len(t_mini *mini);
 int		cmd_args_len(t_command *cmd);
+int		cmd_len(t_mini *mini);
 
 #endif
