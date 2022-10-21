@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:26:11 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/20 16:54:24 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/21 14:24:50 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	get_all_path(t_mini *mini)
 	mini->all_path = ft_split(ev->value, ':');
 }
 
-
 int cmd_len(t_mini *mini)
 {
 	int			i;
@@ -43,5 +42,15 @@ int cmd_len(t_mini *mini)
 		i++;
 		cmd = cmd->next;
 	}
+	return (i);
+}
+
+int cmd_args_len(t_command *cmd)
+{
+	int			i;
+
+	i = 0;
+	while (cmd->args[i])
+		i++;
 	return (i);
 }

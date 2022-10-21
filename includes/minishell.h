@@ -30,7 +30,7 @@
 # define ERR_SYNTAX "msh : syntax error near unexpected token "
 # define ERR_INPUT ""
 # define ERR_QUOTES "msh : Unclosed quotes"
-# define ERR_ARG "msh : too many arguments"
+# define ERR_ARG "msh : wrong number of arguments\n"
 # define ERR_NOFILE "msh : no such file or directory"
 # define ERR_NORIGHT "msh : permission denied"
 # define ERR_VALIDARG "msh : not a valid identifier"
@@ -136,10 +136,11 @@ int		error_redisplay_line(char *msg, char *token, int errcode);
 
 //builtins
 
-void	cd(t_mini *mini, int ac, char **av);
+void	cd(t_command *cmd, t_mini *mini);
 void	echo(int ac, char **av);
 void	env(t_mini *mini);
 void	export(t_mini *mini, int ac, char **av);
+void	ft_exit(t_command *cmd);
 void	import(t_mini *mini, int ac, char **av);
 void	import_env(t_mini *mini, char *s);
 void	import_export(t_mini *mini, char *s);
@@ -161,6 +162,7 @@ int		check_args(int ac, char **av);
 int		is_builtin(char *arg);
 int		is_egal(char *s);
 int		is_space_before_egal(char *s);
+int		str_isdigit(char *str);
 
 //parsing
 
@@ -193,6 +195,7 @@ int		is_egal(char *s);
 
 //exec
 
+void	builtin_process(t_command *cmd, t_mini *mini);
 void	execution(t_command *cmd, t_mini *mini);
 void	redir_out(t_command *cmd);
 void	ft_append(t_command *cmd);
@@ -211,5 +214,6 @@ int		redir_in(t_command *cmd);
 void	get_all_path(t_mini *mini);
 int		str_big(char *a, char *b);
 int 	cmd_len(t_mini *mini);
+int		cmd_args_len(t_command *cmd);
 
 #endif

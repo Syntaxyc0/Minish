@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:55:03 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/21 11:37:25 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/21 15:33:54 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ int	redir_in(t_command *cmd)
 	{
 		if (close(cmd->fd[0]) == -1)
 		{
-			g_exit_status = errno;
+			printf("exit stat redir = %d\n", g_exit_status);
+			g_exit_status = 1;
 			perror(NULL);
 			return (-1);
 		}
@@ -51,7 +52,7 @@ int	redir_in(t_command *cmd)
 	cmd->fd[0] = open(cmd->redir->filename, O_RDONLY);
 	if (cmd->fd[0] < 0)
 	{
-		g_exit_status = errno;
+		g_exit_status = 1;
 		perror(NULL);
 		return (-1);
 	}
@@ -74,7 +75,7 @@ void	redir_out(t_command *cmd)
 	{
 		if (close(cmd->fd[1]) == -1)
 		{
-			g_exit_status = errno;
+			g_exit_status = 1;
 			perror(NULL);
 			return ;
 		}
@@ -82,7 +83,7 @@ void	redir_out(t_command *cmd)
 	cmd->fd[1] = open(cmd->redir->filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (cmd->fd[1] < 0)
 	{
-		g_exit_status = errno;
+		g_exit_status = 1;
 		perror(NULL);
 	}
 	if (cmd->io == 1)
@@ -98,7 +99,7 @@ void	ft_append(t_command *cmd)
 	{
 		if (close(cmd->fd[1]) == -1)
 		{
-			g_exit_status = errno;
+			g_exit_status = 1;
 			perror(NULL);
 			return ;
 		}
@@ -106,7 +107,7 @@ void	ft_append(t_command *cmd)
 	cmd->fd[1] = open(cmd->redir->filename, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (cmd->fd[1] < 0)
 	{
-		g_exit_status = errno;
+		g_exit_status = 1;
 		perror(NULL);
 	}
 	if (cmd->io == 1)

@@ -6,80 +6,26 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 11:49:48 by ggobert           #+#    #+#             */
-/*   Updated: 2022/09/30 17:23:53 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/21 16:30:03 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_pwd(void)
-{
-	int		i;
-	char	*path;
-
-	i = 256;
-	path = malloc(i);
-	while (getcwd(path, i) == 0)
-	{
-		free(path);
-		i *= 2;
-		path = malloc(i);
-	}
-	return (path);
-}
-
-char	*home_env(t_mini *mini)
-{
-	char	*home_path;
-	t_env	*tmp;
-
-	tmp = mini->myenv;
-	while (tmp->key)
-	{
-		if (!ft_strncmp("HOME", tmp->key, str_big("HOME", tmp->key)))
-		{
-			home_path = tmp->value;
-			push_in_env(mini, home_path);
-			return (home_path);
-		}
-		tmp = tmp->next;
-	}
-	return (0);
-}
-
-void	old_pwd(t_mini *mini)
-{
-	char	*path;
-	t_env	*tmp;
-
-	path = get_pwd();
-	tmp = mini->myenv;
-	while (tmp)
-	{
-		if (!ft_strncmp("OLDPWD", tmp->key, str_big("OLDPWD", tmp->key)))
-		{
-			free(tmp->value);
-			tmp->value = ft_strdup(path);
-		}
-		tmp = tmp->next;
-	}
-	free(path);
-}
-
-char	*get_path(char **av)
+char	*get_path(char **args)
 {
 	char	*path;
 	char	*path_slash;
 	char	*tmp;
 
-	if (*av[1] == '/')
-		return (ft_strdup(av[1]));
+	if (*args[1] == '/')
+		return (ft_strdup(args[1]));
 	else
 	{
 		path = get_pwd();
 		tmp = ft_strjoin(path, "/");
 		free(path);
-		path_slash = ft_strjoin(tmp, av[1]);
+		path_slash = ft_strjoin(tmp, args[1]);
 		free(tmp);
 		return (path_slash);
 	}
@@ -141,28 +87,24 @@ void	push_in_env(t_mini *mini, char *curpath)
 	free(temp);
 }
 
-void	cd(t_mini *mini, int ac, char **av)
+void	cd(t_command *cmd, t_mini *mini)
 {
 	char	*curpath;
 
-	(void)av;
 	old_pwd(mini);
-	if (ac == 1)
+	if (cmd_args_len(cmd) == 1)
 		curpath = home_env(mini);
-	else if (ac > 2)
+	else if (cmd_args_len(cmd) > 2)
 	{
 		write_error_message(ERR_ARG);
 		return ;
 	}
 	else
-		curpath = get_path(av);
+		curpath = get_path(cmd->args);
 	if (chdir(curpath) < 0)
 	{
-		printf("%u\n", errno);
-		if (errno == 2 || errno == 20)
-			write_error_message(ERR_NOFILE);
-		if (errno == 13)
-			write_error_message(ERR_NORIGHT);
+		g_exit_status = 1;
+		perror(NULL);
 	}
 	else
 		push_in_env(mini, curpath);

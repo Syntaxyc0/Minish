@@ -49,12 +49,15 @@ SRCS = 	ft_signal.c \
 		env.c	\
 		main.c \
 		cd.c	\
+		cd2.c	\
 		pwd.c	\
 		echo.c	\
 		utils.c \
 		exec.c	\
 		fork_execution.c \
 		open_redir.c  \
+		builtin_process.c	\
+		exit.c	\
 		
 CC = gcc
 

@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 15:19:01 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/03 11:17:43 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/21 16:18:37 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,27 +23,23 @@ int	str_isdigit(char *str)
 	return (1);
 }
 
-void	ft_exit(t_mini *mini, int ac, char **av)
+void	ft_exit(t_command *cmd)
 {
-	if (ac > 2)
+	if (cmd_args_len(cmd) == 2)
 	{
-		write_error_message(ERR_ARG);
-		return;
-	}
-	if (ac == 2)
-	{
-		if (str_isdigit(av[1]))
-		{
-			free_mini(mini);
-			exit(ft_atoi(av[1]));
-		}
+		if (str_isdigit(cmd->args[1]))
+			exit(ft_atoi(cmd->args[1]));
 		else
 		{
 			write_error_message("msh : numeric argument required");
-			free_mini(mini);
 			exit(g_exit_status);
 		}
 	}
-	free_mini(mini);
-	exit;
+	else if (cmd_args_len(cmd) == 1)
+		exit(g_exit_status);
+	else
+	{
+		write_error_message(ERR_ARG);
+		return ;
+	}
 }

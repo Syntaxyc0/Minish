@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:25:17 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/21 11:52:42 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/21 16:28:53 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,19 @@ int	processes(t_mini *mini)
 	cmd = mini->commands;
 	while (cmd)
 	{
-		cmd->pid = fork();
-		if (cmd->pid == -1)
-			{
-				g_exit_status = errno;
-				perror(NULL);
-				return (-1);
-			}
-		if (cmd->pid == 0)
-			execution(cmd, mini);
+		if (!is_builtin(cmd->args[0]))
+		{
+			cmd->pid = fork();
+			if (cmd->pid == -1)
+				{
+					perror(NULL);
+					return (-1);
+				}
+			if (cmd->pid == 0)
+				execution(cmd, mini);
+		}
+		else
+			builtin_process(cmd, mini);
 		cmd = cmd->next;
 	}
 	return (0);
@@ -81,7 +85,7 @@ int	exec(t_mini *mini)
 	i = -1;
 	//init des valeurs de io
 	io_cmd(mini);
-	//les path -> char ** (optionnel, may init ailleur)
+	//path -> char ** (optionnel, may init ailleur)
 	get_all_path(mini);
 	//pipe init (REMPLIR fd par les pipes) ___(KILL EXEC si err) (WARNING une seule execution non géré)
 	if (init_pipe(mini) == -1)
@@ -97,6 +101,7 @@ int	exec(t_mini *mini)
 	ft_close_all(mini);
 	//WAIT
 	while (++i < cmd_len(mini))
-		wait(NULL);
+		wait(&g_exit_status);
+	g_exit_status /= 256;
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:50:41 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/21 11:46:50 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/21 16:18:55 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int dup_io(t_command *cmd)
 	{
 		if (dup2(cmd->fd[0], STDIN_FILENO) == -1)
 			{
-				g_exit_status = errno;
+				g_exit_status = 1;
 				perror(NULL);
 				return (-1);
 			}
@@ -27,7 +27,7 @@ int dup_io(t_command *cmd)
 	{
 		if (dup2(cmd->fd[1], STDOUT_FILENO) == -1)	
 		{
-			g_exit_status = errno;
+			g_exit_status = 1;
 			perror(NULL);
 			return (-1); 
 		}
@@ -36,7 +36,7 @@ int dup_io(t_command *cmd)
 	{
 		if (dup2(cmd->next->fd[1], STDOUT_FILENO) == -1)	
 		{
-			g_exit_status = errno;
+			g_exit_status = 1;
 			perror(NULL);
 			return (-1); 
 		}
@@ -55,7 +55,7 @@ int	ft_close_all(t_mini *mini)
 		{
 			if (close(cmd->fd[0]) == -1)
 			{
-				g_exit_status = errno;
+				g_exit_status = 1;
 				perror(NULL);
 			}
 		}
@@ -63,7 +63,7 @@ int	ft_close_all(t_mini *mini)
 		{
 			if (close(cmd->fd[1]) == -1)
 			{
-				g_exit_status = errno;
+				g_exit_status = 1;
 				perror(NULL);
 			}
 		}
@@ -94,7 +94,10 @@ int	ft_access(t_command *cmd, t_mini *mini)
 	if (access(cmd->args[0], X_OK) == 0)
 		return (0);
 	if (!mini->all_path[i])
+	{
+		error_redisplay_line(cmd->args[0], ": command not found\n", 127);
 		return (-1);
+	}
 	return (0);
 }
 
@@ -102,17 +105,17 @@ void	execution(t_command *cmd, t_mini *mini)
 {
 	//dup2 in _ out
 	if (dup_io(cmd) == -1)
-		return ;
+		exit(g_exit_status) ;
 	//close all fd
 	if (ft_close_all(mini) == -1)
-		return ;
+		exit(g_exit_status) ;
 	//access
 	if (ft_access(cmd, mini) == -1)
-		return ;
-	//execve (WARNING mini->environment n'est plus valide si une modif de l'env est effectue)
+		exit(g_exit_status) ;
+	//execve (!!!WARNING mini->environment n'est plus valide si une modif de l'env est effectue)
 	if (execve(cmd->fullpath, cmd->args, mini->environment) == -1)
 	{
-		g_exit_status = errno;
 		perror(NULL);
+		exit(g_exit_status);
 	}
 }
