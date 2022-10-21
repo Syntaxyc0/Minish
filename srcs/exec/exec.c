@@ -6,11 +6,34 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:25:17 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/20 18:01:25 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/21 11:52:42 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	io_cmd(t_mini *mini)
+{
+	int			i;
+	t_command	*cmd;
+	
+	i = 2;
+	cmd = mini->commands;
+	if (cmd_len(mini) == 1)
+		cmd->io = 0;
+	else
+		cmd->io = -2;
+	cmd = cmd->next;
+	while (cmd)
+	{
+		if (i == cmd_len(mini))
+			cmd->io = 1;
+		else
+			cmd->io = 2;
+		cmd = cmd->next;
+		i++;
+	}
+}
 
 int	init_pipe(t_mini *mini)
 {
@@ -56,6 +79,8 @@ int	exec(t_mini *mini)
 	int			i;
 
 	i = -1;
+	//init des valeurs de io
+	io_cmd(mini);
 	//les path -> char ** (optionnel, may init ailleur)
 	get_all_path(mini);
 	//pipe init (REMPLIR fd par les pipes) ___(KILL EXEC si err) (WARNING une seule execution non géré)
@@ -68,9 +93,10 @@ int	exec(t_mini *mini)
 		//process ____(KILL EXEC si err)
 	if (processes(mini) == -1)
 		return (-1);
-	while (++i < cmd_len(mini))
-		wait(NULL);
 	//close
 	ft_close_all(mini);
+	//WAIT
+	while (++i < cmd_len(mini))
+		wait(NULL);
 	return (0);
 }

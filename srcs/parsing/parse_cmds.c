@@ -14,6 +14,10 @@ t_command	*init_cmd(void)
 	ret->args = NULL;
 	ret->redir = NULL;
 	ret->next = NULL;
+	ret->io = 0;
+	ret->fd[0] = 0;
+	ret->fd[1] = 0;
+	ret->pid = 0;
 	return (ret);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:50:41 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/20 18:24:46 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/21 11:46:50 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int dup_io(t_command *cmd)
 {
-	if (cmd->io < 0)
+	if (cmd->io > 0)
 	{
 		if (dup2(cmd->fd[0], STDIN_FILENO) == -1)
 			{
@@ -23,9 +23,18 @@ int dup_io(t_command *cmd)
 				return (-1);
 			}
 	}
-	if (cmd->io == -1 || cmd->io == 2)
+	if (cmd->io == -1 || cmd->io == 3)
 	{
 		if (dup2(cmd->fd[1], STDOUT_FILENO) == -1)	
+		{
+			g_exit_status = errno;
+			perror(NULL);
+			return (-1); 
+		}
+	}
+	if (cmd->io == 2 || cmd->io == -2)
+	{
+		if (dup2(cmd->next->fd[1], STDOUT_FILENO) == -1)	
 		{
 			g_exit_status = errno;
 			perror(NULL);
