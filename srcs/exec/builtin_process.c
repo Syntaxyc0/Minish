@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:34:15 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/21 16:33:24 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/21 17:07:20 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,5 @@ void	builtin_process(t_command *cmd, t_mini *mini)
 	if (!ft_strncmp(cmd->args[0], "env", str_big(cmd->args[0], "env")))
 		return ;
 	if (!ft_strncmp(cmd->args[0], "exit", str_big(cmd->args[0], "exit")))
-		ft_exit(cmd);
+		ft_exit(cmd, mini);
 }

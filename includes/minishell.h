@@ -143,7 +143,7 @@ void	cd(t_command *cmd, t_mini *mini);
 void	echo(int ac, char **av);
 void	env(t_mini *mini);
 void	export(t_mini *mini, int ac, char **av);
-void	ft_exit(t_command *cmd);
+void	ft_exit(t_command *cmd, t_mini *mini);
 void	import(t_mini *mini, int ac, char **av);
 void	import_env(t_mini *mini, char *s);
 void	import_export(t_mini *mini, char *s);
