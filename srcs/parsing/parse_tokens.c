@@ -75,13 +75,11 @@ int	parse_token(t_mini *mini, char *str)
 	i = 0;
 	start = 0;
 	if (!check_quote_syntax(str))
-		return(error_redisplay_line(ERR_QUOTES, NULL, 1));
+		return (error_redisplay_line(ERR_QUOTES, NULL, 1));
 	while (str[i])
 	{
 		if (str[i] == '\'' || str[i] == '"')
-		{
 			i += len_quote(str, i) + 1;
-		}
 		else if (str[i] == '<' || str[i] == '>'
 			|| str[i] == '|' || str[i] == ' ')
 			add_token(mini, str, &start, &i);

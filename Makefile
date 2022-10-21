@@ -25,7 +25,7 @@ UTILS_PATH = utils
 HEADERS = includes \
 
 SRCS = 	ft_signal.c \
-		ft_sigint_handle.c \
+		ft_signal_handle.c \
 		write_error_message.c \
 		free_mini_exit_msg.c \
 		error_redisplay_line.c \
@@ -35,6 +35,7 @@ SRCS = 	ft_signal.c \
 		check_tokens.c \
 		get_token_type.c \
 		check_syntax.c \
+		parser.c \
 		get_redir_types.c \
 		expander.c \
 		parse_cmds.c \

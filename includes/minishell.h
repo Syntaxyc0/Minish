@@ -35,6 +35,8 @@
 # define ERR_NORIGHT "msh : permission denied"
 # define ERR_VALIDARG "msh : not a valid identifier"
 
+# define MINI "Minishell: "
+
 /*
 DEFINE io :
 io = 0	-> !redir && first && last
@@ -120,6 +122,7 @@ enum e_type
 
 void	ft_signal(int signal);
 void	ft_sigint_handle(void);
+void	ft_handle_exit(t_mini *mini);
 
 //error
 
@@ -185,6 +188,7 @@ void	parse_spaces(t_mini *mini);
 void	remove_empty_tokens(t_mini *mini);
 int		remove_quotes(t_mini *mini);
 int		parse_exec_form(t_mini	*mini);
+int		parser(t_mini *mini, char *line);
 
 //env
 

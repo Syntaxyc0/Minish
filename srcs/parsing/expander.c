@@ -70,7 +70,8 @@ void	expand_env(t_mini *mini, t_token *token, int i)
 
 	j = 1;
 	while (token->value[i + j] && token->value[i + j] != '\''
-		&& token->value[i + j] != '\"' && token->value[i + j] != '$' && token->value[i + j] != ' ')
+		&& token->value[i + j] != '\"' && token->value[i + j] != '$'
+		&& token->value[i + j] != ' ')
 		j++;
 	tmp = ft_substr(token->value, i + 1, j - 1);
 	if (!tmp)
@@ -80,9 +81,13 @@ void	expand_env(t_mini *mini, t_token *token, int i)
 	{
 		free(tmp);
 		token->value = replace_string(token->value, NULL, i, i + j - 1);
+		if (!token->value)
+			free_mini_exit_msg(mini, ERR_MALLOC);
 		return ;
 	}
 	token->value = replace_string(token->value, ret, i, i + j - 1);
+	if (!token->value)
+		free_mini_exit_msg(mini, ERR_MALLOC);
 	free(tmp);
 	return ;
 }
@@ -96,8 +101,11 @@ void	expand(t_mini *mini, t_token *token, int i)
 	else if (token->value[i + 1] == '\'' || token->value[i + 1] == '\"')
 	{
 		token->value = replace_string(token->value, NULL,
-		 i + len_quote(token->value, i + 1) + 1, i + len_quote(token->value, i + 1) + 1);
+				i + len_quote(token->value, i + 1) + 1,
+				i + len_quote(token->value, i + 1) + 1);
 		token->value = replace_string(token->value, NULL, i, i + 1);
+		if (!token->value)
+			free_mini_exit_msg(mini, ERR_MALLOC);
 	}
 	else if (token->value[i + 1] == '?')
 	{
@@ -105,11 +113,15 @@ void	expand(t_mini *mini, t_token *token, int i)
 		if (!tmp)
 			free_mini_exit_msg(mini, ERR_MALLOC);
 		token->value = replace_string(token->value, tmp, i, i + 1);
+		if (!token->value)
+			free_mini_exit_msg(mini, ERR_MALLOC);
 		free(tmp);
 	}
 	else if (ft_isdigit(token->value[i + 1]))
 	{
 		token->value = replace_string(token->value, NULL, i, i + 1);
+		if (!token->value)
+			free_mini_exit_msg(mini, ERR_MALLOC);
 	}
 	else if (ft_isalpha(token->value[i + 1]) || token->value[i + 1] == '_')
 		expand_env(mini, token, i);

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_cmds.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jbesnier <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/21 14:22:18 by jbesnier          #+#    #+#             */
+/*   Updated: 2022/10/21 14:22:20 by jbesnier         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 t_command	*init_cmd(void)
@@ -184,7 +196,8 @@ int	parse_cmd(t_mini *mini)
 	{
 		if (!new)
 			return (EXIT_FAILURE);
-		if (token->type == REDIRIN || token->type == REDIROUT || token->type == HEREDOC || token->type == APPEND)
+		if (token->type == REDIRIN || token->type == REDIROUT
+			|| token->type == HEREDOC || token->type == APPEND)
 		{
 			if (parse_redir(mini, token, new))
 			{
