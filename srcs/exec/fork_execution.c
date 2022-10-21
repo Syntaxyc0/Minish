@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:50:41 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/20 18:01:02 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/21 11:46:50 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int dup_io(t_command *cmd)
 {
-	if (cmd->io < 0)
+	if (cmd->io > 0)
 	{
 		if (dup2(cmd->fd[0], STDIN_FILENO) == -1)
 			{
@@ -23,9 +23,18 @@ int dup_io(t_command *cmd)
 				return (-1);
 			}
 	}
-	if (cmd->io == -1 || cmd->io == 2)
+	if (cmd->io == -1 || cmd->io == 3)
 	{
 		if (dup2(cmd->fd[1], STDOUT_FILENO) == -1)	
+		{
+			g_exit_status = errno;
+			perror(NULL);
+			return (-1); 
+		}
+	}
+	if (cmd->io == 2 || cmd->io == -2)
+	{
+		if (dup2(cmd->next->fd[1], STDOUT_FILENO) == -1)	
 		{
 			g_exit_status = errno;
 			perror(NULL);
@@ -42,15 +51,21 @@ int	ft_close_all(t_mini *mini)
 	cmd = mini->commands;
 	while (cmd)	
 	{
-		if (close(cmd->fd[0]) == -1)
+		if (cmd->fd[0])
 		{
-			g_exit_status = errno;
-			perror(NULL);
+			if (close(cmd->fd[0]) == -1)
+			{
+				g_exit_status = errno;
+				perror(NULL);
+			}
 		}
-		if (close(cmd->fd[1]) == -1)
+		if (cmd->fd[1])
 		{
-			g_exit_status = errno;
-			perror(NULL);
+			if (close(cmd->fd[1]) == -1)
+			{
+				g_exit_status = errno;
+				perror(NULL);
+			}
 		}
 		cmd = cmd->next;
 	}
@@ -78,7 +93,7 @@ int	ft_access(t_command *cmd, t_mini *mini)
 	}
 	if (access(cmd->args[0], X_OK) == 0)
 		return (0);
-	if (!mini->all_path)
+	if (!mini->all_path[i])
 		return (-1);
 	return (0);
 }

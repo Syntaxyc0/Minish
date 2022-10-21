@@ -53,6 +53,7 @@ SRCS = 	ft_signal.c \
 		pwd.c	\
 		echo.c	\
 		utils.c \
+		exec.c	\
 		fork_execution.c \
 		open_redir.c  \
 		
@@ -65,6 +66,14 @@ RM = rm -rf
 OBJS =  $(addprefix $(OBJ_PATH)/,$(SRCS:.c=.o))
 
 DEPS = $(OBJS:.o=.d)
+
+SUPPR		=	\033[00m
+GRAS		=	\033[01m
+CLIGNO		=	\033[05m
+GREEN		=	\033[32m
+YELLOW		=	\033[33m
+RED			=	\033[31m
+WHITE		=	\033[37m
 
 vpath %.h $(HEADERS)
 vpath %.c $(SRCSPATH)			\
@@ -82,17 +91,18 @@ vpath %.o $(OBJ_PATH)
 all: $(NAME)
 
 $(NAME):		$(OBJS)
-			make -C $(FT_PATH)
-			$(CC) $(CFLAGS) $(OBJS) -I $(HEADERS) -I libft/include -L$(FT_PATH) -lft -lreadline -o $(NAME)
+			@make -C $(FT_PATH)
+			@$(CC) $(CFLAGS) $(OBJS) -I $(HEADERS) -I libft/include -L$(FT_PATH) -lft -o $(NAME)
+			@echo "$(WHITE)Compilation $(GRAS)minishell $(GREEN)$(GRAS)$(CLIGNO)OK$(SUPPR)"
 
 $(OBJ_PATH)/%.o:		%.c
-			$(CC) $(CFLAGS) -I $(HEADERS) -I libft/include -I/usr/include -lreadline -c $< -o $@
+			@$(CC) $(CFLAGS) -I $(HEADERS) -I libft/include -I/usr/include -c $< -o $@
 
 
 $(OBJS):	| $(OBJ_PATH)
 
 $(OBJ_PATH):
-			mkdir -p $(OBJ_PATH)
+			@mkdir -p $(OBJ_PATH)
 
 clean:
 		make clean -C $(FT_PATH)
