@@ -40,7 +40,6 @@ SRCS = 	ft_signal.c \
 		expander.c \
 		parse_cmds.c \
 		parse_spaces.c \
-		remove_empty_tokens.c \
 		remove_quotes.c \
 		is_builtin.c \
 		get_env.c \
