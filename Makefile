@@ -92,11 +92,11 @@ all: $(NAME)
 
 $(NAME):		$(OBJS)
 			@make -C $(FT_PATH)
-			@$(CC) $(CFLAGS) $(OBJS) -I $(HEADERS) -I libft/include -L$(FT_PATH) -lft -o $(NAME)
+			@$(CC) $(CFLAGS) $(OBJS) -I $(HEADERS) -I libft/include -L$(FT_PATH) -lft -lreadline -o $(NAME)
 			@echo "$(WHITE)Compilation $(GRAS)minishell $(GREEN)$(GRAS)$(CLIGNO)OK$(SUPPR)"
 
 $(OBJ_PATH)/%.o:		%.c
-			@$(CC) $(CFLAGS) -I $(HEADERS) -I libft/include -I/usr/include -c $< -o $@
+			@$(CC) $(CFLAGS) -I $(HEADERS) -I libft/include -I/usr/include -lreadline -c $< -o $@
 
 
 $(OBJS):	| $(OBJ_PATH)
