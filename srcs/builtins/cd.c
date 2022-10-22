@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 11:49:48 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/21 16:30:03 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/22 11:53:57 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@ char	*get_path(char **args)
 	else
 	{
 		path = get_pwd();
+		if (!path)
+		{
+			g_exit_status = 1;
+			perror(NULL);
+			return (0);
+		}
 		tmp = ft_strjoin(path, "/");
 		free(path);
 		path_slash = ft_strjoin(tmp, args[1]);
@@ -62,6 +68,7 @@ char	*two_dot(char *curpath)
 	if (dot_count == 1)
 	{
 		tmp = ft_strdup(curpath);
+		free(curpath);
 		return (tmp);
 	}
 	tmp = back_repo(curpath, dot_count);
@@ -100,14 +107,20 @@ void	cd(t_command *cmd, t_mini *mini)
 		return ;
 	}
 	else
+	{
 		curpath = get_path(cmd->args);
+		if (!curpath)
+			return ;
+	}
 	if (chdir(curpath) < 0)
 	{
 		g_exit_status = 1;
 		perror(NULL);
 	}
 	else
+	{
 		push_in_env(mini, curpath);
+	}
 }
 
 /* Les erreurs gérées sont : 

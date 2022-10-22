@@ -139,6 +139,7 @@ int		error_redisplay_line(char *msg, char *token, int errcode);
 //builtins
 
 void	cd(t_command *cmd, t_mini *mini);
+/*Apres 2 appel a cd, get_path leaks*/
 void	echo(int ac, char **av);
 void	env(t_mini *mini);
 void	export(t_mini *mini, int ac, char **av);
@@ -219,4 +220,5 @@ int		str_big(char *a, char *b);
 int		cmd_args_len(t_command *cmd);
 int		cmd_len(t_mini *mini);
 
+void	test(char *tmp, char *path);
 #endif

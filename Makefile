@@ -60,7 +60,7 @@ SRCS = 	ft_signal.c \
 		builtin_process.c	\
 		exit.c	\
 		
-CC = gcc
+CC = gcc $(FSANITIZE)
 
 CFLAGS = -MMD -Wall -Werror -Wextra
 
