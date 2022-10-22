@@ -6,30 +6,32 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 14:44:05 by ggobert           #+#    #+#             */
-/*   Updated: 2022/09/30 15:17:58 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/22 15:11:56 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	echo(int ac, char **av)
+void	echo(t_command *cmd)
 {
 	int	i;
 	int	n_count;
 
 	i = 1;
 	n_count = 0;
-	while (!ft_strncmp(av[i], "-n", str_big(av[i], "-n")))
+	if (cmd_args_len(cmd) == 1)
+		return ;
+	while (!ft_strncmp(cmd->args[i], "-n", str_big(cmd->args[i], "-n")))
 	{
 		n_count++;
 		i++;
 	}
-	while (av[i])
+	while (cmd->args[i])
 	{
-		if (i < ac)
+		if (i < cmd_args_len(cmd))
 		{
-			printf("%s", av[i]);
-			if (i != ac - 1)
+			printf("%s", cmd->args[i]);
+			if (i != cmd_args_len(cmd) - 1)
 				printf(" ");
 		}
 		i++;

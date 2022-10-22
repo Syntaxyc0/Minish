@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:25:17 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/21 16:28:53 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/22 15:34:36 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,9 @@ int	processes(t_mini *mini)
 	cmd = mini->commands;
 	while (cmd)
 	{
-		if (!is_builtin(cmd->args[0]))
+		if (is_builtin(cmd->args[0]) && cmd_len(mini) == 1)		
+			builtin_process(cmd, mini);
+		else
 		{
 			cmd->pid = fork();
 			if (cmd->pid == -1)
@@ -71,8 +73,6 @@ int	processes(t_mini *mini)
 			if (cmd->pid == 0)
 				execution(cmd, mini);
 		}
-		else
-			builtin_process(cmd, mini);
 		cmd = cmd->next;
 	}
 	return (0);
@@ -80,9 +80,9 @@ int	processes(t_mini *mini)
 
 int	exec(t_mini *mini)
 {
-	int			i;
+	t_command *cmd;
 
-	i = -1;
+	cmd = mini->commands;
 	//init des valeurs de io
 	io_cmd(mini);
 	//path -> char ** (optionnel, may init ailleur)
@@ -100,8 +100,12 @@ int	exec(t_mini *mini)
 	//close
 	ft_close_all(mini);
 	//WAIT
-	while (++i < cmd_len(mini))
-		wait(&g_exit_status);
+	while (cmd)
+	{
+		if (!is_builtin(cmd->args[0]))
+			wait(&g_exit_status);
+		cmd = cmd->next;
+	}
 	g_exit_status /= 256;
 	return (0);
 }

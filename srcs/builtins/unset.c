@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 15:34:16 by gregoiregob       #+#    #+#             */
-/*   Updated: 2022/10/20 14:30:14 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/22 12:49:42 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	lst_del_unset_export(t_export *tmp, t_export *previous)
 }
 
 
-void	unset_in_env(t_mini *mini, char **av)
+void	unset_in_env(t_mini *mini, char **args)
 {
 	int		i;
 	t_env	*tmp;
@@ -44,7 +44,7 @@ void	unset_in_env(t_mini *mini, char **av)
 	tmp = mini->myenv;
 	while (tmp)
 	{
-		if (ft_strncmp(av[i], tmp->key, str_big(av[i], tmp->key)) != 0)
+		if (ft_strncmp(args[i], tmp->key, str_big(args[i], tmp->key)) != 0)
 		{
 			previous = tmp;
 			tmp = tmp->next;
@@ -58,7 +58,7 @@ void	unset_in_env(t_mini *mini, char **av)
 	i++;
 }
 
-void	unset_in_export(t_mini *mini, char **av)
+void	unset_in_export(t_mini *mini, char **args)
 {
 	int			i;
 	t_export	*tmp;
@@ -69,7 +69,7 @@ void	unset_in_export(t_mini *mini, char **av)
 	tmp = mini->myexport;
 	while (tmp)
 	{
-		if (ft_strncmp(av[i], tmp->key, str_big(av[i], tmp->key)) != 0)
+		if (ft_strncmp(args[i], tmp->key, str_big(args[i], tmp->key)) != 0)
 		{
 			previous = tmp;
 			tmp = tmp->next;
@@ -85,15 +85,17 @@ void	unset_in_export(t_mini *mini, char **av)
 	i++;
 }
 
-void	unset(t_mini *mini, int ac, char **av)
+void	unset(t_mini *mini, t_command *cmd)
 {
-	if (ac == 1)
+	int	i;
+	i = cmd_args_len(cmd);
+	if (i == 1)
 		write_error_message(ERR_ARG);
-	while (ac-- > 1)
+	while (i-- > 1)
 	{
-		if (check_args(ac, av) != 1)
-			return;
-		unset_in_env(mini, av);
-		unset_in_export(mini, av);
+		if (check_args(cmd_args_len(cmd), cmd->args) != 0)
+			return ;
+		unset_in_env(mini, cmd->args);
+		unset_in_export(mini, cmd->args);
 	}
 }

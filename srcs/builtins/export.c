@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 13:44:07 by ggobert           #+#    #+#             */
-/*   Updated: 2022/09/30 14:38:36 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/22 12:48:48 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,21 +105,21 @@ void	import_env(t_mini *mini, char *s)
 	free(value);
 }
 
-int	check_args(int ac, char **av)
+int	check_args(int nb_arg, char **args)
 {
 	int	i;
 
-	while (--ac > 0)
+	while (--nb_arg > 1)
 	{
-		if (av[ac][0] == '=')
+		if (args[nb_arg][0] == '=')
 		{
 			write_error_message(ERR_VALIDARG);
 			return(1);
 		}
 		i = 0;
-		while (av[ac][i] != '=' && av[ac][i])
+		while (args[nb_arg][i] != '=' && args[nb_arg][i])
 		{
-			if (ft_isalpha(av[ac][i]) != 1 && av[ac][i] != '_')
+			if (ft_isalpha(args[nb_arg][i]) != 1 && args[nb_arg][i] != '_')
 			{
 				write_error_message(ERR_VALIDARG);
 				return (1);
@@ -130,14 +130,14 @@ int	check_args(int ac, char **av)
 	return (0);
 }
 
-void	export(t_mini *mini, int ac, char **av)
+void	export(t_mini *mini, t_command *cmd)
 {
-	if (ac == 1)
+	if (cmd_args_len(cmd) == 1)
 		write_error_message("Unspecified behaviour (cf man export)\n");
 	else
 	{
-		if (check_args(ac, av) == 1)
+		if (check_args(cmd_args_len(cmd), cmd->args) == 1)
 			return;
-		import(mini, ac, av);
+		import(mini, cmd_args_len(cmd), cmd->args);
 	}
 }
