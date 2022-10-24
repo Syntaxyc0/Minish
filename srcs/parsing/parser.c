@@ -37,13 +37,6 @@ int	parser(t_mini *mini, char *line)
 	parse_spaces(mini);
 	if (remove_quotes(mini))
 		free_mini_exit_msg(mini, ERR_MALLOC);
-	t_token * token;
-	token = mini->tokens;
-	while (token)
-	{
-		printf("token value %s\n", token->value);
-		token = token->next;
-	}
 	if (parse_exec_form(mini))
 		free_mini_exit_msg(mini, NULL);
 	return (0);
