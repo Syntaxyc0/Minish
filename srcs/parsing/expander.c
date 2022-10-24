@@ -29,39 +29,6 @@ int	contains_exp_sign(char *str)
 	return (-1);
 }
 
-char	*replace_string(char *value, char *str, int start, int end)
-{
-	char	*ret;
-	char	*tmp;
-	char	*prefix;
-	char	*suffix;
-
-	tmp = NULL;
-	prefix = ft_substr(value, 0, start);
-	suffix = ft_substr(value, end + 1, ft_strlen(value));
-	if (str == NULL)
-		ret = ft_strjoin(prefix, suffix);
-	else
-	{
-		tmp = ft_strjoin(prefix, str);
-		if (!tmp)
-		{
-			free(prefix);
-			free(suffix);
-			return (NULL);
-		}
-		ret = ft_strjoin(tmp, suffix);
-	}
-	if (!prefix || !suffix || !ret)
-		return (NULL);
-	free(prefix);
-	free(suffix);
-	free(value);
-	if (tmp)
-		free(tmp);
-	return (ret);
-}
-
 void	expand_env(t_mini *mini, t_token *token, int i)
 {
 	char	*tmp;
@@ -114,7 +81,10 @@ void	expand(t_mini *mini, t_token *token, int i)
 			free_mini_exit_msg(mini, ERR_MALLOC);
 		token->value = replace_string(token->value, tmp, i, i + 1);
 		if (!token->value)
+		{
+			free(tmp);
 			free_mini_exit_msg(mini, ERR_MALLOC);
+		}
 		free(tmp);
 	}
 	else if (ft_isdigit(token->value[i + 1]))

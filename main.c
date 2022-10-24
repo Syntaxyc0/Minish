@@ -39,7 +39,20 @@ int main(int argc, char **argv, char **env)
 			add_history(line);
 		if (parser(mini, line))
 			continue ;
+		t_token *token;
+		token = mini->tokens;
+		while (token)
+		{
+			printf("token value %s\n", token->value);
+			token = token->next;
+		}
+		// if (exec(mini) == -1)
+		// {
+		// 	free_mini(mini);
+		// 	return (1);
+		// }
 		free_commands(mini);
 	}
 	free_mini(mini);
+	return (0);
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   remove_quotes.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jbesnier <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/24 10:52:49 by jbesnier          #+#    #+#             */
+/*   Updated: 2022/10/24 10:52:53 by jbesnier         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	contains_quote(char	*str, int start)
@@ -32,6 +44,33 @@ int	get_next_quote_index(char	*str, int start, char quote)
 	return (-1);
 }
 
+int	remove_token_quote(t_token *token, int *start, int *end)
+{
+	if (contains_quote(token->value, *start) == 1)
+	{
+		*start = get_next_quote_index(token->value, *start, '\'');
+		*end = get_next_quote_index(token->value, *start + 1, '\'');
+		token->value = replace_string(token->value, NULL, *start, *start);
+		if (!token->value)
+			return (1);
+		token->value = replace_string(token->value, NULL, *end - 1, *end - 1);
+		if (!token->value)
+			return (1);
+	}
+	else if (contains_quote(token->value, *start) == 2)
+	{
+		*start = get_next_quote_index(token->value, *start, '\"');
+		*end = get_next_quote_index(token->value, *start + 1, '\"');
+		token->value = replace_string(token->value, NULL, *start, *start);
+		if (!token->value)
+			return (1);
+		token->value = replace_string(token->value, NULL, *end - 1, *end - 1);
+		if (!token->value)
+			return (1);
+	}
+	return (0);
+}
+
 int	remove_quotes(t_mini *mini)
 {
 	t_token	*token;
@@ -47,29 +86,8 @@ int	remove_quotes(t_mini *mini)
 		{
 			while (contains_quote(token->value, start))
 			{
-				if (contains_quote(token->value, start) == 1)
-				{
-					start = get_next_quote_index(token->value, start, '\'');
-					end = get_next_quote_index(token->value, start + 1, '\'');
-					token->value = replace_string(token->value, NULL, start, start);
-					if (!token->value)
-						return (1);
-					token->value = replace_string(token->value, NULL, end - 1, end - 1);
-					if (!token->value)
-						return (1);
-					start = end - 2;
-				}
-				else if (contains_quote(token->value, start) == 2)
-				{
-					start = get_next_quote_index(token->value, start, '\"');
-					end = get_next_quote_index(token->value, start + 1, '\"');
-					token->value = replace_string(token->value, NULL, start, start);
-					if (!token->value)
-						return (1);
-					token->value = replace_string(token->value, NULL, end - 1, end - 1);
-					if (!token->value)
-						return (1);
-				}
+				if (remove_token_quote(token, &start, &end))
+					return (1);
 				start = end - 1;
 			}
 		}

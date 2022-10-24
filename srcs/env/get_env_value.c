@@ -12,9 +12,9 @@
 
 #include "minishell.h"
 
-char    *get_env_value(t_mini *mini, char *key)
+char	*get_env_value(t_mini *mini, char *key)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
 	tmp = mini->myenv;
 	while (tmp != NULL)

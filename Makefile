@@ -37,6 +37,7 @@ SRCS = 	ft_signal.c \
 		check_syntax.c \
 		parser.c \
 		get_redir_types.c \
+		replace_string.c \
 		expander.c \
 		parse_cmds.c \
 		parse_spaces.c \
