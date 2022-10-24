@@ -19,6 +19,8 @@ int	contains_space(char *str)
 	i = 0;
 	while (str[i])
 	{
+		if (str[i] == '\'' || str[i] == '\"')
+			i += len_quote(str, i);
 		if (str[i] == ' ')
 			return (1);
 		i++;
@@ -60,12 +62,6 @@ char	*split_token(t_mini *mini, t_token *token)
 	ret = ft_substr(token->value, start, end - start);
 	if (!ret)
 		free_mini_exit_msg(mini, ERR_MALLOC);
-	if (check_only_space(token->value, end))
-	{
-		free(token->value);
-		token->value = ret;
-		return (NULL);
-	}
 	tmp = replace_string(token->value, NULL, 0, end - 1);
 	if (!tmp)
 		free_mini_exit_msg(mini, ERR_MALLOC);
@@ -77,6 +73,7 @@ void	parse_spaces(t_mini *mini)
 {
 	t_token	*token;
 	t_token	*new;
+	t_token	*tmp;
 	char	*value;
 
 	token = mini->tokens;
@@ -84,6 +81,15 @@ void	parse_spaces(t_mini *mini)
 	{
 		while (contains_space(token->value))
 		{
+			if (check_only_space(token->value, 0))
+			{
+				tmp = token->next;
+				delete_token(mini, token);
+				token = tmp;
+				if (!token)
+					break ;
+				continue ;
+			}
 			value = split_token(mini, token);
 			if (value == NULL)
 				break ;
@@ -92,7 +98,8 @@ void	parse_spaces(t_mini *mini)
 			new->next = token->next;
 			token->next = new;
 		}
-		token = token->next;
+		if (token)
+			token = token->next;
 	}
 	return ;
 }

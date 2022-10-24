@@ -59,9 +59,9 @@ void	init_myexport(t_mini *mini, char *s)
 	if (!mini->myexport)
 		free_mini_exit_msg(mini, ERR_MALLOC);
 	mini->myexport->key = ft_strdup(s);
-	mini->myexport->next = 0;
 	if (!mini->myexport->key)
 		free_mini_exit_msg(mini, ERR_MALLOC);
+	mini->myexport->next = 0;
 }
 
 void	import_export(t_mini *mini, char *s)

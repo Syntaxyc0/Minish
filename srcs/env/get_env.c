@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void    init_myenv(t_mini *mini, char *key, char *value)
+void	init_myenv(t_mini *mini, char *key, char *value)
 {
 	mini->myenv = malloc(sizeof(t_env));
 	if (!mini->myenv)
@@ -24,10 +24,10 @@ void    init_myenv(t_mini *mini, char *key, char *value)
 		free_mini_exit_msg(mini, ERR_MALLOC);
 }
 
-void    add_envelem(t_mini *mini, char *key, char *value)
+void	add_envelem(t_mini *mini, char *key, char *value)
 {
-	t_env   *ret;
-	t_env   *tmp;
+	t_env	*ret;
+	t_env	*tmp;
 
 	if (mini->myenv == 0)
 	{
@@ -56,12 +56,12 @@ void    add_envelem(t_mini *mini, char *key, char *value)
 	mini->myenv = tmp;
 }
 
-int   get_env(char **env, t_mini *mini)
+int	get_env(char **env, t_mini *mini)
 {
-	char    *key;
-	char    *value;
-	int     i;
-	int     j;
+	char	*key;
+	char	*value;
+	int		i;
+	int		j;
 
 	i = -1;
 	if (!env ||!*env)
@@ -69,7 +69,7 @@ int   get_env(char **env, t_mini *mini)
 	while (env[++i])
 	{
 		j = 0;
-		while(env[i][j] != 0 && env[i][j] != '=')
+		while (env[i][j] != 0 && env[i][j] != '=')
 			j++;
 		key = ft_substr(env[i], 0, j);
 		if (env[i][j + 1] != '\0')
