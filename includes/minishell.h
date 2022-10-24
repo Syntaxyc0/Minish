@@ -121,8 +121,7 @@ enum e_type
 
 void	ft_signal(int signal);
 void	ft_sigint_handle(void);
-void	ft_sigint_process_handle(void);
-void	ft_kill_proc(int signal);
+void	process_sig_handle(void);
 void	ft_handle_exit(t_mini *mini);
 
 //error
@@ -136,12 +135,13 @@ void	free_env(t_mini *mini);
 void	free_export(t_mini *mini);
 void	free_array(char **array);
 void	free_commands(t_mini *mini);
+void	exit_free_status_msg(t_mini *mini, int ges, char *msg);
 int		error_redisplay_line(char *msg, char *token, int errcode);
 
 //builtins
 
-void	add_absolute_path(char **path, char **path_slash, char **tmp, char **args , t_mini *mini);
 void	cd(t_command *cmd, t_mini *mini);
+void	chdir_res(char *curpath, t_mini *mini);
 void	echo(t_command *cmd);
 void	echo_print_args(t_command *cmd, int i);
 void	env(t_mini *mini, t_command *cmd);
@@ -212,6 +212,7 @@ void	which_builtin(t_command *cmd, t_mini *mini);
 void	which_builtin2(t_command *cmd, t_mini *mini);
 int		dup_io(t_command *cmd);
 int		exec(t_mini *mini);
+int		exit_perror(int ges, int ret);
 int		init_pipe(t_mini *mini);
 int		processes(t_mini *mini);
 int		ft_access(t_command *cmd, t_mini *mini);

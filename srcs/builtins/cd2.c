@@ -6,12 +6,11 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:40:01 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/24 11:43:48 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/24 16:39:47 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 char	*get_pwd(t_mini *mini)
 {
@@ -86,26 +85,30 @@ void	old_pwd(t_mini *mini)
 	free(path);
 }
 
-void	add_absolute_path(char **path, char **path_slash, char **tmp, char **args, t_mini *mini)
+char	*get_path(char **args, t_mini *mini)
 {
-	*path = get_pwd(mini);
-	if (!*path)
+	char	*path;
+	char	*path_slash;
+	char	*tmp;
+
+	path = 0;
+	path_slash = 0;
+	tmp = 0;
+	if (*args[1] == '/')
+		return (ft_strdup(args[1]));
+	else
 	{
-		g_exit_status = 1;
-		free_mini_exit_msg(mini, ERR_MALLOC);
+		path = get_pwd(mini);
+		if (!path)
+			exit_free_status_msg(mini, 1, ERR_MALLOC);
+		tmp = ft_strjoin(path, "/");
+		if (!tmp)
+			exit_free_status_msg(mini, 1, ERR_MALLOC);
+		free(path);
+		path_slash = ft_strjoin(tmp, args[1]);
+		if (!path_slash)
+			exit_free_status_msg(mini, 1, ERR_MALLOC);
+		free(tmp);
+		return (path_slash);
 	}
-	*tmp = ft_strjoin(*path, "/");
-	if (!*tmp)
-	{
-		g_exit_status = 1;
-		free_mini_exit_msg(mini, ERR_MALLOC);
-	}
-	free(*path);
-	*path_slash = ft_strjoin(*tmp, args[1]);
-	if (!*path_slash)
-	{
-		g_exit_status = 1;
-		free_mini_exit_msg(mini, ERR_MALLOC);
-	}
-	free(*tmp);
 }

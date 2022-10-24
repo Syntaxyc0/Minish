@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:25:17 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/24 12:13:49 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/24 16:28:23 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	io_cmd(t_mini *mini)
 {
 	int			i;
 	t_command	*cmd;
-	
+
 	i = 2;
 	cmd = mini->commands;
 	if (cmd_len(mini) == 1)
@@ -43,11 +43,11 @@ int	init_pipe(t_mini *mini)
 	while (cmd)
 	{
 		if (pipe(cmd->fd) == -1)
-			{
-				g_exit_status = errno;
-				perror(NULL);
-				return (-1);
-			}
+		{
+			g_exit_status = errno;
+			perror(NULL);
+			return (-1);
+		}
 		cmd = cmd->next;
 	}
 	return (0);
@@ -60,16 +60,16 @@ int	processes(t_mini *mini)
 	cmd = mini->commands;
 	while (cmd)
 	{
-		if (is_builtin(cmd->args[0]) && cmd_len(mini) == 1)		
+		if (is_builtin(cmd->args[0]) && cmd_len(mini) == 1)
 			builtin_process(cmd, mini);
 		else
 		{
 			cmd->pid = fork();
 			if (cmd->pid == -1)
-				{
-					perror(NULL);
-					return (-1);
-				}
+			{
+				perror(NULL);
+				return (-1);
+			}
 			if (cmd->pid == 0)
 				execution(cmd, mini);
 		}
@@ -80,28 +80,19 @@ int	processes(t_mini *mini)
 
 int	exec(t_mini *mini)
 {
-	t_command *cmd;
+	t_command	*cmd;
 
 	cmd = mini->commands;
-	//init des valeurs de io
 	io_cmd(mini);
-	//path -> char ** (optionnel, may init ailleur)
 	get_all_path(mini);
-	//pipe init (REMPLIR fd par les pipes) ___(KILL EXEC si err) (WARNING une seule execution non géré)
 	if (init_pipe(mini) == -1)
 		return (-1);
-	//ft_open_all(REMPLACER les fd par les redir) ____(KILL EXEC si err SEULEMENT sur fd in)
 	if (ft_open_all(mini) == -1)
 		return (-1);
-	//fork
-		//process ____(KILL EXEC si err)
 	if (processes(mini) == -1)
 		return (-1);
-	//close
 	ft_close_all(mini);
-	//kill_signal
-	ft_sigint_process_handle();
-	//WAIT
+	process_sig_handle();
 	while (cmd)
 	{
 		if (!is_builtin(cmd->args[0]))
