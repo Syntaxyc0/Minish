@@ -91,8 +91,11 @@ void	parse_spaces(t_mini *mini)
 				continue ;
 			}
 			value = split_token(mini, token);
-			if (value == NULL)
+			if (value[0] == 0)
+			{
+				free(value);
 				break ;
+			}
 			new = create_token(value);
 			new->type = WORD;
 			new->next = token->next;

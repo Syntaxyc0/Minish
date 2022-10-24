@@ -32,7 +32,7 @@ int	parser(t_mini *mini, char *line)
 	if (expander(mini))
 	{
 		free_tokens(mini);
-		return (1);
+		return (1);sa_handler
 	}
 	parse_spaces(mini);
 	if (remove_quotes(mini))

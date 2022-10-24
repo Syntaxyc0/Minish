@@ -31,6 +31,7 @@ void	delete_token(t_mini *mini, t_token *token)
 			tmp->next = token->next;
 			free(token->value);
 			free(token);
+			token = NULL;
 			return ;
 		}
 		tmp = tmp->next;

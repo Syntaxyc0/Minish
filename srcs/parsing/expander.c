@@ -102,6 +102,7 @@ void	expand(t_mini *mini, t_token *token, int i)
 int	expander(t_mini *mini)
 {
 	t_token	*token;
+	t_token *tmp;
 	int		index;
 
 	token = mini->tokens;
@@ -114,9 +115,18 @@ int	expander(t_mini *mini)
 		{
 			if (index >= 0)
 				expand(mini, token, index);
+			if (token->value[0] == 0)
+			{
+				tmp = token->next;
+				delete_token(mini, token);
+				token = tmp;
+				if (!token)
+					break ;
+			}
 			index = contains_exp_sign(token->value);
 		}
-		token = token->next;
+		if (token)
+			token = token->next;
 	}
 	return (0);
 }
