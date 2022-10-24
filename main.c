@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 11:22:37 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/24 16:09:57 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/24 16:52:33 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,11 @@ int	main(int argc, char **argv, char **env)
 			printf("token value %s\n", token->value);
 			token = token->next;
 		}
-		// if (exec(mini) == -1)
-		// {
-		// 	free_mini(mini);
-		// 	return (1);
-		// }
+		if (exec(mini) == -1)
+		{
+			free_mini(mini);
+		 	return (1);
+		}
 		free_commands(mini);
 	}
 	free_mini(mini);

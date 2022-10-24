@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:55:03 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/24 16:29:36 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/24 17:06:23 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ int	ft_open_all(t_mini *mini)
 		while (redir)
 		{
 			if (redir->type == 4)
-				if (redir_in(cmd) == -1)
+				if (redir_in(cmd, redir) == -1)
 					return (-1);
 			if (redir->type == 5)
 				ft_heredoc(cmd);
 			if (redir->type == 6)
-				redir_out(cmd);
+				redir_out(cmd, redir);
 			if (redir->type == 7)
-				ft_append(cmd);
+				ft_append(cmd, redir);
 			redir = redir->next;
 		}
 		cmd = cmd->next;
@@ -39,7 +39,7 @@ int	ft_open_all(t_mini *mini)
 	return (0);
 }
 
-int	redir_in(t_command *cmd)
+int	redir_in(t_command *cmd, t_redir *redir)
 {
 	if (cmd->fd[0])
 	{
@@ -51,7 +51,7 @@ int	redir_in(t_command *cmd)
 			return (-1);
 		}
 	}
-	cmd->fd[0] = open(cmd->redir->filename, O_RDONLY);
+	cmd->fd[0] = open(redir->filename, O_RDONLY);
 	if (cmd->fd[0] < 0)
 	{
 		g_exit_status = 1;
@@ -71,7 +71,7 @@ int	ft_heredoc(t_command *cmd)
 	return (0);
 }
 
-void	redir_out(t_command *cmd)
+void	redir_out(t_command *cmd, t_redir *redir)
 {
 	if (cmd->fd[1])
 	{
@@ -81,8 +81,9 @@ void	redir_out(t_command *cmd)
 			perror(NULL);
 			return ;
 		}
+		cmd->fd[1] = 0;
 	}
-	cmd->fd[1] = open(cmd->redir->filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	cmd->fd[1] = open(redir->filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (cmd->fd[1] < 0)
 	{
 		g_exit_status = 1;
@@ -94,7 +95,7 @@ void	redir_out(t_command *cmd)
 		cmd->io = -1;
 }
 
-void	ft_append(t_command *cmd)
+void	ft_append(t_command *cmd, t_redir *redir)
 {
 	if (cmd->fd[1])
 	{
@@ -105,8 +106,7 @@ void	ft_append(t_command *cmd)
 			return ;
 		}
 	}
-	cmd->fd[1] = open(cmd->redir->filename,
-			O_CREAT | O_WRONLY | O_APPEND, 0644);
+	cmd->fd[1] = open(redir->filename, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (cmd->fd[1] < 0)
 	{
 		g_exit_status = 1;
