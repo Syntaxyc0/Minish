@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 11:22:37 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/24 11:22:38 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/24 16:09:57 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,17 @@
 
 int	g_exit_status;
 
-int main(int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **env)
 {
-	t_mini *mini;
+	t_mini	*mini;
 	char	*line;
-
 
 	g_exit_status = 0;
 	mini = init_mini();
 	get_env(env, mini);
 	(void)argc;
 	(void)argv;
-	while(1)
+	while (1)
 	{
 		ft_sigint_handle();
 		line = readline(MINI);
