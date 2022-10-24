@@ -10,6 +10,16 @@ void	ft_sigint_handle(void)
 	sigaction(SIGINT, &sa, NULL);
 }
 
+void	ft_sigint_process_handle(void)
+{
+	struct sigaction	sa1;
+
+	sa1.sa_handler = ft_kill_proc;
+	sigemptyset(&sa1.sa_mask);
+	sa1.sa_flags = 0;
+	sigaction(SIGINT, &sa1, NULL);
+}
+
 void	ft_handle_exit(t_mini *mini)
 {
 	free_mini(mini);

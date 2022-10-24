@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:25:17 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/24 10:19:37 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/24 12:13:49 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,8 @@ int	exec(t_mini *mini)
 		return (-1);
 	//close
 	ft_close_all(mini);
+	//kill_signal
+	ft_sigint_process_handle();
 	//WAIT
 	while (cmd)
 	{

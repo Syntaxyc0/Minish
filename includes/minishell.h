@@ -121,6 +121,8 @@ enum e_type
 
 void	ft_signal(int signal);
 void	ft_sigint_handle(void);
+void	ft_sigint_process_handle(void);
+void	ft_kill_proc(int signal);
 void	ft_handle_exit(t_mini *mini);
 
 //error

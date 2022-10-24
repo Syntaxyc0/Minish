@@ -8,3 +8,9 @@ void	ft_signal(int signal)
 	rl_replace_line("", 0);
 	rl_redisplay();
 }
+
+void	ft_kill_proc(int signal)
+{
+	(void)signal;
+	kill(0, SIGKILL);
+}
