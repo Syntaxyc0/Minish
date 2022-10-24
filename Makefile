@@ -47,6 +47,7 @@ SRCS = 	ft_signal.c \
 		get_env_value.c \
 		unset.c \
 		export.c \
+		export2.c	\
 		env.c	\
 		main.c \
 		cd.c	\

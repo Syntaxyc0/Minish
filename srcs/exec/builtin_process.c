@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:34:15 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/22 15:20:55 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/24 11:29:41 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	which_builtin(t_command *cmd, t_mini *mini)
 	}
 	if (!ft_strncmp(cmd->args[0], "pwd", str_big(cmd->args[0], "pwd")))
 	{
-		pwd();
+		pwd(cmd, mini);
 		return ;
 	}
 	if (!ft_strncmp(cmd->args[0], "export", str_big(cmd->args[0], "export")))

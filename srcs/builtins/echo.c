@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 14:44:05 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/22 15:11:56 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/24 10:29:33 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,35 @@ void	echo(t_command *cmd)
 		n_count++;
 		i++;
 	}
+	echo_print_args(cmd, i);
+	if (!n_count)
+	{
+		if (any_redir_out(cmd))
+			write(cmd->fd[1], "\n", 1);
+		else
+			printf("\n");
+	}
+}
+
+void	echo_print_args(t_command *cmd, int i)
+{
 	while (cmd->args[i])
 	{
 		if (i < cmd_args_len(cmd))
 		{
-			printf("%s", cmd->args[i]);
-			if (i != cmd_args_len(cmd) - 1)
-				printf(" ");
+			if (any_redir_out(cmd))
+			{
+				write(cmd->fd[1], cmd->args[i], ft_strlen(cmd->args[i]));
+				if (i != cmd_args_len(cmd) - 1)
+					write(cmd->fd[1], " ", 1);
+			}
+			else
+			{
+				printf("%s", cmd->args[i]);
+				if (i != cmd_args_len(cmd) - 1)
+					printf(" ");
+			}
 		}
 		i++;
 	}
-	if (!n_count)
-		printf("\n");
 }
