@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:50:41 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/21 16:18:55 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/22 15:16:12 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int	ft_close_all(t_mini *mini)
 				g_exit_status = 1;
 				perror(NULL);
 			}
+			cmd->fd[0] = 0;
 		}
 		if (cmd->fd[1])
 		{
@@ -66,6 +67,7 @@ int	ft_close_all(t_mini *mini)
 				g_exit_status = 1;
 				perror(NULL);
 			}
+			cmd->fd[1] = 0;
 		}
 		cmd = cmd->next;
 	}
@@ -105,17 +107,23 @@ void	execution(t_command *cmd, t_mini *mini)
 {
 	//dup2 in _ out
 	if (dup_io(cmd) == -1)
-		exit(g_exit_status) ;
+		exit(g_exit_status);
 	//close all fd
 	if (ft_close_all(mini) == -1)
-		exit(g_exit_status) ;
-	//access
-	if (ft_access(cmd, mini) == -1)
-		exit(g_exit_status) ;
-	//execve (!!!WARNING mini->environment n'est plus valide si une modif de l'env est effectue)
-	if (execve(cmd->fullpath, cmd->args, mini->environment) == -1)
-	{
-		perror(NULL);
 		exit(g_exit_status);
+	if (!is_builtin(cmd->args[0]))
+	{
+		//access
+		if (ft_access(cmd, mini) == -1)
+			exit(g_exit_status);
+		//execve (!!!WARNING mini->environment n'est plus valide si une modif de l'env est effectue)
+		if (execve(cmd->fullpath, cmd->args, mini->environment) == -1)
+		{
+			perror(NULL);
+			exit(g_exit_status);
+		}
 	}
+	else
+		builtin_process(cmd, mini);
+	exit(g_exit_status);
 }

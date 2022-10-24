@@ -41,7 +41,7 @@
 DEFINE io :
 io = 0	-> !redir && first && last
 io = -2	-> first !redir_out
-io = -1	-> only redir_out
+io = -1	-> redir_out && first
 io = 1	-> only redir_in || !first
 io = 2	-> !first && !last !redir
 io = 3	-> redir_in && redir_out
@@ -138,10 +138,12 @@ int		error_redisplay_line(char *msg, char *token, int errcode);
 
 //builtins
 
+void	add_absolute_path(char **path, char **path_slash, char **tmp, char **args , t_mini *mini);
 void	cd(t_command *cmd, t_mini *mini);
-void	echo(int ac, char **av);
-void	env(t_mini *mini);
-void	export(t_mini *mini, int ac, char **av);
+void	echo(t_command *cmd);
+void	echo_print_args(t_command *cmd, int i);
+void	env(t_mini *mini, t_command *cmd);
+void	export(t_mini *mini, t_command *cmd);
 void	ft_exit(t_command *cmd, t_mini *mini);
 void	import(t_mini *mini, int ac, char **av);
 void	import_env(t_mini *mini, char *s);
@@ -152,15 +154,17 @@ void	lst_del_unset_env(t_env *tmp, t_env *previous);
 void	lst_del_unset_export(t_export *tmp, t_export *previous);
 void	old_pwd(t_mini *mini);
 void	push_in_env(t_mini *mini, char *curpath);
-void	pwd(void);
-void	unset(t_mini *mini, int ac, char **av);
+void	pwd(t_command *cmd, t_mini *mini);
+void	pwd_get_cwd(char *path, int i, t_mini *mini);
+void	unset(t_mini *mini, t_command *cmd);
 void	unset_in_env(t_mini *mini, char **av);
 void	unset_in_export(t_mini *mini, char **av);
-char	*back_repo(char *curpath, int dot_count);
-char	*get_path(char **av);
-char	*get_pwd(void);
+char	*back_repo(char *curpath, int dot_count, t_mini *mini);
+char	*get_path(char **av, t_mini *mini);
+char	*get_pwd(t_mini *mini);
 char	*home_env(t_mini *mini);
-int		check_args(int ac, char **av);
+char	*two_dot(char *curpath, t_mini *mini);
+int		check_args(int nb_arg, char **args);
 int		is_builtin(char *arg);
 int		is_egal(char *s);
 int		is_space_before_egal(char *s);
@@ -201,6 +205,8 @@ void	builtin_process(t_command *cmd, t_mini *mini);
 void	execution(t_command *cmd, t_mini *mini);
 void	redir_out(t_command *cmd);
 void	ft_append(t_command *cmd);
+void	which_builtin(t_command *cmd, t_mini *mini);
+void	which_builtin2(t_command *cmd, t_mini *mini);
 int		dup_io(t_command *cmd);
 int		exec(t_mini *mini);
 int		init_pipe(t_mini *mini);
@@ -217,5 +223,6 @@ void	get_all_path(t_mini *mini);
 int		str_big(char *a, char *b);
 int		cmd_args_len(t_command *cmd);
 int		cmd_len(t_mini *mini);
+int		any_redir_out(t_command *cmd);
 
 #endif

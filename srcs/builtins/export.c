@@ -6,33 +6,11 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 13:44:07 by ggobert           #+#    #+#             */
-/*   Updated: 2022/09/30 14:38:36 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/24 11:48:21 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	is_egal(char *s)
-{
-	int	i;
-
-	i = -1;
-	while (s[++i])
-		if (s[i] == '=')
-			return (1);
-	return (0);
-}
-
-int	is_space_before_egal(char *s)
-{
-	int	i;
-
-	i = -1;
-	while (s[++i] && s[i] != '=')
-		if (s[i] == ' ')
-			return (1);
-	return (0);
-}
 
 void	import(t_mini *mini, int ac, char **av)
 {
@@ -53,17 +31,6 @@ void	import(t_mini *mini, int ac, char **av)
 	}
 }
 
-void	init_myexport(t_mini *mini, char *s)
-{
-	mini->myexport = malloc(sizeof(t_export));
-	if (!mini->myexport)
-		free_mini_exit_msg(mini, ERR_MALLOC);
-	mini->myexport->key = ft_strdup(s);
-	mini->myexport->next = 0;
-	if (!mini->myexport->key)
-		free_mini_exit_msg(mini, ERR_MALLOC);
-}
-
 void	import_export(t_mini *mini, char *s)
 {
 	t_export	*tmp;
@@ -77,7 +44,10 @@ void	import_export(t_mini *mini, char *s)
 	tmp = mini->myexport;
 	ret = malloc(sizeof(t_export));
 	if (!ret)
+	{
+		g_exit_status = 1;
 		free_mini_exit_msg(mini, ERR_MALLOC);
+	}
 	ret->key = ft_strdup(s);
 	ret->next = 0;
 	while (mini->myexport->next)
@@ -96,8 +66,20 @@ void	import_env(t_mini *mini, char *s)
 	while(s[j] != 0 && s[j] != '=')
 		j++;
 	key = ft_substr(s, 0, j);
+	if (!key)
+	{
+		g_exit_status = 1;
+		free_mini_exit_msg(mini, ERR_MALLOC);
+	}
 	if (s[j + 1])
+	{
 		value = ft_substr(s, j + 1, ft_strlen(s));
+		if (!value)
+		{
+			g_exit_status = 1;
+			free_mini_exit_msg(mini, ERR_MALLOC);
+		}
+	}	
 	else
 		value = 0;
 	add_envelem(mini, key, value);
@@ -105,21 +87,21 @@ void	import_env(t_mini *mini, char *s)
 	free(value);
 }
 
-int	check_args(int ac, char **av)
+int	check_args(int nb_arg, char **args)
 {
 	int	i;
 
-	while (--ac > 0)
+	while (--nb_arg > 1)
 	{
-		if (av[ac][0] == '=')
+		if (args[nb_arg][0] == '=')
 		{
 			write_error_message(ERR_VALIDARG);
 			return(1);
 		}
 		i = 0;
-		while (av[ac][i] != '=' && av[ac][i])
+		while (args[nb_arg][i] != '=' && args[nb_arg][i])
 		{
-			if (ft_isalpha(av[ac][i]) != 1 && av[ac][i] != '_')
+			if (ft_isalpha(args[nb_arg][i]) != 1 && args[nb_arg][i] != '_')
 			{
 				write_error_message(ERR_VALIDARG);
 				return (1);
@@ -130,14 +112,14 @@ int	check_args(int ac, char **av)
 	return (0);
 }
 
-void	export(t_mini *mini, int ac, char **av)
+void	export(t_mini *mini, t_command *cmd)
 {
-	if (ac == 1)
+	if (cmd_args_len(cmd) == 1)
 		write_error_message("Unspecified behaviour (cf man export)\n");
 	else
 	{
-		if (check_args(ac, av) == 1)
+		if (check_args(cmd_args_len(cmd), cmd->args) == 1)
 			return;
-		import(mini, ac, av);
+		import(mini, cmd_args_len(cmd), cmd->args);
 	}
 }

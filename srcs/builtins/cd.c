@@ -6,32 +6,31 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 11:49:48 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/21 16:30:03 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/24 11:43:18 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_path(char **args)
+char	*get_path(char **args, t_mini *mini)
 {
 	char	*path;
 	char	*path_slash;
 	char	*tmp;
 
+	path = 0;
+	path_slash = 0;
+	tmp = 0;
 	if (*args[1] == '/')
 		return (ft_strdup(args[1]));
 	else
 	{
-		path = get_pwd();
-		tmp = ft_strjoin(path, "/");
-		free(path);
-		path_slash = ft_strjoin(tmp, args[1]);
-		free(tmp);
+		add_absolute_path(&path, &path_slash, &tmp, args, mini);
 		return (path_slash);
 	}
 }
 
-char	*back_repo(char *curpath, int dot_count)
+char	*back_repo(char *curpath, int dot_count, t_mini *mini)
 {
 	int		i;
 	char	*tmp;
@@ -43,11 +42,16 @@ char	*back_repo(char *curpath, int dot_count)
 		if (curpath[i] && curpath[i--] == '/')
 			dot_count--;
 	tmp = ft_substr(curpath, 0, i + 1);
+	if (!tmp)
+	{
+		g_exit_status = 1;
+		free_mini_exit_msg(mini, ERR_MALLOC);
+	}
 	free(curpath);
 	return (tmp);
 }
 
-char	*two_dot(char *curpath)
+char	*two_dot(char *curpath, t_mini *mini)
 {
 	int		i;
 	int		dot_count;
@@ -62,9 +66,15 @@ char	*two_dot(char *curpath)
 	if (dot_count == 1)
 	{
 		tmp = ft_strdup(curpath);
+		if (!tmp)
+		{
+			g_exit_status = 1;
+			free_mini_exit_msg(mini, ERR_MALLOC);
+		}
+		free(curpath);
 		return (tmp);
 	}
-	tmp = back_repo(curpath, dot_count);
+	tmp = back_repo(curpath, dot_count, mini);
 	return (tmp);
 }
 
@@ -74,13 +84,18 @@ void	push_in_env(t_mini *mini, char *curpath)
 	char	*temp;
 
 	tmp = mini->myenv;
-	temp = two_dot(curpath);
+	temp = two_dot(curpath, mini);
 	while (tmp)
 	{
 		if (!ft_strncmp("PWD", tmp->key, str_big("PWD", tmp->key)))
 		{
 			free(tmp->value);
 			tmp->value = ft_strdup(temp);
+			if (!tmp->value)
+			{
+				g_exit_status = 1;
+				free_mini_exit_msg(mini, ERR_MALLOC);
+			}
 		}
 		tmp = tmp->next;
 	}
@@ -96,18 +111,28 @@ void	cd(t_command *cmd, t_mini *mini)
 		curpath = home_env(mini);
 	else if (cmd_args_len(cmd) > 2)
 	{
+		g_exit_status = 1;
 		write_error_message(ERR_ARG);
 		return ;
 	}
 	else
-		curpath = get_path(cmd->args);
+	{
+		curpath = get_path(cmd->args, mini);
+		if (!curpath)
+		{
+			g_exit_status = 1;
+			free_mini_exit_msg(mini, ERR_MALLOC);
+		}
+	}
 	if (chdir(curpath) < 0)
 	{
 		g_exit_status = 1;
 		perror(NULL);
 	}
 	else
+	{
 		push_in_env(mini, curpath);
+	}
 }
 
 /* Les erreurs gérées sont : 

@@ -144,5 +144,5 @@ void	free_mini_exit_msg(t_mini *mini, char *message)
 {
 	write_error_message(message);
 	free_mini(mini);
-	exit(1);
+	exit(g_exit_status);
 }

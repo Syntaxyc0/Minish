@@ -6,25 +6,35 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:40:01 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/21 13:40:47 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/24 11:43:48 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 
-char	*get_pwd(void)
+char	*get_pwd(t_mini *mini)
 {
 	int		i;
 	char	*path;
 
 	i = 256;
 	path = malloc(i);
+	if (!path)
+	{
+		g_exit_status = 1;
+		free_mini_exit_msg(mini, ERR_MALLOC);
+	}
 	while (getcwd(path, i) == 0)
 	{
 		free(path);
 		i *= 2;
 		path = malloc(i);
+		if (!path)
+		{
+			g_exit_status = 1;
+			free_mini_exit_msg(mini, ERR_MALLOC);
+		}
 	}
 	return (path);
 }
@@ -39,8 +49,12 @@ char	*home_env(t_mini *mini)
 	{
 		if (!ft_strncmp("HOME", tmp->key, str_big("HOME", tmp->key)))
 		{
-			home_path = tmp->value;
-			push_in_env(mini, home_path);
+			home_path = ft_strdup(tmp->value);
+			if (!home_path)
+			{
+				g_exit_status = 1;
+				free_mini_exit_msg(mini, ERR_MALLOC);
+			}
 			return (home_path);
 		}
 		tmp = tmp->next;
@@ -53,7 +67,7 @@ void	old_pwd(t_mini *mini)
 	char	*path;
 	t_env	*tmp;
 
-	path = get_pwd();
+	path = get_pwd(mini);
 	tmp = mini->myenv;
 	while (tmp)
 	{
@@ -61,8 +75,37 @@ void	old_pwd(t_mini *mini)
 		{
 			free(tmp->value);
 			tmp->value = ft_strdup(path);
+			if (!tmp->value)
+			{
+				g_exit_status = 1;
+				free_mini_exit_msg(mini, ERR_MALLOC);
+			}
 		}
 		tmp = tmp->next;
 	}
 	free(path);
+}
+
+void	add_absolute_path(char **path, char **path_slash, char **tmp, char **args, t_mini *mini)
+{
+	*path = get_pwd(mini);
+	if (!*path)
+	{
+		g_exit_status = 1;
+		free_mini_exit_msg(mini, ERR_MALLOC);
+	}
+	*tmp = ft_strjoin(*path, "/");
+	if (!*tmp)
+	{
+		g_exit_status = 1;
+		free_mini_exit_msg(mini, ERR_MALLOC);
+	}
+	free(*path);
+	*path_slash = ft_strjoin(*tmp, args[1]);
+	if (!*path_slash)
+	{
+		g_exit_status = 1;
+		free_mini_exit_msg(mini, ERR_MALLOC);
+	}
+	free(*tmp);
 }

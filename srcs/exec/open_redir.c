@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:55:03 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/21 15:33:54 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/24 10:18:53 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,24 @@
 int	ft_open_all(t_mini *mini)
 {
 	t_command	*cmd;
-	
+	t_redir		*redir;
+
 	cmd = mini->commands;
 	while (cmd)
 	{
-		while (cmd->redir)
+		redir = cmd->redir;
+		while (redir)
 		{
-			if (cmd->redir->type == 4)
+			if (redir->type == 4)
 				if (redir_in(cmd) == -1)
 					return (-1);
-			if (cmd->redir->type == 5)
+			if (redir->type == 5)
 				ft_heredoc(cmd);
-			if (cmd->redir->type == 6)
+			if (redir->type == 6)
 				redir_out(cmd);
-			if (cmd->redir->type == 7)
+			if (redir->type == 7)
 				ft_append(cmd);
-			cmd->redir = cmd->redir->next;
+			redir = redir->next;
 		}
 		cmd = cmd->next;
 	}
