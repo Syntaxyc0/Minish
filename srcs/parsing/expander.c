@@ -61,12 +61,12 @@ void	expand_env(t_mini *mini, t_token *token, int i)
 	return ;
 }
 
-void	expand(t_mini *mini, t_token *token, int i)
+int	expand(t_mini *mini, t_token *token, int i)
 {
 	char	*tmp;
 
 	if (token->value[i + 1] == '\0')
-		return ;
+		return (1);
 	else if (token->value[i + 1] == '\'' || token->value[i + 1] == '\"')
 	{
 		token->value = replace_string(token->value, NULL,
@@ -98,7 +98,8 @@ void	expand(t_mini *mini, t_token *token, int i)
 	else if (ft_isalpha(token->value[i + 1]) || token->value[i + 1] == '_')
 		expand_env(mini, token, i);
 	else
-		free_mini_exit_msg(mini, ERR_SYNTAX);
+		return (error_redisplay_line(ERR_SYNTAX, "'$'", 2));
+	return (0);
 }
 
 int	expander(t_mini *mini)
@@ -116,7 +117,10 @@ int	expander(t_mini *mini)
 		while (index != -1)
 		{
 			if (index >= 0)
-				expand(mini, token, index);
+			{
+				if (expand(mini, token, index))
+					return (1);
+			}
 			if (token->value[0] == 0)
 			{
 				tmp = token->next;

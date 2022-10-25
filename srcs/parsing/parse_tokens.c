@@ -88,6 +88,8 @@ int	parse_token(t_mini *mini, char *str)
 
 	i = 0;
 	start = 0;
+	if (str[i] == 0)
+		return (1);
 	if (!check_quote_syntax(str))
 		return (error_redisplay_line(ERR_QUOTES, NULL, 1));
 	parse_substr(mini, str, &start, &i);

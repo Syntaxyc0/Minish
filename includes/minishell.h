@@ -137,6 +137,7 @@ void	free_export(t_mini *mini);
 void	free_array(char **array);
 void	free_commands(t_mini *mini);
 void	exit_free_status_msg(t_mini *mini, int ges, char *msg);
+int		error_args(char *msg, char *token, int errcode);
 int		error_redisplay_line(char *msg, char *token, int errcode);
 
 //builtins

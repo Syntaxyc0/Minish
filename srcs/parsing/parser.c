@@ -15,7 +15,6 @@
 int	get_newline(t_mini *mini)
 {
 	free_tokens(mini);
-	printf("\n");
 	return (1);
 }
 
@@ -30,10 +29,7 @@ int	parser(t_mini *mini, char *line)
 	if (check_syntax(mini))
 		return (get_newline(mini));
 	if (expander(mini))
-	{
-		free_tokens(mini);
-		return (1);
-	}
+		return (get_newline(mini));
 	parse_spaces(mini);
 	if (remove_quotes(mini))
 		free_mini_exit_msg(mini, ERR_MALLOC);
