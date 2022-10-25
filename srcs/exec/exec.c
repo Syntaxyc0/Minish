@@ -99,6 +99,7 @@ int	exec(t_mini *mini)
 			wait(&g_exit_status);
 		cmd = cmd->next;
 	}
+	g_exit_status = g_exit_status / 256;
 	heredoc_anihilator(mini);
 	return (0);
 }
