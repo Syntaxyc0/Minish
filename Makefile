@@ -57,13 +57,14 @@ SRCS = 	ft_signal.c \
 		pwd.c	\
 		echo.c	\
 		utils.c \
+		ft_strjoin_free.c \
 		exec.c	\
 		fork_execution.c \
 		open_redir.c  \
 		builtin_process.c	\
 		exit.c	\
 		
-CC = gcc $(FSANITIZE)
+CC = gcc
 
 CFLAGS = -MMD -Wall -Werror -Wextra
 

@@ -39,8 +39,6 @@ int	main(int argc, char **argv, char **env)
 			free_mini(mini);
 			return (1);
 		}
-		free(line);
-		line = NULL;
 		free_commands(mini);
 	}
 	free_mini(mini);

@@ -55,8 +55,8 @@ void	expand_env(t_mini *mini, t_token *token, int i)
 	token->value = replace_string(token->value, ret, i, i + j - 1);
 	if (!token->value)
 		free_mini_exit_msg(mini, ERR_MALLOC);
-	token->value = replace_string(token->value, "\"", 0, 0);
-	token->value = replace_string(token->value, "\"", ft_strlen(token->value), ft_strlen(token->value));
+	token->value = ft_strjoin_free("\"", token->value, 0, 1);
+	token->value = ft_strjoin_free(token->value, "\"", 1, 0);
 	free(tmp);
 	return ;
 }

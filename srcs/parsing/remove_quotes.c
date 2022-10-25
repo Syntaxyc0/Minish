@@ -64,6 +64,7 @@ int	remove_token_quote(t_token *token, int *start, int *end)
 		token->value = replace_string(token->value, NULL, *start, *start);
 		if (!token->value)
 			return (1);
+		
 		token->value = replace_string(token->value, NULL, *end - 1, *end - 1);
 		if (!token->value)
 			return (1);

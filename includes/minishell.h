@@ -157,7 +157,7 @@ void	lst_del_unset_export(t_export *tmp, t_export *previous);
 void	old_pwd(t_mini *mini);
 void	push_in_env(t_mini *mini, char *curpath);
 void	pwd(t_command *cmd, t_mini *mini);
-void	pwd_get_cwd(char *path, int i, t_mini *mini);
+char	*pwd_get_cwd(t_mini *mini, int i, char *ret);
 void	unset(t_mini *mini, t_command *cmd);
 void	unset_in_env(t_mini *mini, char **av);
 void	unset_in_export(t_mini *mini, char **av);
@@ -229,5 +229,6 @@ int		str_big(char *a, char *b);
 int		cmd_args_len(t_command *cmd);
 int		cmd_len(t_mini *mini);
 int		any_redir_out(t_command *cmd);
+char	*ft_strjoin_free(char *s1, char *s2, int free1, int free2);
 
 #endif

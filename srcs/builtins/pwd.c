@@ -16,33 +16,44 @@ void	pwd(t_command *cmd, t_mini *mini)
 {
 	int		i;
 	char	*path;
+	char	*ret;
 
 	i = 256;
-	path = malloc(i);
-	if (!path)
+	ret = malloc(i);
+	if (!ret)
 	{
 		g_exit_status = 1;
 		free_mini_exit_msg(mini, ERR_MALLOC);
 	}
-	pwd_get_cwd(path, i, mini);
+	path = pwd_get_cwd(mini, i, ret);
 	if (any_redir_out(cmd))
 		write(cmd->fd[1], path, ft_strlen(path));
 	else
 		printf("%s\n", path);
-	free(path);
+	if (errno == ERANGE)
+		free(path);
 }
 
-void	pwd_get_cwd(char *path, int i, t_mini *mini)
+char	*pwd_get_cwd(t_mini *mini, int i, char *ret)
 {
-	while (getcwd(path, i) == 0)
+	while (getcwd(ret, i) == 0)
 	{
-		free(path);
-		i *= 2;
-		path = malloc(i);
-		if (!path)
+		if (errno == EACCES || errno == ENOENT)
 		{
-			g_exit_status = 1;
-			free_mini_exit_msg(mini, ERR_MALLOC);
+			ret = NULL;
+			ret = get_env_value(mini, "PWD");
+			return (ret);
+		}
+		if (errno == ERANGE)
+		{
+			i *= 2;
+			ret = malloc(i);
+			if (!ret)
+			{
+				g_exit_status = 1;
+				free_mini_exit_msg(mini, ERR_MALLOC);
+			}
 		}
 	}
+	return (ret);
 }
