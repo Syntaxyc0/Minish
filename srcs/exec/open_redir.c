@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:55:03 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/24 10:18:53 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/24 16:29:36 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ void	redir_out(t_command *cmd)
 		cmd->io = 3;
 	else
 		cmd->io = -1;
-	
 }
 
 void	ft_append(t_command *cmd)
@@ -106,7 +105,8 @@ void	ft_append(t_command *cmd)
 			return ;
 		}
 	}
-	cmd->fd[1] = open(cmd->redir->filename, O_CREAT | O_WRONLY | O_APPEND, 0644);
+	cmd->fd[1] = open(cmd->redir->filename,
+			O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (cmd->fd[1] < 0)
 	{
 		g_exit_status = 1;

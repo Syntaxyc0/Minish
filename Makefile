@@ -111,17 +111,17 @@ $(OBJ_PATH):
 			@mkdir -p $(OBJ_PATH)
 
 clean:
-		make clean -C $(FT_PATH)
-		${RM} $(OBJ_PATH)
+		@make clean -C $(FT_PATH)
+		@${RM} $(OBJ_PATH)
 
 fclean:
-		make fclean -C $(FT_PATH)
-		make clean
-		${RM} ${NAME}
+		@make fclean -C $(FT_PATH)
+		@make clean
+		@${RM} ${NAME}
 
 re:
-	make fclean
-	make all
+	@make fclean
+	@make all
 
 -include $(DEPS)
 

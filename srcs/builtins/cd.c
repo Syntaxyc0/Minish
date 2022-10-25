@@ -6,29 +6,11 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 11:49:48 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/24 11:43:18 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/24 16:18:17 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*get_path(char **args, t_mini *mini)
-{
-	char	*path;
-	char	*path_slash;
-	char	*tmp;
-
-	path = 0;
-	path_slash = 0;
-	tmp = 0;
-	if (*args[1] == '/')
-		return (ft_strdup(args[1]));
-	else
-	{
-		add_absolute_path(&path, &path_slash, &tmp, args, mini);
-		return (path_slash);
-	}
-}
 
 char	*back_repo(char *curpath, int dot_count, t_mini *mini)
 {
@@ -124,15 +106,18 @@ void	cd(t_command *cmd, t_mini *mini)
 			free_mini_exit_msg(mini, ERR_MALLOC);
 		}
 	}
+	chdir_res(curpath, mini);
+}
+
+void	chdir_res(char *curpath, t_mini *mini)
+{
 	if (chdir(curpath) < 0)
 	{
 		g_exit_status = 1;
 		perror(NULL);
 	}
 	else
-	{
 		push_in_env(mini, curpath);
-	}
 }
 
 /* Les erreurs gérées sont : 

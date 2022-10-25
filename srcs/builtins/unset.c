@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 15:34:16 by gregoiregob       #+#    #+#             */
-/*   Updated: 2022/10/22 12:49:42 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/24 16:14:14 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	lst_del_unset_export(t_export *tmp, t_export *previous)
 		previous->next = tmp->next;
 	free(tmp);
 }
-
 
 void	unset_in_env(t_mini *mini, char **args)
 {
@@ -88,6 +87,7 @@ void	unset_in_export(t_mini *mini, char **args)
 void	unset(t_mini *mini, t_command *cmd)
 {
 	int	i;
+
 	i = cmd_args_len(cmd);
 	if (i == 1)
 		write_error_message(ERR_ARG);
