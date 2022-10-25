@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmds.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbesnier <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:22:18 by jbesnier          #+#    #+#             */
-/*   Updated: 2022/10/21 14:22:20 by jbesnier         ###   ########.fr       */
+/*   Updated: 2022/10/25 13:34:56 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ t_redir	*init_redir(void)
 	}
 	ret->type = 0;
 	ret->filename = NULL;
+	ret->heredoc_name = NULL;
 	ret->next = NULL;
 	return (ret);
 }

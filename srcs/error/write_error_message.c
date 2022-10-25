@@ -19,3 +19,12 @@ int	write_error_message(char *message)
 	write(2, message, ft_strlen(message));
 	return (1);
 }
+
+int	exit_perror(int ges, int ret)
+{
+	g_exit_status = ges;
+	perror(NULL);
+	if (ret == -1)
+		return (-1);
+	return (0);
+}
