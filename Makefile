@@ -27,6 +27,7 @@ HEADERS = includes \
 SRCS = 	ft_signal.c				\
 		ft_signal_handle.c		\
 		write_error_message.c	\
+		free_utils.c 			\
 		free_mini_exit_msg.c	\
 		error_redisplay_line.c	\
 		init_mini.c				\
@@ -37,6 +38,7 @@ SRCS = 	ft_signal.c				\
 		check_syntax.c			\
 		parser.c 				\
 		get_redir_types.c 		\
+		check_handle_redir.c	\
 		replace_string.c 		\
 		expander.c 				\
 		parse_cmds.c 			\
@@ -55,6 +57,7 @@ SRCS = 	ft_signal.c				\
 		pwd.c					\
 		echo.c					\
 		utils.c 				\
+		ft_strjoin_free.c		\
 		exec.c					\
 		fork_execution.c 		\
 		open_redir.c  			\
