@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:26:11 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/24 10:08:59 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/24 16:13:00 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	get_all_path(t_mini *mini)
 	mini->all_path = ft_split(ev->value, ':');
 }
 
-int cmd_len(t_mini *mini)
+int	cmd_len(t_mini *mini)
 {
 	int			i;
 	t_command	*cmd;
@@ -53,7 +53,7 @@ int cmd_len(t_mini *mini)
 	return (i);
 }
 
-int cmd_args_len(t_command *cmd)
+int	cmd_args_len(t_command *cmd)
 {
 	int			i;
 
@@ -65,12 +65,12 @@ int cmd_args_len(t_command *cmd)
 
 int	any_redir_out(t_command *cmd)
 {
-	t_redir *redir;
+	t_redir	*redir;
 
 	redir = cmd->redir;
-	while(redir)
+	while (redir)
 	{
-		if (redir->type == 6)	
+		if (redir->type == 6)
 			return (1);
 		redir = redir->next;
 	}
