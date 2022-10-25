@@ -205,8 +205,8 @@ int		is_egal(char *s);
 
 void	builtin_process(t_command *cmd, t_mini *mini);
 void	execution(t_command *cmd, t_mini *mini);
-void	redir_out(t_command *cmd);
-void	ft_append(t_command *cmd);
+void	redir_out(t_command *cmd, t_redir *redir);
+void	ft_append(t_command *cmd, t_redir *redir);
 void	which_builtin(t_command *cmd, t_mini *mini);
 void	which_builtin2(t_command *cmd, t_mini *mini);
 int		dup_io(t_command *cmd);
@@ -218,7 +218,7 @@ int		ft_access(t_command *cmd, t_mini *mini);
 int		ft_close_all(t_mini *mini);
 int		ft_heredoc(t_command *cmd);
 int		ft_open_all(t_mini *mini);		
-int		redir_in(t_command *cmd);
+int		redir_in(t_command *cmd, t_redir *redir);
 
 //utils
 
