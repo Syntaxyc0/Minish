@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:26:11 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/24 16:13:00 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/25 15:20:53 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	any_redir_out(t_command *cmd)
 	redir = cmd->redir;
 	while (redir)
 	{
-		if (redir->type == 6)
+		if (redir->type == 6 || redir->type == 7)
 			return (1);
 		redir = redir->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:50:41 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/25 14:15:30 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/25 16:42:17 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,15 @@ int	dup_io(t_command *cmd)
 			return (exit_perror(1, -1));
 	}
 	if (cmd->io == -1 || cmd->io == 3)
+	{
 		if (dup2(cmd->fd[1], STDOUT_FILENO) == -1)
 			return (exit_perror(1, -1));
+	}
 	if (cmd->io == 2 || cmd->io == -2)
+	{
 		if (dup2(cmd->next->fd[1], STDOUT_FILENO) == -1)
 			return (exit_perror(1, -1));
+	}
 	return (0);
 }
 
@@ -52,7 +56,7 @@ int	ft_close_all(t_mini *mini)
 	return (0);
 }
 
-int	ft_access(t_command *cmd, t_mini *mini)
+int	ft_access(t_command *cmd, t_mini *mini) /* !! strjoin NON protegé*/
 {
 	int		i;
 	char	*tmp;

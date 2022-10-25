@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 14:44:05 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/24 16:15:24 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/25 17:03:51 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	echo_print_args(t_command *cmd, int i)
 		{
 			if (any_redir_out(cmd))
 			{
-				write(cmd->fd[1], cmd->args[i], ft_strlen(cmd->args[i]));
+				>>write(cmd->fd[1], cmd->args[i], ft_strlen(cmd->args[i]));
 				if (i != cmd_args_len(cmd) - 1)
 					write(cmd->fd[1], " ", 1);
 			}

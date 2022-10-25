@@ -206,6 +206,7 @@ int		is_egal(char *s);
 
 //exec
 
+void	access_in(t_command *cmd2);
 void	builtin_process(t_command *cmd, t_mini *mini);
 void	execution(t_command *cmd, t_mini *mini);
 void	heredoc_anihilator(t_mini *mini);
@@ -235,3 +236,9 @@ int		any_redir_out(t_command *cmd);
 char	*ft_strjoin_free(char *s1, char *s2, int free1, int free2);
 
 #endif
+
+/*
+ERREUR
+-cmd "<<p cat" n'affiche pas le heredoc _____ peut-etre close puis re open?
+-cmd "echo some >o" redir le echo dans le o, mais "echo some >o | ls" affiche "some"
+-"cmd1 >test | cmd2 <test | cmd3", cmd2 ne s'execute pas mais cmd3 oui et tout les pipe opé*/
