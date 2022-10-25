@@ -62,6 +62,7 @@ SRCS = 	ft_signal.c				\
 		exit.c					\
 		heredoc.c				\
 		free_utils.c			\
+		ft_strjoin_free.c		\
 		
 CC = gcc #$(FSANITIZE)
 
