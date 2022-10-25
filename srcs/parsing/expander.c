@@ -55,6 +55,8 @@ void	expand_env(t_mini *mini, t_token *token, int i)
 	token->value = replace_string(token->value, ret, i, i + j - 1);
 	if (!token->value)
 		free_mini_exit_msg(mini, ERR_MALLOC);
+	token->value = replace_string(token->value, "\"", 0, 0);
+	token->value = replace_string(token->value, "\"", ft_strlen(token->value), ft_strlen(token->value));
 	free(tmp);
 	return ;
 }
@@ -102,7 +104,7 @@ void	expand(t_mini *mini, t_token *token, int i)
 int	expander(t_mini *mini)
 {
 	t_token	*token;
-	t_token *tmp;
+	t_token	*tmp;
 	int		index;
 
 	token = mini->tokens;

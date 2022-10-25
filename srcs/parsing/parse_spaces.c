@@ -69,12 +69,28 @@ char	*split_token(t_mini *mini, t_token *token)
 	return (tmp);
 }
 
+int	get_token_value(t_mini *mini, t_token *token)
+{
+	char	*value;
+	t_token	*new;
+
+	value = split_token(mini, token);
+	if (value[0] == 0)
+	{
+		free(value);
+		return (1);
+	}
+	new = create_token(value);
+	new->type = WORD;
+	new->next = token->next;
+	token->next = new;
+	return (0);
+}
+
 void	parse_spaces(t_mini *mini)
 {
 	t_token	*token;
 	t_token	*new;
-	t_token	*tmp;
-	char	*value;
 
 	token = mini->tokens;
 	while (token != NULL)
@@ -83,23 +99,15 @@ void	parse_spaces(t_mini *mini)
 		{
 			if (check_only_space(token->value, 0))
 			{
-				tmp = token->next;
+				new = token->next;
 				delete_token(mini, token);
-				token = tmp;
+				token = new;
 				if (!token)
 					break ;
 				continue ;
 			}
-			value = split_token(mini, token);
-			if (value[0] == 0)
-			{
-				free(value);
+			if (get_token_value(mini, token))
 				break ;
-			}
-			new = create_token(value);
-			new->type = WORD;
-			new->next = token->next;
-			token->next = new;
 		}
 		if (token)
 			token = token->next;

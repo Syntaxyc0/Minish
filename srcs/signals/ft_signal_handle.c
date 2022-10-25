@@ -39,6 +39,6 @@ void	process_sig_handle(void)
 void	ft_handle_exit(t_mini *mini)
 {
 	free_mini(mini);
-	printf("exit\n");
+	write_error_message("exit\n");
 	exit(g_exit_status);
 }

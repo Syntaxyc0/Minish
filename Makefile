@@ -27,11 +27,13 @@ HEADERS = includes \
 SRCS = 	ft_signal.c \
 		ft_signal_handle.c \
 		write_error_message.c \
+		free_utils.c \
 		free_mini_exit_msg.c \
 		error_redisplay_line.c \
 		init_mini.c \
 		check_quote.c \
 		parse_tokens.c \
+		check_handle_redir.c \
 		check_tokens.c \
 		get_token_type.c \
 		check_syntax.c \

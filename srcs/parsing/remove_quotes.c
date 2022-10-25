@@ -77,11 +77,11 @@ int	remove_quotes(t_mini *mini)
 	int		start;
 	int		end;
 
+	start = 0;
+	end = 0;
 	token = mini->tokens;
 	while (token != NULL)
 	{
-		start = 0;
-		end = 0;
 		if (token->type == WORD)
 		{
 			while (contains_quote(token->value, start))
