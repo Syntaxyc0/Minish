@@ -24,44 +24,45 @@ UTILS_PATH = utils
 
 HEADERS = includes \
 
-SRCS = 	ft_signal.c \
-		ft_signal_handle.c \
-		write_error_message.c \
-		free_mini_exit_msg.c \
-		error_redisplay_line.c \
-		init_mini.c \
-		check_quote.c \
-		parse_tokens.c \
-		check_tokens.c \
-		get_token_type.c \
-		check_syntax.c \
-		parser.c \
-		get_redir_types.c \
-		replace_string.c \
-		expander.c \
-		parse_cmds.c \
-		parse_spaces.c \
-		remove_quotes.c \
-		is_builtin.c \
-		get_env.c \
-		get_env_value.c \
-		unset.c \
-		export.c \
-		export2.c	\
-		env.c	\
-		main.c \
-		cd.c	\
-		cd2.c	\
-		pwd.c	\
-		echo.c	\
-		utils.c \
-		exec.c	\
-		fork_execution.c \
-		open_redir.c  \
-		builtin_process.c	\
-		exit.c	\
+SRCS = 	ft_signal.c				\
+		ft_signal_handle.c		\
+		write_error_message.c	\
+		free_mini_exit_msg.c	\
+		error_redisplay_line.c	\
+		init_mini.c				\
+		check_quote.c			\
+		parse_tokens.c			\
+		check_tokens.c			\
+		get_token_type.c		\
+		check_syntax.c			\
+		parser.c 				\
+		get_redir_types.c 		\
+		replace_string.c 		\
+		expander.c 				\
+		parse_cmds.c 			\
+		parse_spaces.c 			\
+		remove_quotes.c 		\
+		is_builtin.c 			\
+		get_env.c 				\
+		get_env_value.c 		\
+		unset.c 				\
+		export.c 				\
+		export2.c				\
+		env.c					\
+		main.c 					\
+		cd.c					\
+		cd2.c					\
+		pwd.c					\
+		echo.c					\
+		utils.c 				\
+		exec.c					\
+		fork_execution.c 		\
+		open_redir.c  			\
+		builtin_process.c		\
+		exit.c					\
+		heredoc.c				\
 		
-CC = gcc $(FSANITIZE)
+CC = gcc#$(FSANITIZE)
 
 CFLAGS = -MMD -Wall -Werror -Wextra
 

@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:50:41 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/24 16:48:12 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/25 14:15:30 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,16 @@
 int	dup_io(t_command *cmd)
 {
 	if (cmd->io > 0)
+	{
 		if (dup2(cmd->fd[0], STDIN_FILENO) == -1)
 			return (exit_perror(1, -1));
+	}
 	if (cmd->io == -1 || cmd->io == 3)
 		if (dup2(cmd->fd[1], STDOUT_FILENO) == -1)
 			return (exit_perror(1, -1));
 	if (cmd->io == 2 || cmd->io == -2)
 		if (dup2(cmd->next->fd[1], STDOUT_FILENO) == -1)
 			return (exit_perror(1, -1));
-	return (0);
-}
-
-int	exit_perror(int ges, int ret)
-{
-	g_exit_status = ges;
-	perror(NULL);
-	if (ret == -1)
-		return (-1);
 	return (0);
 }
 
@@ -82,7 +75,7 @@ int	ft_access(t_command *cmd, t_mini *mini)
 		return (0);
 	if (!mini->all_path[i])
 	{
-		error_redisplay_line(cmd->args[0], ": command not found\n", 127);
+		error_redisplay_line(cmd->args[0], "access : command not found\n", 127);
 		return (-1);
 	}
 	return (0);

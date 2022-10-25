@@ -40,9 +40,9 @@
 /*
 DEFINE io :
 io = 0	-> !redir && first && last
-io = -2	-> first !redir_out
-io = -1	-> redir_out && first
-io = 1	-> only redir_in || !first
+io = -2	-> first && !redir_out
+io = -1	-> first && redir_out 
+io = 1	-> redir_in 
 io = 2	-> !first && !last !redir
 io = 3	-> redir_in && redir_out
 */
@@ -81,6 +81,7 @@ typedef struct s_redir
 {
 	int				type;
 	char			*filename;
+	char			*heredoc_name;
 	struct s_redir	*next;
 }	t_redir;
 
@@ -205,6 +206,7 @@ int		is_egal(char *s);
 
 void	builtin_process(t_command *cmd, t_mini *mini);
 void	execution(t_command *cmd, t_mini *mini);
+void	heredoc_anihilator(t_mini *mini);
 void	redir_out(t_command *cmd, t_redir *redir);
 void	ft_append(t_command *cmd, t_redir *redir);
 void	which_builtin(t_command *cmd, t_mini *mini);
@@ -216,8 +218,9 @@ int		init_pipe(t_mini *mini);
 int		processes(t_mini *mini);
 int		ft_access(t_command *cmd, t_mini *mini);
 int		ft_close_all(t_mini *mini);
-int		ft_heredoc(t_command *cmd);
-int		ft_open_all(t_mini *mini);		
+int		ft_heredoc(t_command *cmd, t_redir *redir);
+char	*already_exist(t_redir *redir);
+int		ft_open_all(t_mini *mini);
 int		redir_in(t_command *cmd, t_redir *redir);
 
 //utils

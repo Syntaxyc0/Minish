@@ -5,16 +5,37 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/25 10:46:06 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/25 10:59:21 by ggobert          ###   ########.fr       */
+/*   Created: 2022/10/25 13:21:50 by ggobert           #+#    #+#             */
+/*   Updated: 2022/10/25 14:16:46 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	ft_heredoc(t_command *cmd)
+char	*already_exist(t_redir *redir)
 {
-	int fd;
+	if (access(redir->filename, R_OK) == 0)
+	{
+		return (ft_strjoin(redir->filename, "0"));
+	}
+	return (redir->filename);
+}
 
-	open()
+void	heredoc_anihilator(t_mini *mini)
+{
+	t_command	*cmd;
+	t_redir		*redir;
+
+	cmd = mini->commands;
+	while (cmd)
+	{
+		redir = cmd->redir;
+		while (redir)
+		{
+			if (cmd->redir->type == 5)
+				if (unlink(redir->heredoc_name) == -1)
+					exit_perror(1, 0);
+			redir = redir->next;
+		}
+		cmd = cmd->next;
+	}
 }

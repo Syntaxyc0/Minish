@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbesnier <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:22:31 by jbesnier          #+#    #+#             */
-/*   Updated: 2022/10/21 14:22:32 by jbesnier         ###   ########.fr       */
+/*   Updated: 2022/10/25 11:05:57 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	parser(t_mini *mini, char *line)
 	if (expander(mini))
 	{
 		free_tokens(mini);
-		return (1);sa_handler
+		return (1);
 	}
 	parse_spaces(mini);
 	if (remove_quotes(mini))
