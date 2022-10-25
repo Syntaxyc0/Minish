@@ -64,8 +64,9 @@ SRCS = 	ft_signal.c				\
 		builtin_process.c		\
 		exit.c					\
 		heredoc.c				\
+		free_utils.c			\
 		
-CC = gcc#$(FSANITIZE)
+CC = gcc #$(FSANITIZE)
 
 CFLAGS = -MMD -Wall -Werror -Wextra
 
