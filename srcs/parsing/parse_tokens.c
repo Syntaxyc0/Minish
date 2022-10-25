@@ -65,6 +65,20 @@ void	add_token(t_mini *mini, char *str, int *start, int *i)
 	*start = *i;
 }
 
+void	parse_substr(t_mini *mini, char *str, int *start, int *i)
+{
+	while (str[*i])
+	{
+		if (str[*i] == '\'' || str[*i] == '"')
+			*i += len_quote(str, *i) + 1;
+		else if (str[*i] == '<' || str[*i] == '>'
+			|| str[*i] == '|' || str[*i] == ' ')
+			add_token(mini, str, start, i);
+		else
+			*i += 1;
+	}
+}
+
 int	parse_token(t_mini *mini, char *str)
 {
 	int		i;
@@ -76,16 +90,7 @@ int	parse_token(t_mini *mini, char *str)
 	start = 0;
 	if (!check_quote_syntax(str))
 		return (error_redisplay_line(ERR_QUOTES, NULL, 1));
-	while (str[i])
-	{
-		if (str[i] == '\'' || str[i] == '"')
-			i += len_quote(str, i) + 1;
-		else if (str[i] == '<' || str[i] == '>'
-			|| str[i] == '|' || str[i] == ' ')
-			add_token(mini, str, &start, &i);
-		else
-			i++;
-	}
+	parse_substr(mini, str, &start, &i);
 	if (i != start)
 	{
 		ret = ft_substr(str, start, i - start);

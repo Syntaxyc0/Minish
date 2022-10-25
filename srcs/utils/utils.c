@@ -38,7 +38,7 @@ void	get_all_path(t_mini *mini)
 	mini->all_path = ft_split(ev->value, ':');
 }
 
-int cmd_len(t_mini *mini)
+int	cmd_len(t_mini *mini)
 {
 	int			i;
 	t_command	*cmd;
@@ -53,7 +53,7 @@ int cmd_len(t_mini *mini)
 	return (i);
 }
 
-int cmd_args_len(t_command *cmd)
+int	cmd_args_len(t_command *cmd)
 {
 	int			i;
 
@@ -65,12 +65,12 @@ int cmd_args_len(t_command *cmd)
 
 int	any_redir_out(t_command *cmd)
 {
-	t_redir *redir;
+	t_redir	*redir;
 
 	redir = cmd->redir;
-	while(redir)
+	while (redir)
 	{
-		if (redir->type == 6)	
+		if (redir->type == 6)
 			return (1);
 		redir = redir->next;
 	}

@@ -27,11 +27,11 @@ int main(int argc, char **argv, char **env)
 			add_history(line);
 		if (parser(mini, line))
 			continue ;
-		// if (exec(mini) == -1)
-		// {
-		// 	free_mini(mini);
-		// 	return (1);
-		// }
+		if (exec(mini) == -1)
+		{
+			free_mini(mini);
+			return (1);
+		}
 		free(line);
 		line = NULL;
 		free_commands(mini);

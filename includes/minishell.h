@@ -176,6 +176,8 @@ t_mini	*init_mini(void);
 int		len_quote(char *str, int i);
 int		check_quote_syntax(char	*str);
 int		len_quote(char *str, int i);
+int		handle_append(t_mini *mini, t_token *token);
+int		handle_heredoc(t_mini *mini, t_token *token);
 int		check_tokens(t_mini *mini);
 t_token	*create_token(char *value);
 void	delete_token(t_mini *mini, t_token *token);
