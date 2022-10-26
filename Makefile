@@ -61,11 +61,9 @@ SRCS = 	ft_signal.c				\
 		exec.c					\
 		fork_execution.c 		\
 		open_redir.c  			\
+		open_redir2.c			\
 		builtin_process.c		\
 		exit.c					\
-		heredoc.c				\
-		free_utils.c			\
-		ft_strjoin_free.c		\
 		
 CC = gcc #$(FSANITIZE)
 
@@ -112,16 +110,16 @@ $(OBJ_PATH)/%.o:		%.c
 $(OBJS):	| $(OBJ_PATH)
 
 $(OBJ_PATH):
-			@mkdir -p $(OBJ_PATH)
+	@mkdir -p $(OBJ_PATH)
 
 clean:
-		@make clean -C $(FT_PATH)
-		@${RM} $(OBJ_PATH)
+	@make clean -C $(FT_PATH)
+	@${RM} $(OBJ_PATH)
 
 fclean:
-		@make fclean -C $(FT_PATH)
-		@make clean
-		@${RM} ${NAME}
+	@make fclean -C $(FT_PATH)
+	@make clean
+	@${RM} ${NAME}
 
 re:
 	@make fclean

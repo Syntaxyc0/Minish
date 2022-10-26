@@ -6,7 +6,11 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:25:17 by ggobert           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/10/25 14:15:20 by ggobert          ###   ########.fr       */
+=======
+/*   Updated: 2022/10/26 10:22:17 by ggobert          ###   ########.fr       */
+>>>>>>> greg
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +92,7 @@ int	exec(t_mini *mini)
 	if (init_pipe(mini) == -1)
 		return (-1);
 	if (ft_open_all(mini) == -1)
-		return (-1);
+		return (0);
 	if (processes(mini) == -1)
 		return (-1);
 	ft_close_all(mini);

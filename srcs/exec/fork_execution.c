@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:50:41 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/25 14:15:30 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/26 10:18:36 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,23 @@
 
 int	dup_io(t_command *cmd)
 {
+	if (cmd->io == -3)
+		return (-1);
 	if (cmd->io > 0)
 	{
 		if (dup2(cmd->fd[0], STDIN_FILENO) == -1)
-			return (exit_perror(1, -1));
+			return (return_perror(1, -1));
 	}
 	if (cmd->io == -1 || cmd->io == 3)
+	{
 		if (dup2(cmd->fd[1], STDOUT_FILENO) == -1)
-			return (exit_perror(1, -1));
+			return (return_perror(1, -1));
+	}
 	if (cmd->io == 2 || cmd->io == -2)
+	{
 		if (dup2(cmd->next->fd[1], STDOUT_FILENO) == -1)
-			return (exit_perror(1, -1));
+			return (return_perror(1, -1));
+	}
 	return (0);
 }
 
@@ -38,13 +44,13 @@ int	ft_close_all(t_mini *mini)
 		if (cmd->fd[0])
 		{
 			if (close(cmd->fd[0]) == -1)
-				exit_perror(1, 0);
+				return_perror(1, 0);
 			cmd->fd[0] = 0;
 		}
 		if (cmd->fd[1])
 		{
 			if (close(cmd->fd[1]) == -1)
-				exit_perror(1, 0);
+				return_perror(1, 0);
 			cmd->fd[1] = 0;
 		}
 		cmd = cmd->next;
@@ -52,7 +58,7 @@ int	ft_close_all(t_mini *mini)
 	return (0);
 }
 
-int	ft_access(t_command *cmd, t_mini *mini)
+int	ft_access(t_command *cmd, t_mini *mini) /* !! strjoin NON protegé*/
 {
 	int		i;
 	char	*tmp;
@@ -83,21 +89,18 @@ int	ft_access(t_command *cmd, t_mini *mini)
 
 void	execution(t_command *cmd, t_mini *mini)
 {
-	if (dup_io(cmd) == -1)
-		exit(g_exit_status);
-	if (ft_close_all(mini) == -1)
-		exit(g_exit_status);
 	if (!is_builtin(cmd->args[0]))
 	{
+		if (dup_io(cmd) == -1)
+			exit_free_status(mini, g_exit_status);
+		if (ft_close_all(mini) == -1)
+			exit_free_status(mini, g_exit_status);
 		if (ft_access(cmd, mini) == -1)
-			exit(g_exit_status);
+			exit_free_status(mini, g_exit_status);
 		if (execve(cmd->fullpath, cmd->args, mini->environment) == -1)
-		{
-			perror(NULL);
-			exit(g_exit_status);
-		}
+			exit_perror(g_exit_status);
 	}
 	else
 		builtin_process(cmd, mini);
-	exit(g_exit_status);
+	exit_free_status(mini, g_exit_status);
 }
