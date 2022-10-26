@@ -75,7 +75,7 @@ int	ft_access(t_command *cmd, t_mini *mini)
 		return (0);
 	if (!mini->all_path[i])
 	{
-		error_redisplay_line(cmd->args[0], "access : command not found\n", 127);
+		error_args(cmd->args[0], ": command not found\n", 127);
 		return (-1);
 	}
 	return (0);

@@ -28,10 +28,7 @@ void	ft_exit(t_command *cmd, t_mini *mini)
 	if (cmd_args_len(cmd) == 2)
 	{
 		if (str_isdigit(cmd->args[1]))
-		{
-			g_exit_status = ft_atoi(cmd->args[1]) % 256;
 			exit(ft_atoi(cmd->args[1]) % 256);
-		}
 		else
 		{
 			write_error_message("msh : numeric argument required");
