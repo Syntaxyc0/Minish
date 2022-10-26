@@ -21,6 +21,8 @@ int	contains_exp_sign(char *str)
 	{
 		if (str[i] == '\'')
 			i += len_quote(str, i);
+		else if (str[i] == '\"')
+			i++;
 		else if (str[i] == '$')
 			return (i);
 		else
@@ -28,6 +30,9 @@ int	contains_exp_sign(char *str)
 	}
 	return (-1);
 }
+
+
+//pre traiter les variables expand pour bien separer les espaces, remplacer les espaces par des '\n' ??
 
 void	expand_env(t_mini *mini, t_token *token, int i)
 {
@@ -55,8 +60,6 @@ void	expand_env(t_mini *mini, t_token *token, int i)
 	token->value = replace_string(token->value, ret, i, i + j - 1);
 	if (!token->value)
 		free_mini_exit_msg(mini, ERR_MALLOC);
-	token->value = ft_strjoin_free("\"", token->value, 0, 1);
-	token->value = ft_strjoin_free(token->value, "\"", 1, 0);
 	free(tmp);
 	return ;
 }

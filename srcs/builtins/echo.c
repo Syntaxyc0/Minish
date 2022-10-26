@@ -20,7 +20,10 @@ void	echo(t_command *cmd)
 	i = 1;
 	n_count = 0;
 	if (cmd_args_len(cmd) == 1)
+	{
+		printf("\n");
 		return ;
+	}
 	while (!ft_strncmp(cmd->args[i], "-n", str_big(cmd->args[i], "-n")))
 	{
 		n_count++;
