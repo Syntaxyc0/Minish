@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 13:21:50 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/26 10:08:51 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/26 10:52:07 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ void	access_in(t_command *cmd2)
 			{
 				if (access(redir->filename, R_OK) != 0)
 				{
-					return_perror(1, 0);
 					cmd->io = -3;
+					return_perror(1, 0);
 				}
 			}
 			redir = redir->next;

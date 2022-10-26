@@ -242,4 +242,6 @@ char	*ft_strjoin_free(char *s1, char *s2, int free1, int free2);
 
 /*
 ERREUR
--cmd "<<p cat" n'affiche pas le heredoc _____ peut-etre close puis re open?*/
+-cmd "<<p cat" n'affiche pas le heredoc _____ peut-etre close puis re open?
+-signaux dans heredoc
+*/

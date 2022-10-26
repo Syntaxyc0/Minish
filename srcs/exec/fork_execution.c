@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:50:41 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/26 10:18:36 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/26 11:01:37 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 int	dup_io(t_command *cmd)
 {
-	if (cmd->io == -3)
-		return (-1);
 	if (cmd->io > 0)
 	{
 		if (dup2(cmd->fd[0], STDIN_FILENO) == -1)
