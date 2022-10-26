@@ -137,6 +137,7 @@ void	free_env(t_mini *mini);
 void	free_export(t_mini *mini);
 void	free_array(char **array);
 void	free_commands(t_mini *mini);
+int		error_args(char *msg, char *token, int errcode);
 void	exit_free_status(t_mini *mini, int ges);
 void	exit_free_status_msg(t_mini *mini, int ges, char *msg);
 void	exit_perror(int ges);
