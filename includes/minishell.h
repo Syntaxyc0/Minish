@@ -243,5 +243,3 @@ char	*ft_strjoin_free(char *s1, char *s2, int free1, int free2);
 /*
 ERREUR
 -cmd "<<p cat" n'affiche pas le heredoc _____ peut-etre close puis re open?
--cmd "echo some >o" redir le echo dans le o, mais "echo some >o | ls" affiche "some"
--"cmd1 >test | cmd2 <test | cmd3", cmd2 ne s'execute pas mais cmd3 oui et tout les pipe opé*/
