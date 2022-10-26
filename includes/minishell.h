@@ -125,6 +125,9 @@ void	ft_signal(int signal);
 void	ft_sigint_handle(void);
 void	process_sig_handle(void);
 void	ft_handle_exit(t_mini *mini);
+void	heredoc_sig_handle(void);
+void	heredoc_D(int signal);
+void	heredoc_C(int signal);
 
 //error
 
@@ -213,20 +216,22 @@ int		is_egal(char *s);
 void	access_in(t_command *cmd2);
 void	builtin_process(t_command *cmd, t_mini *mini);
 void	execution(t_command *cmd, t_mini *mini);
-void	heredoc_anihilator(t_mini *mini);
-void	redir_out(t_command *cmd, t_redir *redir);
 void	ft_append(t_command *cmd, t_redir *redir);
+void	heredoc_anihilator(t_mini *mini);
+void	heredoc_child(t_redir *redir, t_mini *mini, int fd);
+void	heredoc_iocondition(t_command *cmd);
+void	redir_out(t_command *cmd, t_redir *redir);
 void	which_builtin(t_command *cmd, t_mini *mini);
 void	which_builtin2(t_command *cmd, t_mini *mini);
+char	*already_exist(t_redir *redir);
 int		dup_io(t_command *cmd);
 int		exec(t_mini *mini);
-int		init_pipe(t_mini *mini);
-int		processes(t_mini *mini);
 int		ft_access(t_command *cmd, t_mini *mini);
 int		ft_close_all(t_mini *mini);
-int		ft_heredoc(t_command *cmd, t_redir *redir);
-char	*already_exist(t_redir *redir);
+int		ft_heredoc(t_command *cmd, t_redir *redir, t_mini *mini);
 int		ft_open_all(t_mini *mini);
+int		init_pipe(t_mini *mini);
+int		processes(t_mini *mini);
 int		redir_in(t_command *cmd, t_redir *redir);
 
 //utils

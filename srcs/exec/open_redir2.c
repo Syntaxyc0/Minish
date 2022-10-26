@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 13:21:50 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/26 11:33:06 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/26 17:04:11 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,27 +43,62 @@ void	heredoc_anihilator(t_mini *mini)
 	}
 }
 
-void	access_in(t_command *cmd2)
+int	ft_heredoc(t_command *cmd, t_redir *redir, t_mini *mini)
 {
-	t_command	*cmd;
-	t_redir		*redir;
+	int		fd;
+	int		pid;
 
-	cmd = cmd2;
-	while (cmd)
+	if (cmd->fd[0])
+		if (close(cmd->fd[0]) == -1)
+			return_perror(1, -1);
+	redir->heredoc_name = already_exist(redir);
+	fd = open(redir->heredoc_name, O_CREAT | O_RDWR, 0666);
+	if (fd < 0)
+		return_perror(1, 0);
+	process_sig_handle();
+	pid = fork();
+	if (pid == -1)
+		exit_perror(1);
+	if (pid == 0)
+		heredoc_child(redir, mini, fd);
+	close(fd);
+	wait(&g_exit_status);
+	g_exit_status /= 256;
+	if (g_exit_status == 42)
 	{
-		redir = cmd->redir;
-		while (redir)
-		{
-			if (redir->type == 4)
-			{
-				if (access(redir->filename, R_OK) != 0)
-				{
-					cmd->io = -3;
-					return_perror(1, 0);
-				}
-			}
-			redir = redir->next;
-		}
-		cmd =cmd->next;
+		printf("connard\n");
+		ft_close_all(mini);
+		return (-1);
 	}
+	cmd->fd[0] = open(redir->heredoc_name, O_CREAT | O_RDWR, 0666);
+	if (cmd->fd[0] < 0)
+		return_perror(1, 0);
+	heredoc_iocondition(cmd);
+	return (0);
+}
+
+void	heredoc_child(t_redir *redir, t_mini *mini, int fd)
+{
+	char *line;
+	
+	while (1)
+	{
+		heredoc_sig_handle();
+		line = readline(">");
+		if (g_exit_status == -1)
+		{
+			close(fd);
+			//printf("here_document : wanted '%s'\n", redir->filename);
+			printf("iccci\n");
+			ft_close_all(mini);
+			exit_free_status(mini, 42);
+		}
+		if (!ft_strncmp(redir->filename, line, str_big(redir->filename, line)))
+			break;
+		write(fd, line, ft_strlen(line));
+		write(fd, "\n", 1);
+	}
+	ft_close_all(mini);
+	close(fd);
+	exit_free_status(mini, 0);
 }
