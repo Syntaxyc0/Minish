@@ -83,6 +83,8 @@ int	exec(t_mini *mini)
 	t_command	*cmd;
 
 	cmd = mini->commands;
+	if (!cmd)
+		return (0);
 	io_cmd(mini);
 	get_all_path(mini);
 	if (init_pipe(mini) == -1)
