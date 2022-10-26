@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:55:03 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/26 10:57:35 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/26 11:20:02 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ int	redir_in(t_command *cmd, t_redir *redir)
 
 int	ft_heredoc(t_command *cmd, t_redir *redir)
 {
-	char *line;
+	char	*line;
+	int		fd;
 
 	if (cmd->fd[0])
 	{
@@ -78,7 +79,7 @@ int	ft_heredoc(t_command *cmd, t_redir *redir)
 			return_perror(1, -1);
 	}
 	redir->heredoc_name = already_exist(redir);
-	cmd->fd[0] = open(redir->heredoc_name, O_CREAT | O_RDWR | O_TRUNC, 0666);
+	fd = open(redir->heredoc_name, O_CREAT | O_RDWR, 0666);
 	if (cmd->fd[0] < 0)
 		return_perror(1, 0);
 	while (1)
@@ -90,6 +91,10 @@ int	ft_heredoc(t_command *cmd, t_redir *redir)
 		write(cmd->fd[0], line, ft_strlen(line));
 		write(cmd->fd[0], "\n", 1);
 	}
+	close(fd);
+	cmd->fd[0] = open(redir->heredoc_name, O_CREAT | O_RDWR, 0666);
+	if (cmd->fd[0] < 0)
+		return_perror(1, 0);
 	if (cmd->io != -3)
 	{
 		if (cmd->io == -1)
