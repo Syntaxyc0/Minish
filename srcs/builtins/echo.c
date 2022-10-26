@@ -6,13 +6,13 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 14:44:05 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/25 17:03:51 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/26 10:28:10 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	echo(t_command *cmd)
+void	echo(t_command *cmd, t_mini *mini)
 {
 	int	i;
 	int	n_count;
@@ -26,25 +26,25 @@ void	echo(t_command *cmd)
 		n_count++;
 		i++;
 	}
-	echo_print_args(cmd, i);
+	echo_print_args(cmd, mini, i);
 	if (!n_count)
 	{
-		if (any_redir_out(cmd))
+		if (any_redir_out(cmd) && cmd_len(mini) == 1)
 			write(cmd->fd[1], "\n", 1);
 		else
 			printf("\n");
 	}
 }
 
-void	echo_print_args(t_command *cmd, int i)
+void	echo_print_args(t_command *cmd, t_mini *mini, int i)
 {
 	while (cmd->args[i])
 	{
 		if (i < cmd_args_len(cmd))
 		{
-			if (any_redir_out(cmd))
+			if (any_redir_out(cmd) && cmd_len(mini) == 1)
 			{
-				>>write(cmd->fd[1], cmd->args[i], ft_strlen(cmd->args[i]));
+				write(cmd->fd[1], cmd->args[i], ft_strlen(cmd->args[i]));
 				if (i != cmd_args_len(cmd) - 1)
 					write(cmd->fd[1], " ", 1);
 			}

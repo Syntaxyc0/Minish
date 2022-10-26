@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:34:15 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/24 16:28:44 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/26 10:30:02 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 
 void	builtin_process(t_command *cmd, t_mini *mini)
 {
+	if (cmd_len(mini) > 1)
+		if (dup_io(cmd) == -1)
+			exit_free_status(mini, g_exit_status);
 	which_builtin(cmd, mini);
-	if (cmd_len(mini) == 1)
-	{
-		if (ft_close_all(mini) == -1)
-			exit(g_exit_status);
-	}
+	if (ft_close_all(mini) == -1)
+		exit_free_status(mini, g_exit_status);
 }
 
 void	which_builtin(t_command *cmd, t_mini *mini)
 {
 	if (!ft_strncmp(cmd->args[0], "echo", str_big(cmd->args[0], "echo")))
 	{
-		echo(cmd);
+		echo(cmd, mini);
 		return ;
 	}
 	if (!ft_strncmp(cmd->args[0], "cd", str_big(cmd->args[0], "cd")))

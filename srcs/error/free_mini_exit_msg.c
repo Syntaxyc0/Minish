@@ -76,3 +76,11 @@ void	exit_free_status_msg(t_mini *mini, int ges, char *msg)
 	free_mini(mini);
 	exit(g_exit_status);
 }
+
+
+void	exit_free_status(t_mini *mini, int ges)
+{
+	g_exit_status = ges;
+	free_mini(mini);
+	exit(g_exit_status);
+}

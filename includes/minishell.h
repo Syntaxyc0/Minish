@@ -39,6 +39,7 @@
 
 /*
 DEFINE io :
+io = -3 -> do not execute
 io = 0	-> !redir && first && last
 io = -2	-> first && !redir_out
 io = -1	-> first && redir_out 
@@ -136,15 +137,18 @@ void	free_env(t_mini *mini);
 void	free_export(t_mini *mini);
 void	free_array(char **array);
 void	free_commands(t_mini *mini);
+void	exit_free_status(t_mini *mini, int ges);
 void	exit_free_status_msg(t_mini *mini, int ges, char *msg);
+void	exit_perror(int ges);
 int		error_redisplay_line(char *msg, char *token, int errcode);
+int		return_perror(int ges, int ret);
 
 //builtins
 
 void	cd(t_command *cmd, t_mini *mini);
 void	chdir_res(char *curpath, t_mini *mini);
-void	echo(t_command *cmd);
-void	echo_print_args(t_command *cmd, int i);
+void	echo(t_command *cmd, t_mini *mini);
+void	echo_print_args(t_command *cmd, t_mini *mini, int i);
 void	env(t_mini *mini, t_command *cmd);
 void	export(t_mini *mini, t_command *cmd);
 void	ft_exit(t_command *cmd, t_mini *mini);
@@ -216,7 +220,6 @@ void	which_builtin(t_command *cmd, t_mini *mini);
 void	which_builtin2(t_command *cmd, t_mini *mini);
 int		dup_io(t_command *cmd);
 int		exec(t_mini *mini);
-int		exit_perror(int ges, int ret);
 int		init_pipe(t_mini *mini);
 int		processes(t_mini *mini);
 int		ft_access(t_command *cmd, t_mini *mini);
