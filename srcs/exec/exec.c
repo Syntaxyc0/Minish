@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:25:17 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/26 10:22:17 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/26 11:01:48 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ int	processes(t_mini *mini)
 	cmd = mini->commands;
 	while (cmd)
 	{
-		if (is_builtin(cmd->args[0]) && cmd_len(mini) == 1)
+		if (is_builtin(cmd->args[0]) && cmd_len(mini) == 1 && cmd->io != -3)
 			builtin_process(cmd, mini);
-		else if (cmd->args[0])
+		else if (cmd->args[0] && cmd->io != -3)
 		{
 			cmd->pid = fork();
 			if (cmd->pid == -1)

@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 15:38:35 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/24 16:21:44 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/26 10:44:25 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,11 @@ void	pwd(t_command *cmd, t_mini *mini)
 		free_mini_exit_msg(mini, ERR_MALLOC);
 	}
 	path = pwd_get_cwd(mini, i, ret);
-	if (any_redir_out(cmd))
+	if (any_redir_out(cmd) && cmd_len(mini) == 1)
+	{
 		write(cmd->fd[1], path, ft_strlen(path));
+		write(cmd->fd[1], "\n", 1);
+	}
 	else
 		printf("%s\n", path);
 	if (errno == ERANGE)
