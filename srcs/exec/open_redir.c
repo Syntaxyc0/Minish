@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:55:03 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/26 11:20:02 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/26 11:56:44 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ int	redir_in(t_command *cmd, t_redir *redir)
 	{
 		if (cmd->io == -1)
 			cmd->io = 3;
+		else if (cmd->io == 2 || cmd->io == 1)
+			;
 		else
 			cmd->io = 1;
 	}
@@ -99,6 +101,10 @@ int	ft_heredoc(t_command *cmd, t_redir *redir)
 	{
 		if (cmd->io == -1)
 			cmd->io = 3;
+		else if (cmd->io == 2 || cmd->io == 1)
+			;
+		else if (cmd->io == -2)
+			cmd->io = 2;
 		else
 			cmd->io = 1;
 	}

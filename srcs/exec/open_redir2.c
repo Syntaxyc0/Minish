@@ -6,18 +6,21 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 13:21:50 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/26 10:52:07 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/26 11:33:06 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 char	*already_exist(t_redir *redir)
 {
-	if (access(redir->filename, R_OK) == 0)
+	char	*ret;
+	
+	ret = ft_strdup(redir->filename);
+	while (access(ret, R_OK) == 0)
 	{
-		return (ft_strjoin(redir->filename, "0"));
+		ret = ft_strjoin_free(ret, "0", 1, 0);
 	}
-	return (redir->filename);
+	return (ret);
 }
 
 void	heredoc_anihilator(t_mini *mini)

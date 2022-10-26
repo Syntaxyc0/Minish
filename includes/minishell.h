@@ -44,7 +44,7 @@ io = 0	-> !redir && first && last
 io = -2	-> first && !redir_out
 io = -1	-> first && redir_out 
 io = 1	-> redir_in 
-io = 2	-> !first && !last !redir
+io = 2	-> !first && !last !redir_out
 io = 3	-> redir_in && redir_out
 */
 
