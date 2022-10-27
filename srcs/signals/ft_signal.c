@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:21:55 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/26 16:53:21 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/27 10:50:00 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ void	ft_signal(int signal)
 	rl_redisplay();
 }
 
-void	heredoc_D(int signal)
+void	heredoc_d(int signal)
 {
 	(void)signal;
 	printf("POLO\n");
 }
 
-void	heredoc_C(int signal)
+void	heredoc_c(int signal)
 {
 	(void)signal;
 	g_exit_status = -1;

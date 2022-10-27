@@ -126,8 +126,8 @@ void	ft_sigint_handle(void);
 void	process_sig_handle(void);
 void	ft_handle_exit(t_mini *mini);
 void	heredoc_sig_handle(void);
-void	heredoc_D(int signal);
-void	heredoc_C(int signal);
+void	heredoc_d(int signal);
+void	heredoc_c(int signal);
 
 //error
 
@@ -217,9 +217,11 @@ void	access_in(t_command *cmd2);
 void	builtin_process(t_command *cmd, t_mini *mini);
 void	execution(t_command *cmd, t_mini *mini);
 void	ft_append(t_command *cmd, t_redir *redir);
-void	heredoc_anihilator(t_mini *mini);
+void	fork_adjust(t_mini *mini, t_redir *redir, int fd);
+void	heredoc_annihilator(t_mini *mini);
 void	heredoc_child(t_redir *redir, t_mini *mini, int fd);
-void	heredoc_iocondition(t_command *cmd);
+void	iocondition_heredoc(t_command *cmd);
+void	iocondition_redir_in(t_command *cmd);
 void	redir_out(t_command *cmd, t_redir *redir);
 void	which_builtin(t_command *cmd, t_mini *mini);
 void	which_builtin2(t_command *cmd, t_mini *mini);
@@ -237,11 +239,11 @@ int		redir_in(t_command *cmd, t_redir *redir);
 //utils
 
 void	get_all_path(t_mini *mini);
-int		str_big(char *a, char *b);
+char	*ft_strjoin_free(char *s1, char *s2, int free1, int free2);
+int		any_redir_out(t_command *cmd);
 int		cmd_args_len(t_command *cmd);
 int		cmd_len(t_mini *mini);
-int		any_redir_out(t_command *cmd);
-char	*ft_strjoin_free(char *s1, char *s2, int free1, int free2);
+int		str_big(char *a, char *b);
 
 #endif
 

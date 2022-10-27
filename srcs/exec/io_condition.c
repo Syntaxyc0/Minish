@@ -6,13 +6,13 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 16:02:27 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/26 16:03:30 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/27 10:56:36 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	heredoc_iocondition(t_command *cmd)
+void	iocondition_heredoc(t_command *cmd)
 {
 	if (cmd->io != -3)
 	{
@@ -22,6 +22,19 @@ void	heredoc_iocondition(t_command *cmd)
 			;
 		else if (cmd->io == -2)
 			cmd->io = 2;
+		else
+			cmd->io = 1;
+	}
+}
+
+void	iocondition_redir_in(t_command *cmd)
+{
+	if (cmd->io != -3)
+	{
+		if (cmd->io == -1)
+			cmd->io = 3;
+		else if (cmd->io == 2 || cmd->io == 1)
+			;
 		else
 			cmd->io = 1;
 	}

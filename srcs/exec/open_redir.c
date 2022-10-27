@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:55:03 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/26 16:57:02 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/27 10:57:02 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	access_in(t_command *cmd2)
 			}
 			redir = redir->next;
 		}
-		cmd =cmd->next;
+		cmd = cmd->next;
 	}
 }
 
@@ -86,15 +86,7 @@ int	redir_in(t_command *cmd, t_redir *redir)
 		perror(NULL);
 		return (-1);
 	}
-	if (cmd->io != -3)
-	{
-		if (cmd->io == -1)
-			cmd->io = 3;
-		else if (cmd->io == 2 || cmd->io == 1)
-			;
-		else
-			cmd->io = 1;
-	}
+	iocondition_redir_in(cmd);
 	return (0);
 }
 
