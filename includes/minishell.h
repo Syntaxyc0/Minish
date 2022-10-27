@@ -265,7 +265,4 @@ int		str_big(char *a, char *b);
 
 /*
 ERREUR
--export, si deux fois la meme key dans les arg, elle change
--env -i dans get env
--$? doit etre 3 si "exit 1 | exit 2 | exit 3"
 */
