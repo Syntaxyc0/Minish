@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:22:18 by jbesnier          #+#    #+#             */
-/*   Updated: 2022/10/25 13:34:56 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/27 13:57:00 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,7 @@ int	parse_args(t_mini *mini, t_token *token, t_command *command)
 
 void	add_command(t_mini *mini, t_command *cmd)
 {
-	t_command *tmp;
+	t_command	*tmp;
 
 	tmp = mini->commands;
 	if (tmp == NULL)

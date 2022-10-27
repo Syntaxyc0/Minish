@@ -39,13 +39,25 @@
 
 /*
 DEFINE io :
-io = -3 -> do not execute
-io = 0	-> !redir && first && last
-io = -2	-> first && !redir_out
-io = -1	-> first && redir_out 
-io = 1	-> redir_in 
-io = 2	-> !first && !last !redir_out
-io = 3	-> redir_in && redir_out
+first = -2
++ in = 2
++ out = -1
++ all = 3
+
+mid = 2
++ in = 2
++ out = 3
++ all = 3
+
+last = 1
++ in = 1
++ out = 3
++ all = 3
+
+alone = 0
++ in = 1
++ out = -1
++ all = 3
 */
 
 extern int	g_exit_status;
@@ -143,6 +155,7 @@ void	free_commands(t_mini *mini);
 void	exit_free_status(t_mini *mini, int ges);
 void	exit_free_status_msg(t_mini *mini, int ges, char *msg);
 void	exit_perror(int ges);
+int		error_args(char *msg, char *token, int errcode);
 int		error_redisplay_line(char *msg, char *token, int errcode);
 int		return_perror(int ges, int ret);
 
@@ -226,6 +239,7 @@ void	redir_out(t_command *cmd, t_redir *redir);
 void	which_builtin(t_command *cmd, t_mini *mini);
 void	which_builtin2(t_command *cmd, t_mini *mini);
 char	*already_exist(t_redir *redir);
+int		check_relative(t_mini *mini, t_command *cmd);
 int		dup_io(t_command *cmd);
 int		exec(t_mini *mini);
 int		ft_access(t_command *cmd, t_mini *mini);

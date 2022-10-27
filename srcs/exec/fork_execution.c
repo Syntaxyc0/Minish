@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:50:41 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/27 10:26:15 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/27 13:56:32 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,14 @@
 int	dup_io(t_command *cmd)
 {
 	if (cmd->io > 0)
-	{
 		if (dup2(cmd->fd[0], STDIN_FILENO) == -1)
 			return (return_perror(1, -1));
-	}
 	if (cmd->io == -1 || cmd->io == 3)
-	{
 		if (dup2(cmd->fd[1], STDOUT_FILENO) == -1)
 			return (return_perror(1, -1));
-	}
 	if (cmd->io == 2 || cmd->io == -2)
-	{
 		if (dup2(cmd->next->fd[1], STDOUT_FILENO) == -1)
 			return (return_perror(1, -1));
-	}
 	return (0);
 }
 
@@ -59,8 +53,8 @@ int	ft_close_all(t_mini *mini)
 	return (0);
 }
 
-int	ft_access(t_command *cmd, t_mini *mini) /* !! strjoin NON protegé*/
-{
+int	check_relative(t_mini *mini, t_command *cmd)
+{	
 	int		i;
 	char	*tmp;
 	char	*path;
@@ -69,20 +63,33 @@ int	ft_access(t_command *cmd, t_mini *mini) /* !! strjoin NON protegé*/
 	while (mini->all_path[++i])
 	{
 		tmp = ft_strjoin(mini->all_path[i], "/");
-		path = ft_strjoin(tmp, cmd->args[0]);
-		free(tmp);
+		if (!tmp)
+			exit_free_status_msg(mini, 1, ERR_MALLOC);
+		path = ft_strjoin_free(tmp, cmd->args[0], 1, 0);
+		if (!path)
+			exit_free_status_msg(mini, 1, ERR_MALLOC);
 		if (access(path, X_OK) == 0)
 		{
 			cmd->fullpath = path;
-			return (0);
+			return (1);
 		}
 		free(path);
 	}
+	return (0);
+}
+
+int	ft_access(t_command *cmd, t_mini *mini)
+{
+	int	relative;
+
+	relative = check_relative(mini, cmd);
+	if (relative)
+		return (0);
 	if (access(cmd->args[0], X_OK) == 0)
 		return (0);
-	if (!mini->all_path[i])
+	if (!relative)
 	{
-		error_args(cmd->args[0], ": command not found\n", 127);
+		error_args(cmd->args[0], "access : command not found\n", 127);
 		return (-1);
 	}
 	return (0);

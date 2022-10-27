@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:55:03 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/27 10:57:02 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/27 12:05:56 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void	redir_out(t_command *cmd, t_redir *redir)
 	}
 	if (cmd->io != -3)
 	{
-		if (cmd->io == 1)
+		if (cmd->io > 0)
 			cmd->io = 3;
 		else
 			cmd->io = -1;
@@ -135,7 +135,7 @@ void	ft_append(t_command *cmd, t_redir *redir)
 	}
 	if (cmd->io != -3)
 	{
-		if (cmd->io == 1)
+		if (cmd->io > 0)
 			cmd->io = 3;
 		else
 			cmd->io = -1;
