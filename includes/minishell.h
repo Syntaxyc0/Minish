@@ -143,21 +143,21 @@ void	heredoc_c(int signal);
 
 //error
 
-int		write_error_message(char *message);
-void	free_mini(t_mini *mini);
-void	free_mini_exit_msg(t_mini *mini, char *message);
-void	free_letters(t_mini *mini);
-void	free_tokens(t_mini *mini);
-void	free_env(t_mini *mini);
-void	free_export(t_mini *mini);
 void	free_array(char **array);
 void	free_commands(t_mini *mini);
+void	free_env(t_mini *mini);
+void	free_export(t_mini *mini);
+void	free_letters(t_mini *mini);
+void	free_mini(t_mini *mini);
+void	free_mini_exit_msg(t_mini *mini, char *message);
+void	free_tokens(t_mini *mini);
 void	exit_free_status(t_mini *mini, int ges);
 void	exit_free_status_msg(t_mini *mini, int ges, char *msg);
 void	exit_perror(int ges);
 int		error_args(char *msg, char *token, int errcode);
 int		error_redisplay_line(char *msg, char *token, int errcode);
 int		return_perror(int ges, int ret);
+int		write_error_message(char *message);
 
 //builtins
 
@@ -178,7 +178,6 @@ void	lst_del_unset_export(t_export *tmp, t_export *previous);
 void	old_pwd(t_mini *mini);
 void	push_in_env(t_mini *mini, char *curpath);
 void	pwd(t_command *cmd, t_mini *mini);
-char	*pwd_get_cwd(t_mini *mini, int i, char *ret);
 void	unset(t_mini *mini, t_command *cmd);
 void	unset_in_env(t_mini *mini, char **av);
 void	unset_in_export(t_mini *mini, char **av);
@@ -186,7 +185,10 @@ char	*back_repo(char *curpath, int dot_count, t_mini *mini);
 char	*get_path(char **av, t_mini *mini);
 char	*get_pwd(t_mini *mini);
 char	*home_env(t_mini *mini);
+char	*pwd_get_cwd(t_mini *mini, int i, char *ret);
 char	*two_dot(char *curpath, t_mini *mini);
+int		already_in_env(t_mini *mini, char *key, char *value);
+int		already_in_export(t_mini *mini, char *key);
 int		check_args(int nb_arg, char **args);
 int		is_builtin(char *arg);
 int		is_egal(char *s);
@@ -221,8 +223,8 @@ int		parser(t_mini *mini, char *line);
 
 void	add_envelem(t_mini *mini, char *key, char *value);
 char	*get_env_value(t_mini *mini, char *key);
-int		get_env(char **env, t_mini *mini);
 int		is_egal(char *s);
+int		get_env(char **env, t_mini *mini);
 
 //exec
 
