@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:50:41 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/27 13:56:32 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/27 14:11:19 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	ft_close_all(t_mini *mini)
 }
 
 int	check_relative(t_mini *mini, t_command *cmd)
-{	
+{
 	int		i;
 	char	*tmp;
 	char	*path;
@@ -86,13 +86,12 @@ int	ft_access(t_command *cmd, t_mini *mini)
 	if (relative)
 		return (0);
 	if (access(cmd->args[0], X_OK) == 0)
-		return (0);
-	if (!relative)
 	{
-		error_args(cmd->args[0], "access : command not found\n", 127);
-		return (-1);
+		cmd->fullpath = cmd->args[0];
+		return (0);
 	}
-	return (0);
+	error_args(cmd->args[0], ": command not found\n", 127);
+	return (-1);
 }
 
 void	execution(t_command *cmd, t_mini *mini)

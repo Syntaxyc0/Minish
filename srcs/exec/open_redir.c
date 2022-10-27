@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:55:03 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/27 12:05:56 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/27 14:23:41 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_open_all(t_mini *mini)
 		redir = cmd->redir;
 		while (redir)
 		{
-			if (redir->type == 4 && cmd->io != -3)
+			if (redir->type == 4)
 				if (redir_in(cmd, redir) == -1)
 					return (-1);
 			if (redir->type == 5)
@@ -70,6 +70,8 @@ void	access_in(t_command *cmd2)
 
 int	redir_in(t_command *cmd, t_redir *redir)
 {
+	if (cmd->io == -3)
+		return (1);
 	if (cmd->fd[0])
 	{
 		if (close(cmd->fd[0]) == -1)

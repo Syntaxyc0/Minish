@@ -42,22 +42,22 @@ DEFINE io :
 first = -2
 + in = 2
 + out = -1
-+ all = 3
++ in/out = 3
 
 mid = 2
 + in = 2
 + out = 3
-+ all = 3
++ in/out = 3
 
 last = 1
 + in = 1
 + out = 3
-+ all = 3
++ in/out = 3
 
 alone = 0
 + in = 1
 + out = -1
-+ all = 3
++ in/out = 3
 */
 
 extern int	g_exit_status;
