@@ -6,7 +6,11 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:25:17 by ggobert           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/10/26 11:13:59 by ggobert          ###   ########.fr       */
+=======
+/*   Updated: 2022/10/27 10:31:20 by ggobert          ###   ########.fr       */
+>>>>>>> greg
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +103,7 @@ int	exec(t_mini *mini)
 			wait(&g_exit_status);
 		cmd = cmd->next;
 	}
-	g_exit_status = g_exit_status / 256;
-	heredoc_anihilator(mini);
+	heredoc_annihilator(mini);
+	g_exit_status /= 256;
 	return (0);
 }

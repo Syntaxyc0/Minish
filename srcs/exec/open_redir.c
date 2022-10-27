@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:55:03 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/26 10:57:35 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/27 10:57:02 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ int	ft_open_all(t_mini *mini)
 				if (redir_in(cmd, redir) == -1)
 					return (-1);
 			if (redir->type == 5)
-				ft_heredoc(cmd, redir);
+				if (ft_heredoc(cmd, redir, mini) == -1)
+					return (-1);
 			if (redir->type == 6)
 				redir_out(cmd, redir);
 			if (redir->type == 7)
@@ -38,6 +39,33 @@ int	ft_open_all(t_mini *mini)
 		cmd = cmd->next;
 	}
 	return (0);
+}
+
+void	access_in(t_command *cmd2)
+{
+	t_command	*cmd;
+	t_redir		*redir;
+
+	cmd = cmd2;
+	while (cmd)
+	{
+		redir = cmd->redir;
+		while (redir)
+		{
+			if (redir->type == 4)
+			{
+				if (access(redir->filename, R_OK) != 0)
+				{
+					cmd->io = -3;
+					write(2, redir->filename, ft_strlen(redir->filename));
+					write(2, ": ", 3);
+					return_perror(1, 0);
+				}
+			}
+			redir = redir->next;
+		}
+		cmd = cmd->next;
+	}
 }
 
 int	redir_in(t_command *cmd, t_redir *redir)
@@ -58,45 +86,7 @@ int	redir_in(t_command *cmd, t_redir *redir)
 		perror(NULL);
 		return (-1);
 	}
-	if (cmd->io != -3)
-	{
-		if (cmd->io == -1)
-			cmd->io = 3;
-		else
-			cmd->io = 1;
-	}
-	return (0);
-}
-
-int	ft_heredoc(t_command *cmd, t_redir *redir)
-{
-	char *line;
-
-	if (cmd->fd[0])
-	{
-		if (close(cmd->fd[0]) == -1)
-			return_perror(1, -1);
-	}
-	redir->heredoc_name = already_exist(redir);
-	cmd->fd[0] = open(redir->heredoc_name, O_CREAT | O_RDWR | O_TRUNC, 0666);
-	if (cmd->fd[0] < 0)
-		return_perror(1, 0);
-	while (1)
-	{
-	//signaux!
-		line = readline(">");
-		if (!ft_strncmp(redir->filename, line, str_big(redir->filename, line)))
-			break;
-		write(cmd->fd[0], line, ft_strlen(line));
-		write(cmd->fd[0], "\n", 1);
-	}
-	if (cmd->io != -3)
-	{
-		if (cmd->io == -1)
-			cmd->io = 3;
-		else
-			cmd->io = 1;
-	}
+	iocondition_redir_in(cmd);
 	return (0);
 }
 
@@ -110,7 +100,6 @@ void	redir_out(t_command *cmd, t_redir *redir)
 			perror(NULL);
 			return ;
 		}
-		cmd->fd[1] = 0;
 	}
 	cmd->fd[1] = open(redir->filename, O_CREAT | O_WRONLY | O_TRUNC, 0666);
 	if (cmd->fd[1] < 0)
