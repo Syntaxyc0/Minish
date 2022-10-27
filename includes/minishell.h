@@ -232,7 +232,7 @@ void	access_in(t_command *cmd2);
 void	builtin_process(t_command *cmd, t_mini *mini);
 void	execution(t_command *cmd, t_mini *mini);
 void	ft_append(t_command *cmd, t_redir *redir);
-void	fork_adjust(t_mini *mini, t_redir *redir, int fd);
+void	heredoc_fork(t_mini *mini, t_redir *redir, int fd);
 void	heredoc_annihilator(t_mini *mini);
 void	heredoc_child(t_redir *redir, t_mini *mini, int fd);
 void	iocondition_heredoc(t_command *cmd);
@@ -265,4 +265,5 @@ int		str_big(char *a, char *b);
 
 /*
 ERREUR
+-ctrl + c dans le heredoc doit tout fermer et renvoyer au prompt.
 */
