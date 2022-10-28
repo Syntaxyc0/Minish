@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 13:21:50 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/28 12:08:04 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/28 13:53:31 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	ft_heredoc(t_command *cmd, t_redir *redir, t_mini *mini)
 		if (close(cmd->fd[0]) == -1)
 			return_perror(1, -1);
 	redir->heredoc_name = already_exist(redir);
-	cmd->fd[0] = open("/tmp", __O_TMPFILE | O_RDWR | O_EXCL , 0666);
+	cmd->fd[0] = open("/tmp", __O_TMPFILE | O_RDWR, 0666);
 	if (cmd->fd[0] < 0)
 		return_perror(1, 0);
 	heredoc_fork(mini, redir, cmd);
