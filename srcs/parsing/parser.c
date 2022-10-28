@@ -25,6 +25,8 @@ int	parser(t_mini *mini, char *line)
 	parse_spaces(mini);
 	if (check_tokens(mini))
 		return (get_newline(mini));
+	if (check_expandredirs(mini))
+		return (get_newline(mini));
 	get_redir_types(mini);
 	if (check_syntax(mini))
 		return (get_newline(mini));

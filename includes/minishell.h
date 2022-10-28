@@ -151,14 +151,6 @@ void	free_letters(t_mini *mini);
 void	free_mini(t_mini *mini);
 void	free_mini_exit_msg(t_mini *mini, char *message);
 void	free_tokens(t_mini *mini);
-<<<<<<< HEAD
-void	free_env(t_mini *mini);
-void	free_export(t_mini *mini);
-void	free_array(char **array);
-void	free_commands(t_mini *mini);
-int		error_args(char *msg, char *token, int errcode);
-=======
->>>>>>> main
 void	exit_free_status(t_mini *mini, int ges);
 void	exit_free_status_msg(t_mini *mini, int ges, char *msg);
 void	exit_perror(int ges);
@@ -217,10 +209,12 @@ void	delete_token(t_mini *mini, t_token *token);
 int		parse_token(t_mini *mini, char *str);
 void	get_token_type(t_mini *mini);
 int		check_syntax(t_mini *mini);
+int check_expandredirs(t_mini *mini);
 void	get_redir_types(t_mini *mini);
 char	*replace_string(char *value, char *str, int start, int end);
 int		contains_exp_sign(char *str);
 void	expand_env(t_mini *mini, t_token *token, int i);
+int		contains_exp_sign(char *str);
 int		expander(t_mini *mini);
 void	parse_spaces(t_mini *mini);
 int		remove_quotes(t_mini *mini);

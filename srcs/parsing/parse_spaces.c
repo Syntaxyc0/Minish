@@ -76,7 +76,6 @@ char	*split_token(t_mini *mini, t_token *token)
 		}
 	}
 	ret = ft_substr(token->value, start, end - start);
-	printf("ret : |%s|\n", ret);
 	if (!ret)
 		free_mini_exit_msg(mini, ERR_MALLOC);
 	tmp = replace_string(token->value, NULL, 0, end - 1);
