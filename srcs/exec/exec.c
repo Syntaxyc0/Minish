@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:25:17 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/27 15:35:37 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/28 14:40:24 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,7 @@ int	init_pipe(t_mini *mini)
 	while (cmd)
 	{
 		if (pipe(cmd->fd) == -1)
-		{
-			g_exit_status = errno;
-			perror(NULL);
-			return (-1);
-		}
+			return_perror(1, -1);
 		cmd = cmd->next;
 	}
 	return (0);
