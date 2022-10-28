@@ -164,6 +164,7 @@ int		write_error_message(char *message);
 void	cd(t_command *cmd, t_mini *mini);
 void	chdir_res(char *curpath, t_mini *mini);
 void	echo(t_command *cmd, t_mini *mini);
+void	echo_nl(t_command *cmd, t_mini *mini);
 void	echo_print_args(t_command *cmd, t_mini *mini, int i);
 void	env(t_mini *mini, t_command *cmd);
 void	export(t_mini *mini, t_command *cmd);
@@ -228,7 +229,6 @@ int		get_env(char **env, t_mini *mini);
 
 //exec
 
-void	access_in(t_command *cmd2);
 void	builtin_process(t_command *cmd, t_mini *mini);
 void	execution(t_command *cmd, t_mini *mini);
 void	ft_append(t_command *cmd, t_redir *redir);
@@ -241,6 +241,7 @@ void	redir_out(t_command *cmd, t_redir *redir);
 void	which_builtin(t_command *cmd, t_mini *mini);
 void	which_builtin2(t_command *cmd, t_mini *mini);
 char	*already_exist(t_redir *redir, t_command *cmd);
+int		access_in(t_command *cmd2);
 int		check_relative(t_mini *mini, t_command *cmd);
 int		dup_io(t_command *cmd);
 int		exec(t_mini *mini);
@@ -265,5 +266,7 @@ int		str_big(char *a, char *b);
 
 /*
 ERREUR
--ctrl + c dans le heredoc doit tout fermer et renvoyer au prompt.
+-ls | echo >p, ls ecrit dans fd de echo et le fichier p contient ls
+-unset path -> SEGFAULT
+-echo -n segfault; echo -nnnnnnn affiche "-nnnnnnnnn" (pas bon)
 */

@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 13:21:50 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/28 15:06:46 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/28 16:43:08 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ void	heredoc_annihilator(t_mini *mini)
 				if (unlink(redir->heredoc_name) == -1)
 				{
 					printf("%s\n", redir->filename);
-					return_perror(1, 0);
+					g_exit_status = 1;
+					perror(NULL);
 				}
 			}
 			redir = redir->next;
@@ -105,7 +106,7 @@ int	ft_heredoc(t_command *cmd, t_redir *redir, t_mini *mini)
 	redir->heredoc_name = already_exist(redir, cmd);
 	fd = open(redir->heredoc_name, O_CREAT | O_RDWR, 0666);
 	if (fd < 0)
-		return_perror(1, 0);
+		return (return_perror(1, 0));
 	heredoc_fork(mini, redir, fd);
 	process_sig_handle();
 	close(fd);
@@ -116,10 +117,9 @@ int	ft_heredoc(t_command *cmd, t_redir *redir, t_mini *mini)
 		heredoc_annihilator(mini);
 		return (-1);
 	}
-	cmd->fd[0] = open(redir->heredoc_name,
-			O_CREAT | O_RDWR | __O_CLOEXEC, 0666);
+	cmd->fd[0] = open(redir->heredoc_name, O_CREAT | O_RDWR, 0666);
 	if (cmd->fd[0] < 0)
-		return_perror(1, 0);
+		rerturn (return_perror(1, 0));
 	iocondition_heredoc(cmd);
 	return (0);
 }

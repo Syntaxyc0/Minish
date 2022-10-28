@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:55:03 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/28 14:46:52 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/28 16:35:39 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	ft_open_all(t_mini *mini)
 	return (0);
 }
 
-void	access_in(t_command *cmd2)
+int	access_in(t_command *cmd2)
 {
 	t_command	*cmd;
 	t_redir		*redir;
@@ -59,19 +59,20 @@ void	access_in(t_command *cmd2)
 					cmd->io = -3;
 					write(2, redir->filename, ft_strlen(redir->filename));
 					write(2, ": ", 3);
-					return_perror(1, 0);
+					return (return_perror(1, 0));
 				}
 			}
 			redir = redir->next;
 		}
 		cmd = cmd->next;
 	}
+	return (0);
 }
 
 int	redir_in(t_command *cmd, t_redir *redir)
 {
 	if (cmd->io == -3)
-		return (1);
+		return (-1);
 	if (cmd->fd[0])
 	{
 		if (close(cmd->fd[0]) == -1)
@@ -81,7 +82,7 @@ int	redir_in(t_command *cmd, t_redir *redir)
 			return (-1);
 		}
 	}
-	cmd->fd[0] = open(redir->filename, O_RDONLY | __O_CLOEXEC);
+	cmd->fd[0] = open(redir->filename, O_RDONLY);
 	if (cmd->fd[0] < 0)
 	{
 		g_exit_status = 1;
@@ -104,7 +105,7 @@ void	redir_out(t_command *cmd, t_redir *redir)
 		}
 	}
 	cmd->fd[1] = open(redir->filename,
-			O_CREAT | O_WRONLY | O_TRUNC | __O_CLOEXEC, 0666);
+			O_CREAT | O_WRONLY | O_TRUNC, 0666);
 	if (cmd->fd[1] < 0)
 	{
 		g_exit_status = 1;
@@ -131,7 +132,7 @@ void	ft_append(t_command *cmd, t_redir *redir)
 		}
 	}
 	cmd->fd[1] = open(redir->filename,
-			O_CREAT | O_WRONLY | O_APPEND | __O_CLOEXEC, 0666);
+			O_CREAT | O_WRONLY | O_APPEND, 0666);
 	if (cmd->fd[1] < 0)
 	{
 		g_exit_status = 1;
