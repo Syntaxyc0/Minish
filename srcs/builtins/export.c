@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 13:44:07 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/24 16:37:40 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/27 15:24:26 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	import(t_mini *mini, int ac, char **av)
 	i = 0;
 	while (++i < ac)
 	{
-		if (is_space_before_egal(av[i]) == 1)
+		if (is_space_before_egal(av[i]))
 		{
 			printf("export: not valid in this context\n");
 			return ;
@@ -41,6 +41,8 @@ void	import_export(t_mini *mini, char *s)
 		init_myexport(mini, s);
 		return ;
 	}
+	if (already_in_export(mini, s))
+		return ;
 	tmp = mini->myexport;
 	ret = malloc(sizeof(t_export));
 	if (!ret)
@@ -63,7 +65,7 @@ void	import_env(t_mini *mini, char *s)
 	char	*value;
 
 	j = 0;
-	while (s[j] != 0 && s[j] != '=')
+	while (s[j] && s[j] != '=')
 		j++;
 	key = ft_substr(s, 0, j);
 	if (!key)
@@ -76,6 +78,8 @@ void	import_env(t_mini *mini, char *s)
 	}	
 	else
 		value = 0;
+	if (already_in_env(mini, key, value))
+		return ;
 	add_envelem(mini, key, value);
 	free(key);
 	free(value);

@@ -39,13 +39,25 @@
 
 /*
 DEFINE io :
-io = -3 -> do not execute
-io = 0	-> !redir && first && last
-io = -2	-> first && !redir_out
-io = -1	-> first && redir_out 
-io = 1	-> redir_in 
-io = 2	-> !first && !last !redir
-io = 3	-> redir_in && redir_out
+first = -2
++ in = 2
++ out = -1
++ in/out = 3
+
+mid = 2
++ in = 2
++ out = 3
++ in/out = 3
+
+last = 1
++ in = 1
++ out = 3
++ in/out = 3
+
+alone = 0
++ in = 1
++ out = -1
++ in/out = 3
 */
 
 extern int	g_exit_status;
@@ -125,24 +137,35 @@ void	ft_signal(int signal);
 void	ft_sigint_handle(void);
 void	process_sig_handle(void);
 void	ft_handle_exit(t_mini *mini);
+void	heredoc_sig_handle(void);
+void	heredoc_d(int signal);
+void	heredoc_c(int signal);
 
 //error
 
-int		write_error_message(char *message);
+void	free_array(char **array);
+void	free_commands(t_mini *mini);
+void	free_env(t_mini *mini);
+void	free_export(t_mini *mini);
+void	free_letters(t_mini *mini);
 void	free_mini(t_mini *mini);
 void	free_mini_exit_msg(t_mini *mini, char *message);
-void	free_letters(t_mini *mini);
 void	free_tokens(t_mini *mini);
+<<<<<<< HEAD
 void	free_env(t_mini *mini);
 void	free_export(t_mini *mini);
 void	free_array(char **array);
 void	free_commands(t_mini *mini);
 int		error_args(char *msg, char *token, int errcode);
+=======
+>>>>>>> main
 void	exit_free_status(t_mini *mini, int ges);
 void	exit_free_status_msg(t_mini *mini, int ges, char *msg);
 void	exit_perror(int ges);
+int		error_args(char *msg, char *token, int errcode);
 int		error_redisplay_line(char *msg, char *token, int errcode);
 int		return_perror(int ges, int ret);
+int		write_error_message(char *message);
 
 //builtins
 
@@ -163,7 +186,6 @@ void	lst_del_unset_export(t_export *tmp, t_export *previous);
 void	old_pwd(t_mini *mini);
 void	push_in_env(t_mini *mini, char *curpath);
 void	pwd(t_command *cmd, t_mini *mini);
-char	*pwd_get_cwd(t_mini *mini, int i, char *ret);
 void	unset(t_mini *mini, t_command *cmd);
 void	unset_in_env(t_mini *mini, char **av);
 void	unset_in_export(t_mini *mini, char **av);
@@ -171,7 +193,10 @@ char	*back_repo(char *curpath, int dot_count, t_mini *mini);
 char	*get_path(char **av, t_mini *mini);
 char	*get_pwd(t_mini *mini);
 char	*home_env(t_mini *mini);
+char	*pwd_get_cwd(t_mini *mini, int i, char *ret);
 char	*two_dot(char *curpath, t_mini *mini);
+int		already_in_env(t_mini *mini, char *key, char *value);
+int		already_in_export(t_mini *mini, char *key);
 int		check_args(int nb_arg, char **args);
 int		is_builtin(char *arg);
 int		is_egal(char *s);
@@ -206,43 +231,46 @@ int		parser(t_mini *mini, char *line);
 
 void	add_envelem(t_mini *mini, char *key, char *value);
 char	*get_env_value(t_mini *mini, char *key);
-int		get_env(char **env, t_mini *mini);
 int		is_egal(char *s);
+int		get_env(char **env, t_mini *mini);
 
 //exec
 
 void	access_in(t_command *cmd2);
 void	builtin_process(t_command *cmd, t_mini *mini);
 void	execution(t_command *cmd, t_mini *mini);
-void	heredoc_anihilator(t_mini *mini);
-void	redir_out(t_command *cmd, t_redir *redir);
 void	ft_append(t_command *cmd, t_redir *redir);
+void	fork_adjust(t_mini *mini, t_redir *redir, int fd);
+void	heredoc_annihilator(t_mini *mini);
+void	heredoc_child(t_redir *redir, t_mini *mini, int fd);
+void	iocondition_heredoc(t_command *cmd);
+void	iocondition_redir_in(t_command *cmd);
+void	redir_out(t_command *cmd, t_redir *redir);
 void	which_builtin(t_command *cmd, t_mini *mini);
 void	which_builtin2(t_command *cmd, t_mini *mini);
+char	*already_exist(t_redir *redir);
+int		check_relative(t_mini *mini, t_command *cmd);
 int		dup_io(t_command *cmd);
 int		exec(t_mini *mini);
-int		init_pipe(t_mini *mini);
-int		processes(t_mini *mini);
 int		ft_access(t_command *cmd, t_mini *mini);
 int		ft_close_all(t_mini *mini);
-int		ft_heredoc(t_command *cmd, t_redir *redir);
-char	*already_exist(t_redir *redir);
+int		ft_heredoc(t_command *cmd, t_redir *redir, t_mini *mini);
 int		ft_open_all(t_mini *mini);
+int		init_pipe(t_mini *mini);
+int		processes(t_mini *mini);
 int		redir_in(t_command *cmd, t_redir *redir);
 
 //utils
 
 void	get_all_path(t_mini *mini);
-int		str_big(char *a, char *b);
+char	*ft_strjoin_free(char *s1, char *s2, int free1, int free2);
+int		any_redir_out(t_command *cmd);
 int		cmd_args_len(t_command *cmd);
 int		cmd_len(t_mini *mini);
-int		any_redir_out(t_command *cmd);
-char	*ft_strjoin_free(char *s1, char *s2, int free1, int free2);
+int		str_big(char *a, char *b);
 
 #endif
 
 /*
 ERREUR
--cmd "<<p cat" n'affiche pas le heredoc _____ peut-etre close puis re open?
--signaux dans heredoc
 */

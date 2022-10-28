@@ -1,35 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_signal.c                                        :+:      :+:    :+:   */
+/*   io_condition.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/24 16:21:55 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/27 10:50:00 by ggobert          ###   ########.fr       */
+/*   Created: 2022/10/26 16:02:27 by ggobert           #+#    #+#             */
+/*   Updated: 2022/10/27 11:44:08 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_signal(int signal)
+void	iocondition_heredoc(t_command *cmd)
 {
-	(void)signal;
-	printf("\n");
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
+	if (cmd->io != -3)
+	{
+		if (cmd->io == -1)
+			cmd->io = 3;
+		else if (cmd->io > 0)
+			;
+		else if (cmd->io == -2)
+			cmd->io = 2;
+		else
+			cmd->io = 1;
+	}
 }
 
-void	heredoc_d(int signal)
+void	iocondition_redir_in(t_command *cmd)
 {
-	(void)signal;
-	printf("POLO\n");
-}
-
-void	heredoc_c(int signal)
-{
-	(void)signal;
-	g_exit_status = -1;
-	close(STDIN_FILENO);
+	if (cmd->io != -3)
+	{
+		if (cmd->io == -1)
+			cmd->io = 3;
+		else if (cmd->io > 0)
+			;
+		else if (cmd->io == -2)
+			cmd->io = 2;
+		else
+			cmd->io = 1;
+	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbesnier <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:58:23 by jbesnier          #+#    #+#             */
-/*   Updated: 2022/10/24 15:58:24 by jbesnier         ###   ########.fr       */
+/*   Updated: 2022/10/26 15:55:36 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	free_redir(t_redir *redir)
 	{
 		if (tmp->filename)
 			free(tmp->filename);
+		if (tmp->heredoc_name)
+			free(tmp->heredoc_name);
 		tmp_next = tmp->next;
 		free(tmp);
 		tmp = tmp_next;

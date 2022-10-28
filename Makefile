@@ -64,10 +64,11 @@ SRCS = 	ft_signal.c				\
 		open_redir2.c			\
 		builtin_process.c		\
 		exit.c					\
+		io_condition.c			\
 		
 CC = gcc #$(FSANITIZE)
 
-CFLAGS = -MMD -Wall -Werror -Wextra
+CFLAGS = -MMD -Wall -Werror -Wextra -g3
 
 RM = rm -rf
 
