@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:50:41 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/28 13:27:24 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/28 14:15:30 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ int	ft_close_all(t_mini *mini)
 		if (cmd->fd[0])
 		{
 			if (close(cmd->fd[0]) == -1)
+			{
+				printf("%d\n", cmd->fd[1]);
 				return_perror(1, 0);
+			}
 			cmd->fd[0] = 0;
 		}
 		if (cmd->fd[1])
@@ -95,7 +98,6 @@ void	execution(t_command *cmd, t_mini *mini)
 {
 	if (!is_builtin(cmd->args[0]))
 	{
-		printf("%d\n", cmd->fd[0]);
 		if (dup_io(cmd) == -1)
 			exit_free_status(mini, g_exit_status);
 		if (ft_close_all(mini) == -1)

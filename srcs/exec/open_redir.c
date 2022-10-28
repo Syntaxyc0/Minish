@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:55:03 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/27 14:23:41 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/28 14:46:52 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	redir_in(t_command *cmd, t_redir *redir)
 			return (-1);
 		}
 	}
-	cmd->fd[0] = open(redir->filename, O_RDONLY);
+	cmd->fd[0] = open(redir->filename, O_RDONLY | __O_CLOEXEC);
 	if (cmd->fd[0] < 0)
 	{
 		g_exit_status = 1;
@@ -103,7 +103,8 @@ void	redir_out(t_command *cmd, t_redir *redir)
 			return ;
 		}
 	}
-	cmd->fd[1] = open(redir->filename, O_CREAT | O_WRONLY | O_TRUNC, 0666);
+	cmd->fd[1] = open(redir->filename,
+			O_CREAT | O_WRONLY | O_TRUNC | __O_CLOEXEC, 0666);
 	if (cmd->fd[1] < 0)
 	{
 		g_exit_status = 1;
@@ -129,7 +130,8 @@ void	ft_append(t_command *cmd, t_redir *redir)
 			return ;
 		}
 	}
-	cmd->fd[1] = open(redir->filename, O_CREAT | O_WRONLY | O_APPEND, 0666);
+	cmd->fd[1] = open(redir->filename,
+			O_CREAT | O_WRONLY | O_APPEND | __O_CLOEXEC, 0666);
 	if (cmd->fd[1] < 0)
 	{
 		g_exit_status = 1;
