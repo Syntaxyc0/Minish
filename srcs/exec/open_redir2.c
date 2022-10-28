@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 13:21:50 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/27 16:09:32 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/28 12:08:04 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	heredoc_annihilator(t_mini *mini)
 	}
 }
 
-void	heredoc_fork(t_mini *mini, t_redir *redir, int fd)
+void	heredoc_fork(t_mini *mini, t_redir *redir, t_command *cmd)
 {
 	int	pid;
 
@@ -57,10 +57,10 @@ void	heredoc_fork(t_mini *mini, t_redir *redir, int fd)
 	if (pid == -1)
 		exit_perror(1);
 	if (pid == 0)
-		heredoc_child(redir, mini, fd);
+		heredoc_child(mini, redir, cmd);
 }
 
-void	heredoc_child(t_redir *redir, t_mini *mini, int fd)
+void	heredoc_child(t_mini *mini, t_redir *redir, t_command *cmd)
 {
 	char	*line;
 
@@ -70,46 +70,33 @@ void	heredoc_child(t_redir *redir, t_mini *mini, int fd)
 		line = readline(">");
 		if (g_exit_status == -1)
 		{
-			close(fd);
 			ft_close_all(mini);
 			exit_free_status(mini, 42);
 		}
 		if (!ft_strncmp(redir->filename, line, str_big(redir->filename, line)))
 			break ;
-		write(fd, line, ft_strlen(line));
-		write(fd, "\n", 1);
+		write(cmd->fd[0], line, ft_strlen(line));
+		write(cmd->fd[0], "\n", 2);
 	}
-	close(fd);
 	ft_close_all(mini);
 	exit_free_status(mini, 0);
 }
 
 int	ft_heredoc(t_command *cmd, t_redir *redir, t_mini *mini)
 {
-	int		fd;
-
 	if (cmd->fd[0])
 		if (close(cmd->fd[0]) == -1)
 			return_perror(1, -1);
 	redir->heredoc_name = already_exist(redir);
-	fd = open(redir->heredoc_name, O_CREAT | O_RDWR, 0666);
-	if (fd < 0)
-		return_perror(1, 0);
-	process_sig_handle();
-	heredoc_fork(mini, redir, fd);
-	close(fd);
-	ft_close_all(mini);
-	wait(&g_exit_status);
-	g_exit_status /= 256;
-	printf("%d\n", g_exit_status);
-	if (g_exit_status == 42)
-	{
-		heredoc_annihilator(mini);
-		return (-1);
-	}
-	cmd->fd[0] = open(redir->heredoc_name, O_CREAT | O_RDWR, 0666);
+	cmd->fd[0] = open("/tmp", __O_TMPFILE | O_RDWR | O_EXCL , 0666);
 	if (cmd->fd[0] < 0)
 		return_perror(1, 0);
+	heredoc_fork(mini, redir, cmd);
+	process_sig_handle();
+	wait(&g_exit_status);
+	g_exit_status /= 256;
+	if (g_exit_status == 42)
+		return (-1);
 	iocondition_heredoc(cmd);
 	return (0);
 }

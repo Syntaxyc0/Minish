@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:22:36 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/27 10:49:39 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/28 11:38:58 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,12 @@ void	process_sig_handle(void)
 
 void	heredoc_sig_handle(void)
 {
-	struct sigaction	s[2];
+	struct sigaction	s;
 
-	s[0].sa_handler = heredoc_c;
-	sigemptyset(&s[0].sa_mask);
-	s[0].sa_flags = 0;
-	sigaction(SIGINT, &s[0], NULL);
-	s[1].sa_handler = heredoc_d;
-	sigemptyset(&s[1].sa_mask);
-	s[1].sa_flags = 0;
-	sigaction(SIGQUIT, &s[1], NULL);
+	s.sa_handler = heredoc_c;
+	sigemptyset(&s.sa_mask);
+	s.sa_flags = 0;
+	sigaction(SIGINT, &s, NULL);
 }
 
 void	ft_handle_exit(t_mini *mini)
