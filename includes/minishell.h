@@ -269,5 +269,4 @@ int		str_big(char *a, char *b);
 
 /*
 ERREUR
--ls | echo >p, ls ecrit dans fd de echo et le fichier p contient ls
 */
