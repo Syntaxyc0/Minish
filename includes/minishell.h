@@ -58,6 +58,8 @@ alone = 0
 + in = 1
 + out = -1
 + in/out = 3
+
+builtin + out = 4
 */
 
 extern int	g_exit_status;
@@ -191,6 +193,7 @@ char	*two_dot(char *curpath, t_mini *mini);
 int		already_in_env(t_mini *mini, char *key, char *value);
 int		already_in_export(t_mini *mini, char *key);
 int		check_args(int nb_arg, char **args);
+int		echo_n_manager(t_command *cmd);
 int		is_builtin(char *arg);
 int		is_egal(char *s);
 int		is_space_before_egal(char *s);
@@ -267,6 +270,4 @@ int		str_big(char *a, char *b);
 /*
 ERREUR
 -ls | echo >p, ls ecrit dans fd de echo et le fichier p contient ls
--unset path -> SEGFAULT
--echo -n segfault; echo -nnnnnnn affiche "-nnnnnnnnn" (pas bon)
 */

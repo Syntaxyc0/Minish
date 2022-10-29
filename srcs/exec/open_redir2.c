@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 13:21:50 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/28 16:43:08 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/29 10:40:31 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int	ft_heredoc(t_command *cmd, t_redir *redir, t_mini *mini)
 	}
 	cmd->fd[0] = open(redir->heredoc_name, O_CREAT | O_RDWR, 0666);
 	if (cmd->fd[0] < 0)
-		rerturn (return_perror(1, 0));
+		return (return_perror(1, 0));
 	iocondition_heredoc(cmd);
 	return (0);
 }
