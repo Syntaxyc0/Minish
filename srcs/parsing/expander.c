@@ -68,47 +68,6 @@ void	expand_env(t_mini *mini, t_token *token, int i)
 	return ;
 }
 
-int	expand(t_mini *mini, t_token *token, int i)
-{
-	char	*tmp;
-
-	if (token->value[i + 1] == '\0')
-		return (1);
-	else if (token->value[i + 1] == '\'' || token->value[i + 1] == '\"')
-	{
-		token->value = replace_string(token->value, NULL,
-				i + len_quote(token->value, i + 1) + 1,
-				i + len_quote(token->value, i + 1) + 1);
-		token->value = replace_string(token->value, NULL, i, i + 1);
-		if (!token->value)
-			free_mini_exit_msg(mini, ERR_MALLOC);
-	}
-	else if (token->value[i + 1] == '?')
-	{
-		tmp = ft_itoa(g_exit_status);
-		if (!tmp)
-			free_mini_exit_msg(mini, ERR_MALLOC);
-		token->value = replace_string(token->value, tmp, i, i + 1);
-		if (!token->value)
-		{
-			free(tmp);
-			free_mini_exit_msg(mini, ERR_MALLOC);
-		}
-		free(tmp);
-	}
-	else if (ft_isdigit(token->value[i + 1]))
-	{
-		token->value = replace_string(token->value, NULL, i, i + 1);
-		if (!token->value)
-			free_mini_exit_msg(mini, ERR_MALLOC);
-	}
-	else if (ft_isalpha(token->value[i + 1]) || token->value[i + 1] == '_')
-		expand_env(mini, token, i);
-	else
-		return (error_redisplay_line(ERR_SYNTAX, "'$'", 2));
-	return (0);
-}
-
 int	expander(t_mini *mini)
 {
 	t_token	*token;

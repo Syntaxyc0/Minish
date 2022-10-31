@@ -43,6 +43,7 @@ SRCS = 	ft_signal.c				\
 		check_handle_redir.c	\
 		replace_string.c 		\
 		handle_exp_quote.c		\
+		expand.c				\
 		expander.c 				\
 		parse_redir.c			\
 		parse_cmds.c 			\

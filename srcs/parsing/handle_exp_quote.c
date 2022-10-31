@@ -28,10 +28,39 @@ int	exp_contains_quote(char *str)
 	return (-1);
 }
 
-char	*add_symbol_before(char *str, int i, int *free1)
+char	*free_2_if(char *str1, char *str2, int free1, int free2)
+{
+	if (free1)
+		free(str1);
+	if (free2)
+		free(str2);
+	return (NULL);
+}
+
+char	*add_between(char *cpy, int *i)
 {
 	char	*ret;
 	char	*tmp;
+
+	ret = ft_substr(cpy, 0, *i);
+	if (!ret)
+		return (free_2_if(cpy, NULL, 1, 0));
+	tmp = ft_substr(cpy, *i, ft_strlen(cpy));
+	if (!tmp)
+		return (free_2_if(cpy, ret, 1, 1));
+	free(cpy);
+	ret = ft_strjoin_free(ret, ";", 1, 0);
+	if (!ret)
+		return (free_2_if(tmp, NULL, 1, 0));
+	ret = ft_strjoin_free(ret, tmp, 1, 1);
+	if (!ret)
+		return (free_2_if(tmp, NULL, 1, 0));
+	return (ret);
+}
+
+char	*add_symbol_before(char *str, int i, int *free1)
+{
+	char	*ret;
 	char	*cpy;
 
 	cpy = ft_strdup(str);
@@ -42,42 +71,16 @@ char	*add_symbol_before(char *str, int i, int *free1)
 	if (i == 0)
 	{
 		ret = ft_strjoin(";", cpy);
+		free(cpy);
 		if (!ret)
-		{
-			free(cpy);
 			return (NULL);
-		}
 	}
 	else
 	{
-		ret = ft_substr(cpy, 0, i);
+		ret = add_between(cpy, &i);
 		if (!ret)
-		{
-			free(cpy);
 			return (NULL);
-		}
-		tmp = ft_substr(cpy, i, ft_strlen(cpy));
-		if (!cpy)
-		{
-			free(ret);
-			free(cpy);
-			return (NULL);
-		}
-		ret = ft_strjoin_free(ret, ";", 1, 0);
-		if (!ret)
-		{
-			free(tmp);
-			free(cpy);
-			return (NULL);
-		}
-		ret = ft_strjoin_free(ret, tmp, 1, 1);
-		if (!ret)
-		{
-			free(cpy);
-			return (NULL);
-		}
 	}
-	free(cpy);
 	return (ret);
 }
 
