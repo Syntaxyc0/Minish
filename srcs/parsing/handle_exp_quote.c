@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_exp_quote.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jbesnier <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/31 13:55:04 by jbesnier          #+#    #+#             */
+/*   Updated: 2022/10/31 13:55:18 by jbesnier         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	exp_contains_quote(char *str)
@@ -31,7 +43,10 @@ char	*add_symbol_before(char *str, int i, int *free1)
 	{
 		ret = ft_strjoin(";", cpy);
 		if (!ret)
+		{
+			free(cpy);
 			return (NULL);
+		}
 	}
 	else
 	{

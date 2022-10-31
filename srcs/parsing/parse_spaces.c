@@ -14,7 +14,7 @@
 
 int	contains_space(t_token *token)
 {
-	int	i;
+	int		i;
 	char	*str;
 
 	str = token->value;
@@ -36,7 +36,7 @@ int	contains_space(t_token *token)
 
 int	check_only_space(t_token *token, int start)
 {
-	int	i;
+	int		i;
 	char	*str;
 
 	str = token->value;
@@ -67,7 +67,9 @@ char	*split_token(t_mini *mini, t_token *token)
 	end = start;
 	while (token->value[end] != ' ' && token->value[end])
 	{
-		if (token->value[end] == '\'')
+		if (token->value[end] == ';')
+			end += 2;
+		else if (token->value[end] == '\'')
 			end += len_quote(token->value, end);
 		else if (token->value[end] == '\"')
 			end += len_quote(token->value, end);

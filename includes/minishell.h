@@ -35,6 +35,7 @@
 # define ERR_NORIGHT "msh : permission denied"
 # define ERR_VALIDARG "msh : not a valid identifier"
 # define ERR_INVALID " : Invalid input."
+# define ERR_AMBI ": ambiguous redirect"
 
 # define MINI "Minishell: "
 
@@ -205,7 +206,7 @@ int		str_isdigit(char *str);
 t_mini	*init_mini(void);
 int		len_quote(char *str, int i);
 int		check_quote_syntax(char	*str);
-int 	check_invalid_char(char *input);
+int		check_invalid_char(char *input);
 int		len_quote(char *str, int i);
 int		handle_append(t_mini *mini, t_token *token);
 int		handle_heredoc(t_mini *mini, t_token *token);
@@ -215,7 +216,7 @@ void	delete_token(t_mini *mini, t_token *token);
 int		parse_token(t_mini *mini, char *str);
 void	get_token_type(t_mini *mini);
 int		check_syntax(t_mini *mini);
-int 	check_expandredirs(t_mini *mini);
+int		check_expandredirs(t_mini *mini);
 void	get_redir_types(t_mini *mini);
 char	*replace_string(char *value, char *str, int start, int end);
 int		contains_exp_sign(char *str);
@@ -226,6 +227,7 @@ int		expander(t_mini *mini);
 void	parse_spaces(t_mini *mini);
 int		remove_quotes(t_mini *mini);
 int		remove_markers(t_mini *mini);
+int		parse_redir(t_mini	*mini, t_token *token, t_command *command);
 int		parse_exec_form(t_mini	*mini);
 int		parser(t_mini *mini, char *line);
 

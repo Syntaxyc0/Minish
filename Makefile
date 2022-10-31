@@ -44,6 +44,7 @@ SRCS = 	ft_signal.c				\
 		replace_string.c 		\
 		handle_exp_quote.c		\
 		expander.c 				\
+		parse_redir.c			\
 		parse_cmds.c 			\
 		parse_spaces.c 			\
 		remove_quotes.c 		\

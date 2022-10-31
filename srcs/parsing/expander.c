@@ -19,7 +19,9 @@ int	contains_exp_sign(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '\'')
+		if (str[i] == ';')
+			i += 2;
+		else if (str[i] == '\'')
 			i += len_quote(str, i);
 		else if (str[i] == '\"')
 			i++;
@@ -36,7 +38,7 @@ void	expand_env(t_mini *mini, t_token *token, int i)
 	char	*tmp;
 	char	*ret;
 	int		j;
-	int 	free1;
+	int		free1;
 
 	j = 1;
 	free1 = 0;
