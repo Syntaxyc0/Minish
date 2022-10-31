@@ -19,16 +19,8 @@ void	echo(t_command *cmd, t_mini *mini)
 
 	n_count = 0;
 	if (cmd_args_len(cmd) == 1)
-<<<<<<< HEAD
 	{
 		printf("\n");
-		return ;
-	}
-	while (!ft_strncmp(cmd->args[i], "-n", str_big(cmd->args[i], "-n")))
-=======
->>>>>>> d305d9c61b0f8f7dcf59bba3bcbbfb8fbdce0473
-	{
-		echo_nl(cmd, mini);
 		return ;
 	}
 	i = echo_n_manager(cmd);
