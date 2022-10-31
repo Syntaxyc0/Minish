@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:22:36 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/28 11:38:58 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/31 10:18:31 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,6 @@ void	process_sig_handle(void)
 	sigemptyset(&sac[0].sa_mask);
 	sac[0].sa_flags = 0;
 	sigaction(SIGINT, &sac[0], NULL);
-	sac[1].sa_handler = SIG_IGN;
-	sigemptyset(&sac[1].sa_mask);
-	sac[1].sa_flags = 0;
-	sigaction(SIGQUIT, &sac[1], NULL);
 }
 
 void	heredoc_sig_handle(void)
