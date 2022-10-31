@@ -42,10 +42,12 @@ SRCS = 	ft_signal.c				\
 		get_redir_types.c 		\
 		check_handle_redir.c	\
 		replace_string.c 		\
+		handle_exp_quote.c		\
 		expander.c 				\
 		parse_cmds.c 			\
 		parse_spaces.c 			\
 		remove_quotes.c 		\
+		remove_markers.c		\
 		is_builtin.c 			\
 		get_env.c 				\
 		get_env_value.c 		\
@@ -68,7 +70,7 @@ SRCS = 	ft_signal.c				\
 		exit.c					\
 		io_condition.c			\
 		
-CC = gcc $(FSANITIZE)
+CC = gcc #$(FSANITIZE)
 
 CFLAGS = -MMD -Wall -Werror -Wextra -g3
 

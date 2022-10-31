@@ -34,7 +34,7 @@
 # define ERR_NOFILE "msh : no such file or directory"
 # define ERR_NORIGHT "msh : permission denied"
 # define ERR_VALIDARG "msh : not a valid identifier"
-# define ERR_INVALID ": Invalid input."
+# define ERR_INVALID " : Invalid input."
 
 # define MINI "Minishell: "
 
@@ -215,15 +215,17 @@ void	delete_token(t_mini *mini, t_token *token);
 int		parse_token(t_mini *mini, char *str);
 void	get_token_type(t_mini *mini);
 int		check_syntax(t_mini *mini);
-int check_expandredirs(t_mini *mini);
+int 	check_expandredirs(t_mini *mini);
 void	get_redir_types(t_mini *mini);
 char	*replace_string(char *value, char *str, int start, int end);
 int		contains_exp_sign(char *str);
 void	expand_env(t_mini *mini, t_token *token, int i);
 int		contains_exp_sign(char *str);
+char	*handle_exp_quote(t_mini *mini, char *str, int *free1);
 int		expander(t_mini *mini);
 void	parse_spaces(t_mini *mini);
 int		remove_quotes(t_mini *mini);
+int		remove_markers(t_mini *mini);
 int		parse_exec_form(t_mini	*mini);
 int		parser(t_mini *mini, char *line);
 

@@ -37,6 +37,7 @@ int	parser(t_mini *mini, char *line)
 	parse_spaces(mini);
 	if (remove_quotes(mini))
 		free_mini_exit_msg(mini, ERR_MALLOC);
+	remove_markers(mini);
 	if (parse_exec_form(mini))
 		free_mini_exit_msg(mini, NULL);
 	return (0);

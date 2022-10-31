@@ -21,9 +21,11 @@ int	contains_quote(char	*str, int start)
 	i = start;
 	while (str[i])
 	{
-		if (str[i] == '\'')
+		if (str[i] == ';')
+			i++;
+		else if (str[i] == '\'')
 			return (1);
-		if (str[i] == '\"')
+		else if (str[i] == '\"')
 			return (2);
 		i++;
 	}
@@ -37,7 +39,9 @@ int	get_next_quote_index(char	*str, int start, char quote)
 	i = start;
 	while (str[i])
 	{
-		if (str[i] == quote)
+		if (str[i] == ';')
+			i++;
+		else if (str[i] == quote)
 			return (i);
 		i++;
 	}

@@ -31,16 +31,15 @@ int	contains_exp_sign(char *str)
 	return (-1);
 }
 
-
-//pre traiter les variables expand pour bien separer les espaces, remplacer les espaces par des '\n' ??
-
 void	expand_env(t_mini *mini, t_token *token, int i)
 {
 	char	*tmp;
 	char	*ret;
 	int		j;
+	int 	free1;
 
 	j = 1;
+	free1 = 0;
 	while (token->value[i + j] && token->value[i + j] != '\''
 		&& token->value[i + j] != '\"' && token->value[i + j] != '$'
 		&& token->value[i + j] != ' ')
@@ -57,10 +56,13 @@ void	expand_env(t_mini *mini, t_token *token, int i)
 			free_mini_exit_msg(mini, ERR_MALLOC);
 		return ;
 	}
+	else
+		ret = handle_exp_quote(mini, ret, &free1);
 	token->value = replace_string(token->value, ret, i, i + j - 1);
+	if (free1)
+		free(ret);
 	if (!token->value)
 		free_mini_exit_msg(mini, ERR_MALLOC);
-	free(tmp);
 	return ;
 }
 
@@ -100,7 +102,6 @@ int	expand(t_mini *mini, t_token *token, int i)
 	}
 	else if (ft_isalpha(token->value[i + 1]) || token->value[i + 1] == '_')
 		expand_env(mini, token, i);
-	// ICI : virer ces fuckings espaces en trop
 	else
 		return (error_redisplay_line(ERR_SYNTAX, "'$'", 2));
 	return (0);
