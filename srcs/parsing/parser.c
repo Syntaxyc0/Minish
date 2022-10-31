@@ -20,6 +20,8 @@ int	get_newline(t_mini *mini)
 
 int	parser(t_mini *mini, char *line)
 {
+	if (check_invalid_char(line))
+		return (get_newline(mini));
 	if (parse_token(mini, line))
 		return (get_newline(mini));
 	parse_spaces(mini);

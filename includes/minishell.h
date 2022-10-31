@@ -34,6 +34,7 @@
 # define ERR_NOFILE "msh : no such file or directory"
 # define ERR_NORIGHT "msh : permission denied"
 # define ERR_VALIDARG "msh : not a valid identifier"
+# define ERR_INVALID ": Invalid input."
 
 # define MINI "Minishell: "
 
@@ -201,6 +202,7 @@ int		str_isdigit(char *str);
 t_mini	*init_mini(void);
 int		len_quote(char *str, int i);
 int		check_quote_syntax(char	*str);
+int 	check_invalid_char(char *input);
 int		len_quote(char *str, int i);
 int		handle_append(t_mini *mini, t_token *token);
 int		handle_heredoc(t_mini *mini, t_token *token);
