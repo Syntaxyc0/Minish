@@ -64,7 +64,7 @@ int	get_env(char **env, t_mini *mini)
 	int		j;
 
 	i = -1;
-	if (!env ||!*env)
+	if (!env || !*env)
 		return (0);
 	while (env[++i])
 	{

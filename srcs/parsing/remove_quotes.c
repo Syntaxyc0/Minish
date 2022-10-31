@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remove_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbesnier <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 10:52:49 by jbesnier          #+#    #+#             */
-/*   Updated: 2022/10/24 10:52:53 by jbesnier         ###   ########.fr       */
+/*   Updated: 2022/10/27 13:57:23 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ int	remove_token_quote(t_token *token, int *start, int *end)
 		token->value = replace_string(token->value, NULL, *start, *start);
 		if (!token->value)
 			return (1);
-		
 		token->value = replace_string(token->value, NULL, *end - 1, *end - 1);
 		if (!token->value)
 			return (1);
