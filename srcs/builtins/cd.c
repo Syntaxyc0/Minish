@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 11:49:48 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/24 16:18:17 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/31 16:11:09 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void	push_in_env(t_mini *mini, char *curpath)
 
 void	cd(t_command *cmd, t_mini *mini)
 {
+	g_exit_status = 0;
 	char	*curpath;
 
 	old_pwd(mini);

@@ -33,7 +33,7 @@
 # define ERR_ARG "msh : wrong number of arguments\n"
 # define ERR_NOFILE "msh : no such file or directory"
 # define ERR_NORIGHT "msh : permission denied"
-# define ERR_VALIDARG "msh : not a valid identifier"
+# define ERR_VALIDARG "msh : not a valid identifier\n"
 # define ERR_INVALID ": Invalid input."
 
 # define MINI "Minishell: "
@@ -193,7 +193,7 @@ char	*pwd_get_cwd(t_mini *mini, int i, char *ret);
 char	*two_dot(char *curpath, t_mini *mini);
 int		already_in_env(t_mini *mini, char *key, char *value);
 int		already_in_export(t_mini *mini, char *key);
-int		check_args(int nb_arg, char **args);
+int		check_arg(char *args);
 int		echo_n_manager(t_command *cmd);
 int		is_builtin(char *arg);
 int		is_egal(char *s);
@@ -273,4 +273,5 @@ int		str_big(char *a, char *b);
 
 /*
 ERREUR
+exit status
 */

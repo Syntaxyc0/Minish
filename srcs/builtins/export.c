@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 13:44:07 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/27 15:24:26 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/31 16:04:22 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,18 @@ void	import(t_mini *mini, int ac, char **av)
 	i = 0;
 	while (++i < ac)
 	{
-		if (is_space_before_egal(av[i]))
+		if (!check_arg(av[i]))
 		{
-			printf("export: not valid in this context\n");
-			return ;
+			if (is_space_before_egal(av[i]))
+			{
+				printf("export: not valid in this context\n");
+				return ;
+			}
+			if (is_egal(av[i]))
+				import_env(mini, av[i]);
+			else
+				import_export(mini, av[i]);
 		}
-		if (is_egal(av[i]))
-			import_env(mini, av[i]);
-		else
-			import_export(mini, av[i]);
 	}
 }
 
@@ -79,45 +82,43 @@ void	import_env(t_mini *mini, char *s)
 	else
 		value = 0;
 	if (already_in_env(mini, key, value))
-		return ;
-	add_envelem(mini, key, value);
+		;
+	else
+		add_envelem(mini, key, value);
 	free(key);
 	free(value);
 }
 
-int	check_args(int nb_arg, char **args)
+int	check_arg(char *args)
 {
 	int	i;
 
-	while (--nb_arg > 1)
+	if (args[0] == '=')
 	{
-		if (args[nb_arg][0] == '=')
+		write_error_message(ERR_VALIDARG);
+		return (1);
+	}
+	i = 0;
+	while (args[i] != '=' && args[i])
+	{
+		if (ft_isalpha(args[i]) != 1 && args[i] != '_')
 		{
+			write(1, "'", 2);
+			write_error_message(args);
+			write_error_message("' : ");
 			write_error_message(ERR_VALIDARG);
 			return (1);
 		}
-		i = 0;
-		while (args[nb_arg][i] != '=' && args[nb_arg][i])
-		{
-			if (ft_isalpha(args[nb_arg][i]) != 1 && args[nb_arg][i] != '_')
-			{
-				write_error_message(ERR_VALIDARG);
-				return (1);
-			}
-			i++;
-		}
+		i++;
 	}
 	return (0);
 }
 
 void	export(t_mini *mini, t_command *cmd)
 {
+	g_exit_status = 0;
 	if (cmd_args_len(cmd) == 1)
 		write_error_message("Unspecified behaviour (cf man export)\n");
 	else
-	{
-		if (check_args(cmd_args_len(cmd), cmd->args) == 1)
-			return ;
 		import(mini, cmd_args_len(cmd), cmd->args);
-	}
 }

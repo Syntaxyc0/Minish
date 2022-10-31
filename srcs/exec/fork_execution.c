@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:50:41 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/29 12:40:27 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/31 16:12:32 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,5 +112,5 @@ void	execution(t_command *cmd, t_mini *mini)
 	}
 	else
 		builtin_process(cmd, mini);
-	exit_free_status(mini, g_exit_status);
+	exit_free_status(mini, g_exit_status * 256);
 }
