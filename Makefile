@@ -66,7 +66,7 @@ SRCS = 	ft_signal.c				\
 		exit.c					\
 		io_condition.c			\
 		
-CC = gcc #$(FSANITIZE)
+CC = gcc $(FSANITIZE)
 
 CFLAGS = -MMD -Wall -Werror -Wextra -g3
 
