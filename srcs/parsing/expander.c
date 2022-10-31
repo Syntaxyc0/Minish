@@ -60,6 +60,7 @@ void	expand_env(t_mini *mini, t_token *token, int i)
 	token->value = replace_string(token->value, ret, i, i + j - 1);
 	if (!token->value)
 		free_mini_exit_msg(mini, ERR_MALLOC);
+	free(tmp);
 	return ;
 }
 

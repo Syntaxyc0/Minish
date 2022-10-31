@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 14:26:11 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/25 15:20:53 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/29 11:03:38 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,17 @@ void	get_all_path(t_mini *mini)
 
 	i = -1;
 	ev = mini->myenv;
-	while (ft_strncmp(ev->key, "PATH", str_big(ev->key, "PATH")))
+	while (ev && ft_strncmp(ev->key, "PATH", str_big(ev->key, "PATH")))
 		ev = ev->next;
 	if (mini->all_path)
 	{
 		while (mini->all_path[++i])
 			free(mini->all_path[i]);
 		free(mini->all_path);
+		mini->all_path = NULL;
 	}
+	if (!ev)
+		return ;
 	mini->all_path = ft_split(ev->value, ':');
 }
 

@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:50:41 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/28 16:10:02 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/29 12:40:27 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 int	dup_io(t_command *cmd)
 {
+	if ((cmd->io == -2 || cmd->io == 2) && cmd->next
+		&& is_builtin(cmd->next->args[0]) && cmd->next->io == 3)
+		cmd->io++;
 	if (cmd->io > 0)
 		if (dup2(cmd->fd[0], STDIN_FILENO) == -1)
 			return (return_perror(1, -1));
@@ -60,7 +63,7 @@ int	check_relative(t_mini *mini, t_command *cmd)
 	char	*path;
 
 	i = -1;
-	while (mini->all_path[++i])
+	while (mini->all_path && mini->all_path[++i])
 	{
 		tmp = ft_strjoin(mini->all_path[i], "/");
 		if (!tmp)
