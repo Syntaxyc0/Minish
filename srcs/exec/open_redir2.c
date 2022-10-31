@@ -119,7 +119,7 @@ int	ft_heredoc(t_command *cmd, t_redir *redir, t_mini *mini)
 	}
 	cmd->fd[0] = open(redir->heredoc_name, O_CREAT | O_RDWR, 0666);
 	if (cmd->fd[0] < 0)
-		rerturn (return_perror(1, 0));
+		return (return_perror(1, 0));
 	iocondition_heredoc(cmd);
 	return (0);
 }

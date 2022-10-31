@@ -49,9 +49,9 @@ void	expand_env(t_mini *mini, t_token *token, int i)
 	if (!tmp)
 		free_mini_exit_msg(mini, ERR_MALLOC);
 	ret = get_env_value(mini, tmp);
+	free(tmp);
 	if (!ret)
 	{
-		free(tmp);
 		token->value = replace_string(token->value, NULL, i, i + j - 1);
 		if (!token->value)
 			free_mini_exit_msg(mini, ERR_MALLOC);
@@ -60,7 +60,6 @@ void	expand_env(t_mini *mini, t_token *token, int i)
 	token->value = replace_string(token->value, ret, i, i + j - 1);
 	if (!token->value)
 		free_mini_exit_msg(mini, ERR_MALLOC);
-	free(tmp);
 	return ;
 }
 
@@ -100,6 +99,7 @@ int	expand(t_mini *mini, t_token *token, int i)
 	}
 	else if (ft_isalpha(token->value[i + 1]) || token->value[i + 1] == '_')
 		expand_env(mini, token, i);
+	// ICI : virer ces fuckings espaces en trop
 	else
 		return (error_redisplay_line(ERR_SYNTAX, "'$'", 2));
 	return (0);
