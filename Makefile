@@ -37,6 +37,8 @@ SRCS = 	ft_signal.c				\
 		get_token_type.c		\
 		check_syntax.c			\
 		parser.c 				\
+		check_ambiguous.c 		\
+		check_invalid_char.c	\
 		get_redir_types.c 		\
 		check_handle_redir.c	\
 		replace_string.c 		\
