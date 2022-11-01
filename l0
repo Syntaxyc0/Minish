@@ -1,1 +1,0 @@
-<<l cat >1 | <<l cat >3 | <<l cat >l0
