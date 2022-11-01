@@ -47,6 +47,7 @@ SRCS = 	ft_signal.c				\
 		expander.c 				\
 		parse_redir.c			\
 		parse_cmds.c 			\
+		split_token.c			\
 		parse_spaces.c 			\
 		remove_quotes.c 		\
 		remove_markers.c		\

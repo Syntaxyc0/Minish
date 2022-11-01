@@ -53,42 +53,6 @@ int	check_only_space(t_token *token, int start)
 	return (0);
 }
 
-char	*split_token(t_mini *mini, t_token *token)
-{
-	int		end;
-	char	*ret;
-	char	*tmp;
-	int		start;
-
-	start = 0;
-	end = 0;
-	while (token->value[start] == ' ' && token->value[start])
-		start ++;
-	end = start;
-	while (token->value[end] != ' ' && token->value[end])
-	{
-		if (token->value[end] == ';')
-			end += 2;
-		else if (token->value[end] == '\'')
-			end += len_quote(token->value, end);
-		else if (token->value[end] == '\"')
-			end += len_quote(token->value, end);
-		else
-		{
-			if (token->value[end])
-				end++;
-		}
-	}
-	ret = ft_substr(token->value, start, end - start);
-	if (!ret)
-		free_mini_exit_msg(mini, ERR_MALLOC);
-	tmp = replace_string(token->value, NULL, 0, end - 1);
-	if (!tmp)
-		free_mini_exit_msg(mini, ERR_MALLOC);
-	token->value = ret;
-	return (tmp);
-}
-
 int	get_token_value(t_mini *mini, t_token *token)
 {
 	char	*value;

@@ -24,7 +24,7 @@ t_redir	*init_redir(void)
 	}
 	ret->type = 0;
 	ret->filename = NULL;
-	ret->filename = NULL;
+	ret->heredoc_name = NULL;
 	ret->next = NULL;
 	return (ret);
 }
