@@ -95,15 +95,8 @@ void	add_command(t_mini *mini, t_command *cmd)
 	tmp->next = cmd;
 }
 
-int	parse_cmd(t_mini *mini)
+int	parse_between_pipes(t_mini *mini, t_token *token, t_command *new)
 {
-	t_command	*new;
-	t_token		*token;
-
-	token = mini->tokens;
-	if (token != NULL && token->type == PIPE)
-		return (0);
-	new = init_cmd();
 	while (token != NULL && token->type != PIPE)
 	{
 		if (!new)
@@ -114,13 +107,27 @@ int	parse_cmd(t_mini *mini)
 			if (parse_redir(mini, token, new))
 			{
 				free(new);
-				return (EXIT_FAILURE);
+				return (1);
 			}
 			token = mini->tokens;
 		}
 		else
 			token = token->next;
 	}
+	return (0);
+}
+
+int	parse_cmd(t_mini *mini)
+{
+	t_command	*new;
+	t_token		*token;
+
+	token = mini->tokens;
+	if (token != NULL && token->type == PIPE)
+		return (0);
+	new = init_cmd();
+	if (parse_between_pipes(mini, token, new))
+		return (1);
 	token = mini->tokens;
 	if (parse_args(mini, token, new))
 	{
