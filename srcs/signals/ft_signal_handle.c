@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:22:36 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/31 10:18:31 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/11/01 13:33:24 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,16 @@
 
 void	ft_sigint_handle(void)
 {
-	struct sigaction	sa;
+	struct sigaction	sa[2];
 
-	sa.sa_handler = ft_signal;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0;
-	sigaction(SIGINT, &sa, NULL);
+	sa[0].sa_handler = ft_signal;
+	sigemptyset(&sa[0].sa_mask);
+	sa[0].sa_flags = 0;
+	sigaction(SIGINT, &sa[0], NULL);
+	sa[1].sa_handler = SIG_IGN;
+	sigemptyset(&sa[1].sa_mask);
+	sa[1].sa_flags = 0;
+	sigaction(SIGQUIT, &sa[1], NULL);
 }
 
 void	process_sig_handle(void)
