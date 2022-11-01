@@ -24,6 +24,45 @@ void	init_myenv(t_mini *mini, char *key, char *value)
 		free_mini_exit_msg(mini, ERR_MALLOC);
 }
 
+void	free_envelem_key_value(t_env *ret, char *key, char *value)
+{
+	if (ret->key)
+		free(ret->key);
+	if (key)
+		free(key);
+	if (value)
+		free(value);
+	free(ret);
+}
+
+t_env	*init_envelem(t_mini *mini, char *key, char *value)
+{
+	t_env	*ret;
+
+	ret = malloc(sizeof(t_env));
+	if (!ret)
+		free_mini_exit_msg(mini, ERR_MALLOC);
+	ret->key = ft_strdup(key);
+	if (!ret->key)
+	{
+		free_envelem_key_value(ret, key, value);
+		free_mini_exit_msg(mini, ERR_MALLOC);
+	}
+	if (value)
+	{
+		ret->value = ft_strdup(value);
+		if (!ret->value)
+		{
+			free_envelem_key_value(ret, key, value);
+			free_mini_exit_msg(mini, ERR_MALLOC);
+		}
+	}
+	else
+		ret->value = 0;
+	ret->next = NULL;
+	return (ret);
+}
+
 void	add_envelem(t_mini *mini, char *key, char *value)
 {
 	t_env	*ret;
@@ -35,21 +74,7 @@ void	add_envelem(t_mini *mini, char *key, char *value)
 		return ;
 	}
 	tmp = mini->myenv;
-	ret = malloc(sizeof(t_env));
-	if (!ret)
-		free_mini_exit_msg(mini, ERR_MALLOC);
-	ret->key = ft_strdup(key);
-	if (value)
-	{
-		ret->value = ft_strdup(value);
-		if (!ret->value)
-			free_mini_exit_msg(mini, ERR_MALLOC);
-	}
-	else
-		ret->value = 0;
-	ret->next = NULL;
-	if (!ret->key)
-		free_mini_exit_msg(mini, ERR_MALLOC);
+	ret = init_envelem(mini, key, value);
 	while (mini->myenv->next != NULL)
 		mini->myenv = mini->myenv->next;
 	mini->myenv->next = ret;

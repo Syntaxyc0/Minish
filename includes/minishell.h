@@ -160,6 +160,7 @@ void	exit_free_status_msg(t_mini *mini, int ges, char *msg);
 void	exit_perror(int ges);
 int		error_args(char *msg, char *token, int errcode);
 int		error_redisplay_line(char *msg, char *token, int errcode);
+int		error_mini(t_mini *mini);
 int		return_perror(int ges, int ret);
 int		write_error_message(char *message);
 
@@ -230,6 +231,7 @@ void	parse_spaces(t_mini *mini);
 int		remove_quotes(t_mini *mini);
 int		remove_markers(t_mini *mini);
 int		parse_redir(t_mini	*mini, t_token *token, t_command *command);
+int		parse_args(t_mini *mini, t_token *token, t_command *command);
 int		parse_exec_form(t_mini	*mini);
 int		parser(t_mini *mini, char *line);
 

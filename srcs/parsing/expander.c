@@ -33,6 +33,20 @@ int	contains_exp_sign(char *str)
 	return (-1);
 }
 
+char	*get_tmp(t_mini *mini, t_token *token, int *i, int *j)
+{
+	char	*tmp;
+
+	while (token->value[*i + *j] && token->value[*i + *j] != '\''
+		&& token->value[*i + *j] != '\"' && token->value[*i + *j] != '$'
+		&& token->value[*i + *j] != ' ')
+		*j += 1;
+	tmp = ft_substr(token->value, *i + 1, *j - 1);
+	if (!tmp)
+		free_mini_exit_msg(mini, ERR_MALLOC);
+	return (tmp);
+}
+
 void	expand_env(t_mini *mini, t_token *token, int i)
 {
 	char	*tmp;
@@ -42,13 +56,7 @@ void	expand_env(t_mini *mini, t_token *token, int i)
 
 	j = 1;
 	free1 = 0;
-	while (token->value[i + j] && token->value[i + j] != '\''
-		&& token->value[i + j] != '\"' && token->value[i + j] != '$'
-		&& token->value[i + j] != ' ')
-		j++;
-	tmp = ft_substr(token->value, i + 1, j - 1);
-	if (!tmp)
-		free_mini_exit_msg(mini, ERR_MALLOC);
+	tmp = get_tmp(mini, token, &i, &j);
 	ret = get_env_value(mini, tmp);
 	free(tmp);
 	if (!ret)
@@ -68,15 +76,8 @@ void	expand_env(t_mini *mini, t_token *token, int i)
 	return ;
 }
 
-int	expander(t_mini *mini)
+int	expand_all(t_mini *mini, t_token *token, t_token *tmp, int index)
 {
-	t_token	*token;
-	t_token	*tmp;
-	int		index;
-
-	token = mini->tokens;
-	if (mini->tokens == NULL)
-		return (error_redisplay_line(NULL, NULL, 0));
 	while (token != NULL)
 	{
 		index = contains_exp_sign(token->value);
@@ -100,5 +101,21 @@ int	expander(t_mini *mini)
 		if (token)
 			token = token->next;
 	}
+	return (0);
+}
+
+int	expander(t_mini *mini)
+{
+	t_token	*token;
+	t_token	*tmp;
+	int		index;
+
+	tmp = NULL;
+	index = 0;
+	token = mini->tokens;
+	if (mini->tokens == NULL)
+		return (error_redisplay_line(NULL, NULL, 0));
+	if (expand_all(mini, token, tmp, index))
+		return (1);
 	return (0);
 }

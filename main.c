@@ -35,10 +35,7 @@ int	main(int argc, char **argv, char **env)
 		if (parser(mini, line))
 			continue ;
 		if (exec(mini) == -1)
-		{
-			free_mini(mini);
-			return (1);
-		}
+			return (error_mini(mini));
 		free_commands(mini);
 	}
 	free_mini(mini);

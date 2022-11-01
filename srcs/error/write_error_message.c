@@ -29,6 +29,12 @@ int	return_perror(int ges, int ret)
 	return (0);
 }
 
+int	error_mini(t_mini *mini)
+{
+	free_mini(mini);
+	return (1);
+}
+
 void	exit_perror(int ges)
 {
 	perror(NULL);
