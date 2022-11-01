@@ -225,6 +225,7 @@ int		contains_exp_sign(char *str);
 char	*handle_exp_quote(t_mini *mini, char *str, int *free1);
 int		expand(t_mini *mini, t_token *token, int i);
 int		expander(t_mini *mini);
+char	*split_token(t_mini *mini, t_token *token);
 void	parse_spaces(t_mini *mini);
 int		remove_quotes(t_mini *mini);
 int		remove_markers(t_mini *mini);
