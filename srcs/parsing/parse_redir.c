@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:28:24 by jbesnier          #+#    #+#             */
-/*   Updated: 2022/10/26 15:55:57 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/11/01 11:33:25 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_redir	*init_redir(void)
 	}
 	ret->type = 0;
 	ret->filename = NULL;
-	ret->filename = NULL;
+	ret->heredoc_name = NULL;
 	ret->next = NULL;
 	return (ret);
 }

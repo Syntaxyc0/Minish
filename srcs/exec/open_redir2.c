@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 13:21:50 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/29 10:40:31 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/11/01 11:23:25 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ char	*already_exist(t_redir *redir, t_command *cmd)
 	char	*ret;
 
 	ret = ft_strdup(redir->filename);
-	while (access(ret, R_OK) == 0)
-		ret = ft_strjoin_free(ret, "0", 1, 0);
 	while (cmd)
 	{
 		red = cmd->redir;
@@ -31,6 +29,8 @@ char	*already_exist(t_redir *redir, t_command *cmd)
 		}
 		cmd = cmd->next;
 	}
+	while (access(ret, R_OK) == 0)
+		ret = ft_strjoin_free(ret, "0", 1, 0);
 	return (ret);
 }
 
