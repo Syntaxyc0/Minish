@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 15:38:35 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/31 16:05:06 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/11/01 11:37:25 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	pwd(t_command *cmd, t_mini *mini)
 {
-	g_exit_status = 0;
 	int		i;
 	char	*path;
 	char	*ret;
 
+	g_exit_status = 0;
 	i = 256;
 	ret = malloc(i);
 	if (!ret)

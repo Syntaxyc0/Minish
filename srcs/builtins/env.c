@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 15:35:25 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/31 16:04:13 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/11/01 11:37:11 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	env(t_mini *mini, t_command *cmd)
 {
-	g_exit_status = 0;
 	t_env	*tmp;
 
+	g_exit_status = 0;
 	tmp = mini->myenv;
 	while (tmp)
 	{

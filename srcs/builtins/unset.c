@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 15:34:16 by gregoiregob       #+#    #+#             */
-/*   Updated: 2022/10/31 16:05:12 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/11/01 11:36:19 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,9 @@ void	unset_in_export(t_mini *mini, char **args)
 
 void	unset(t_mini *mini, t_command *cmd)
 {
-	g_exit_status = 0;
 	int	i;
 
+	g_exit_status = 0;
 	i = cmd_args_len(cmd);
 	if (i == 1)
 		write_error_message(ERR_ARG);

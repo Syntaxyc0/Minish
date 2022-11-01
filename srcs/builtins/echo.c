@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 14:44:05 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/31 16:04:10 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/11/01 11:37:18 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	echo(t_command *cmd, t_mini *mini)
 {
-	g_exit_status = 0;
 	int	i;
 	int	n_count;
 
+	g_exit_status = 0;
 	n_count = 0;
 	if (cmd_args_len(cmd) == 1)
 	{
