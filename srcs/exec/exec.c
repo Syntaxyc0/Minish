@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:25:17 by ggobert           #+#    #+#             */
-/*   Updated: 2022/11/01 10:45:56 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/11/01 10:51:03 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	exec(t_mini *mini)
 		cmd = cmd->next;
 	}
 	heredoc_annihilator(mini);
-	if (cmd_len(mini) > 1)
+	if (cmd_len(mini) > 1 || !is_builtin(mini->commands->args[0]))
 		g_exit_status /= 256;
 	return (0);
 }

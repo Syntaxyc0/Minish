@@ -36,7 +36,6 @@
 # define ERR_INVALID " : Invalid input."
 # define ERR_AMBI ": ambiguous redirect"
 # define ERR_VALIDARG "msh : not a valid identifier\n"
-# define ERR_INVALID ": Invalid input."
 
 # define MINI "Minishell: "
 
