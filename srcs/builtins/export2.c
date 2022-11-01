@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 11:47:32 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/28 14:47:17 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/10/31 15:09:48 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,16 @@ int	already_in_env(t_mini *mini, char *key, char *value)
 	{
 		if (!ft_strncmp(key, env->key, str_big(key, env->key)))
 		{
-			free(env->value);
-			env->value = ft_strdup(value);
+			if (value)
+			{
+				free(env->value);
+				env->value = ft_strdup(value);
+			}
+			else
+			{
+				free(env->value);
+				env->value = 0;
+			}
 			return (1);
 		}
 		env = env->next;
