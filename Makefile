@@ -28,6 +28,7 @@ SRCS = 	ft_signal.c				\
 		ft_signal_handle.c		\
 		write_error_message.c	\
 		free_utils.c 			\
+		free_utils2.c 			\
 		free_mini_exit_msg.c	\
 		error_redisplay_line.c	\
 		init_mini.c				\

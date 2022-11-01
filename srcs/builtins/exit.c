@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 15:19:01 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/27 12:15:34 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/11/01 11:53:39 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	str_isdigit(char *str)
 	int	i;
 
 	i = -1;
+	if (str[0] == '-')
+		i++;
 	while (str[++i])
 		if (isdigit(str[i]) == 0)
 			return (0);
