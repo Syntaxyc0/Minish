@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 15:34:16 by gregoiregob       #+#    #+#             */
-/*   Updated: 2022/11/01 11:36:19 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/11/02 14:07:01 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,17 @@ void	lst_del_unset_export(t_export *tmp, t_export *previous)
 	free(tmp);
 }
 
-void	unset_in_env(t_mini *mini, char **args)
+void	unset_in_env(t_mini *mini, char *args)
 {
-	int		i;
 	t_env	*tmp;
 	t_env	*previous;
 
-	i = 1;
 	previous = 0;
 	tmp = mini->myenv;
+	printf("args[i] = %s\n", args);
 	while (tmp)
 	{
-		if (ft_strncmp(args[i], tmp->key, str_big(args[i], tmp->key)) != 0)
+		if (ft_strncmp(args, tmp->key, str_big(args, tmp->key)))
 		{
 			previous = tmp;
 			tmp = tmp->next;
@@ -54,21 +53,18 @@ void	unset_in_env(t_mini *mini, char **args)
 			tmp = previous;
 		}
 	}
-	i++;
 }
 
-void	unset_in_export(t_mini *mini, char **args)
+void	unset_in_export(t_mini *mini, char *args)
 {
-	int			i;
 	t_export	*tmp;
 	t_export	*previous;
 
-	i = 1;
 	previous = 0;
 	tmp = mini->myexport;
 	while (tmp)
 	{
-		if (ft_strncmp(args[i], tmp->key, str_big(args[i], tmp->key)) != 0)
+		if (ft_strncmp(args, tmp->key, str_big(args, tmp->key)) != 0)
 		{
 			previous = tmp;
 			tmp = tmp->next;
@@ -81,7 +77,6 @@ void	unset_in_export(t_mini *mini, char **args)
 			tmp = previous;
 		}
 	}
-	i++;
 }
 
 void	unset(t_mini *mini, t_command *cmd)
@@ -94,7 +89,7 @@ void	unset(t_mini *mini, t_command *cmd)
 		write_error_message(ERR_ARG);
 	while (i-- > 1)
 	{
-		unset_in_env(mini, cmd->args);
-		unset_in_export(mini, cmd->args);
+		unset_in_env(mini, cmd->args[i]);
+		unset_in_export(mini, cmd->args[i]);
 	}
 }
