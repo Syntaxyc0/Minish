@@ -6,13 +6,13 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 13:21:50 by ggobert           #+#    #+#             */
-/*   Updated: 2022/11/01 13:46:10 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/11/02 13:46:07 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*already_exist(t_redir *redir, t_command *cmd)
+char	*already_exist(t_redir *redir, t_command *cmd, t_mini *mini)
 {
 	t_redir	*red;
 	char	*ret;
@@ -24,11 +24,16 @@ char	*already_exist(t_redir *redir, t_command *cmd)
 		while (red)
 		{
 			if (!ft_strncmp(ret, red->filename, str_big(ret, red->filename)))
+			{
 				ret = ft_strjoin_free(ret, "0", 1, 0);
+				if (!ret)
+					exit_free_status_msg(mini, 1, ERR_MALLOC);
+			}	
 			red = red->next;
 		}
 		cmd = cmd->next;
 	}
+	ret = heredoc_tmp_add(mini, ret);
 	while (access(ret, R_OK) == 0)
 		ret = ft_strjoin_free(ret, "0", 1, 0);
 	return (ret);
@@ -106,7 +111,7 @@ int	ft_heredoc(t_command *cmd, t_redir *redir, t_mini *mini)
 		if (close(cmd->fd[0]) == -1)
 			return_perror(1, -1);
 	cmd->fd[0] = 0;
-	redir->heredoc_name = already_exist(redir, cmd);
+	redir->heredoc_name = already_exist(redir, cmd, mini);
 	fd = open(redir->heredoc_name, O_CREAT | O_RDWR, 0666);
 	if (fd < 0)
 		return (return_perror(1, 0));

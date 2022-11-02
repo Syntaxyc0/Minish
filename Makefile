@@ -71,6 +71,7 @@ SRCS = 	ft_signal.c				\
 		fork_execution.c 		\
 		open_redir.c  			\
 		open_redir2.c			\
+		open_redir3.c			\
 		builtin_process.c		\
 		exit.c					\
 		io_condition.c			\
