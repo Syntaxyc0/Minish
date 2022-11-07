@@ -114,6 +114,7 @@ int	chdir_res(char *curpath, t_mini *mini)
 {
 	if (chdir(curpath) < 0)
 	{
+		free(curpath);
 		g_exit_status = 1;
 		perror(NULL);
 		return (1);

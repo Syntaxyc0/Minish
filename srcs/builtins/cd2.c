@@ -25,6 +25,7 @@ char	*get_pwd(t_mini *mini)
 	{
 		if (errno == EACCES || errno == ENOENT)
 		{
+			free(ret);
 			ret = NULL;
 			ret = ft_strdup(get_env_value(mini, "PWD"));
 			return (ret);
