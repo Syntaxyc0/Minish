@@ -39,7 +39,6 @@ void	unset_in_env(t_mini *mini, char *args)
 
 	previous = 0;
 	tmp = mini->myenv;
-	printf("args[i] = %s\n", args);
 	while (tmp)
 	{
 		if (ft_strncmp(args, tmp->key, str_big(args, tmp->key)))

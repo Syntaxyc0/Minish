@@ -26,7 +26,11 @@ int	contains_exp_sign(char *str)
 		else if (str[i] == '\"')
 			i++;
 		else if (str[i] == '$')
+		{
+			if (str[i + 1] == 0)
+				return (-1);
 			return (i);
+		}
 		else
 			i++;
 	}
