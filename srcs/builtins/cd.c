@@ -20,7 +20,7 @@ char	*back_repo(char *curpath, int dot_count, t_mini *mini)
 	i = 0;
 	while (curpath[i] && curpath[i] != '.')
 		i++;
-	while (dot_count)
+	while (curpath[i] && dot_count)
 		if (curpath[i] && curpath[i--] == '/')
 			dot_count--;
 	tmp = ft_substr(curpath, 0, i + 1);
