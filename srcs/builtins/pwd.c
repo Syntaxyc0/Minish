@@ -34,6 +34,7 @@ void	pwd(t_command *cmd, t_mini *mini)
 	}
 	else
 		printf("%s\n", path);
+	free(ret);
 	free(path);
 }
 
@@ -44,7 +45,7 @@ char	*pwd_get_cwd(t_mini *mini, int i, char *ret)
 		if (errno == EACCES || errno == ENOENT)
 		{
 			ret = NULL;
-			ret = get_env_value(mini, "PWD");
+			ret = ft_strdup(get_env_value(mini, "PWD"));
 			return (ret);
 		}
 		if (errno == ERANGE)
