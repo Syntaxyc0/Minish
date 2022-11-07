@@ -34,8 +34,7 @@ void	pwd(t_command *cmd, t_mini *mini)
 	}
 	else
 		printf("%s\n", path);
-	if (errno == ERANGE)
-		free(path);
+	free(path);
 }
 
 char	*pwd_get_cwd(t_mini *mini, int i, char *ret)

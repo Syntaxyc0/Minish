@@ -101,14 +101,12 @@ char	*get_path(char **args, t_mini *mini)
 		path = get_pwd(mini);
 		if (!path)
 			exit_free_status_msg(mini, 1, ERR_MALLOC);
-		tmp = ft_strjoin(path, "/");
+		tmp = ft_strjoin_free(path, "/", 1, 0);
 		if (!tmp)
 			exit_free_status_msg(mini, 1, ERR_MALLOC);
-		free(path);
-		path_slash = ft_strjoin(tmp, args[1]);
+		path_slash = ft_strjoin_free(tmp, args[1], 1, 0);
 		if (!path_slash)
 			exit_free_status_msg(mini, 1, ERR_MALLOC);
-		free(tmp);
 		return (path_slash);
 	}
 }
