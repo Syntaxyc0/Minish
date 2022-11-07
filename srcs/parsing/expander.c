@@ -22,7 +22,7 @@ int	contains_exp_sign(char *str)
 		if (str[i] == ';')
 			i += 2;
 		else if (str[i] == '\'')
-			i += len_quote(str, i);
+			i += len_quote(str, i) + 1;
 		else if (str[i] == '\"')
 			i++;
 		else if (str[i] == '$')

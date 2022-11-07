@@ -22,6 +22,7 @@ t_mini	*init_mini(void)
 		write_error_message(ERR_MALLOC);
 		exit (1);
 	}
+	mini->line = NULL;
 	mini->all_path = NULL;
 	mini->myenv = NULL;
 	mini->myexport = NULL;

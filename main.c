@@ -32,6 +32,7 @@ int	main(int argc, char **argv, char **env)
 			ft_handle_exit(mini);
 		else
 			add_history(line);
+		mini->line = line;
 		if (parser(mini, line))
 			continue ;
 		if (exec(mini) == -1)

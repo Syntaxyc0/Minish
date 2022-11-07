@@ -120,6 +120,7 @@ typedef struct s_mini
 	t_token		*tokens;
 	t_sort		*sort;
 	t_command	*commands;
+	char		*line;
 	char		**all_path;
 	char		**environment;
 }	t_mini;
@@ -155,6 +156,7 @@ void	free_letters(t_mini *mini);
 void	free_mini(t_mini *mini);
 void	free_mini_exit_msg(t_mini *mini, char *message);
 void	free_tokens(t_mini *mini);
+void	free_line_null(t_mini *mini);
 void	exit_free_status(t_mini *mini, int ges);
 void	exit_free_status_msg(t_mini *mini, int ges, char *msg);
 void	exit_perror(int ges);

@@ -67,26 +67,33 @@ void	free_commands(t_mini *mini)
 		free(cmd);
 		cmd = tmp;
 	}
+	if (mini->line)
+		free_line_null(mini);
 	mini->commands = NULL;
 }
 
-void	free_mini(t_mini *mini)
+void	free_allpath(t_mini *mini)
 {
 	int	i;
 
 	i = -1;
+	while (mini->all_path[++i])
+		free(mini->all_path[i]);
+	free(mini->all_path);
+}
+
+void	free_mini(t_mini *mini)
+{
 	if (mini->myenv)
 		free_env(mini);
 	if (mini->myexport)
 		free_export(mini);
 	if (mini->tokens)
 		free_tokens(mini);
+	if (mini->line)
+		free_line_null(mini);
 	if (mini->all_path)
-	{
-		while (mini->all_path[++i])
-			free(mini->all_path[i]);
-		free(mini->all_path);
-	}
+		free_allpath(mini);
 	if (mini->commands)
 		free_commands(mini);
 	free(mini);

@@ -61,3 +61,9 @@ void	free_export(t_mini *mini)
 		free(tofree);
 	}
 }
+
+void	free_line_null(t_mini *mini)
+{
+	free(mini->line);
+	mini->line = NULL;
+}
