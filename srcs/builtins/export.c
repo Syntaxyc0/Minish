@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 13:44:07 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/31 16:04:22 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/11/07 14:40:29 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	check_arg(char *args)
 	i = 0;
 	while (args[i] != '=' && args[i])
 	{
-		if (ft_isalpha(args[i]) != 1 && args[i] != '_')
+		if (ft_isalpha(args[0]) != 1 && args[i] != '_')
 		{
 			write(1, "'", 2);
 			write_error_message(args);

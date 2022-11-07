@@ -24,13 +24,13 @@
 # include <fcntl.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
 # include <signal.h>
 
 # define ERR_MALLOC "msh : Failed to allocate memory."
 # define ERR_SYNTAX "msh : syntax error near unexpected token "
-# define ERR_INPUT ""
 # define ERR_QUOTES "msh : Unclosed quotes"
-# define ERR_ARG "msh : wrong number of arguments\n"
+# define ERR_ARG "wrong number of arguments\n"
 # define ERR_NOFILE "msh : no such file or directory"
 # define ERR_NORIGHT "msh : permission denied"
 # define ERR_INVALID " : Invalid input."
@@ -62,6 +62,8 @@ alone = 0
 + in/out = 3
 
 builtin + out = 4
+
+dont exec = -3
 */
 
 extern int	g_exit_status;
@@ -144,6 +146,8 @@ void	ft_handle_exit(t_mini *mini);
 void	heredoc_sig_handle(void);
 void	heredoc_d(int signal);
 void	heredoc_c(int signal);
+void	child_process_handle(void);
+void	ft_core_quit(int signal);
 
 //error
 
@@ -158,6 +162,7 @@ void	free_tokens(t_mini *mini);
 void	exit_free_status(t_mini *mini, int ges);
 void	exit_free_status_msg(t_mini *mini, int ges, char *msg);
 void	exit_perror(int ges);
+void	perror_ges(int ges);
 int		error_args(char *msg, char *token, int errcode);
 int		error_redisplay_line(char *msg, char *token, int errcode);
 int		error_mini(t_mini *mini);
@@ -279,8 +284,3 @@ int		cmd_len(t_mini *mini);
 int		str_big(char *a, char *b);
 
 #endif
-
-/*
-ERREUR
-exit status
-*/

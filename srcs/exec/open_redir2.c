@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 13:21:50 by ggobert           #+#    #+#             */
-/*   Updated: 2022/11/02 13:46:07 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/11/07 14:39:05 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,13 @@ void	heredoc_child(t_redir *redir, t_mini *mini, int fd)
 		{
 			close(fd);
 			ft_close_all(mini);
-			if (!line)
+			if (!line && g_exit_status != -1)
+			{
+				free(line);
 				exit_free_status_msg(mini, 0,
 					"warning : here-document delimited by end-of-file\n");
+			}
+			free(line);
 			exit_free_status(mini, 42);
 		}
 		if (!ft_strncmp(redir->filename, line, str_big(redir->filename, line)))
@@ -100,6 +104,7 @@ void	heredoc_child(t_redir *redir, t_mini *mini, int fd)
 	}
 	close(fd);
 	ft_close_all(mini);
+	free(line);
 	exit_free_status(mini, 0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:50:41 by ggobert           #+#    #+#             */
-/*   Updated: 2022/11/01 15:05:54 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/11/07 16:47:27 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,13 @@ int	ft_close_all(t_mini *mini)
 		if (cmd->fd[0])
 		{
 			if (close(cmd->fd[0]) == -1)
-			{
-				printf("%d\n", cmd->fd[1]);
-				return_perror(1, 0);
-			}
+				perror_ges(1);
 			cmd->fd[0] = 0;
 		}
 		if (cmd->fd[1])
 		{
 			if (close(cmd->fd[1]) == -1)
-				return_perror(1, 0);
+				perror_ges(1);
 			cmd->fd[1] = 0;
 		}
 		cmd = cmd->next;
@@ -61,7 +58,7 @@ int	check_relative(t_mini *mini, t_command *cmd)
 	int		i;
 	char	*tmp;
 	char	*path;
-
+	
 	i = -1;
 	while (mini->all_path && mini->all_path[++i])
 	{
@@ -73,6 +70,7 @@ int	check_relative(t_mini *mini, t_command *cmd)
 			exit_free_status_msg(mini, 1, ERR_MALLOC);
 		if (access(path, X_OK) == 0)
 		{
+			fprintf(stderr, "i = %s\n", mini->all_path[i]);
 			cmd->fullpath = path;
 			return (1);
 		}
@@ -99,6 +97,7 @@ int	ft_access(t_command *cmd, t_mini *mini)
 
 void	execution(t_command *cmd, t_mini *mini)
 {
+	child_process_handle();
 	if (!is_builtin(cmd->args[0]))
 	{
 		if (dup_io(cmd) == -1)

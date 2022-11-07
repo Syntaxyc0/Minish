@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:22:36 by ggobert           #+#    #+#             */
-/*   Updated: 2022/11/01 15:06:31 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/11/07 16:58:41 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,11 @@ void	ft_sigint_handle(void)
 	sigemptyset(&sa[0].sa_mask);
 	sa[0].sa_flags = 0;
 	sigaction(SIGINT, &sa[0], NULL);
-	sa[1].sa_handler = SIG_IGN;
-	sigemptyset(&sa[1].sa_mask);
-	sa[1].sa_flags = 0;
-	sigaction(SIGQUIT, &sa[1], NULL);
+	// sa[1].sa_handler = SIG_IGN;
+	// sigemptyset(&sa[1].sa_mask);
+	// sa[1].sa_flags = 0;
+	// sigaction(SIGQUIT, &sa[1], NULL);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 void	process_sig_handle(void)
@@ -34,6 +35,17 @@ void	process_sig_handle(void)
 	sigemptyset(&sac.sa_mask);
 	sac.sa_flags = 0;
 	sigaction(SIGINT, &sac, NULL);
+}
+
+void	child_process_handle(void)
+{
+	struct sigaction	sact;
+
+	sact.sa_handler = ft_core_quit;
+	sigemptyset(&sact.sa_mask);bahs
+	sact.sa_flags = 0;
+	sigaction(SIGQUIT, &sact, NULL);
+	// signal(SIGQUIT, &ft_core_quit);
 }
 
 void	heredoc_sig_handle(void)
