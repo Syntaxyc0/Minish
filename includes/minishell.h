@@ -28,7 +28,6 @@
 
 # define ERR_MALLOC "msh : Failed to allocate memory."
 # define ERR_SYNTAX "msh : syntax error near unexpected token "
-# define ERR_INPUT ""
 # define ERR_QUOTES "msh : Unclosed quotes"
 # define ERR_ARG "msh : wrong number of arguments\n"
 # define ERR_NOFILE "msh : no such file or directory"
@@ -169,7 +168,7 @@ int		write_error_message(char *message);
 //builtins
 
 void	cd(t_command *cmd, t_mini *mini);
-void	chdir_res(char *curpath, t_mini *mini);
+int		chdir_res(char *curpath, t_mini *mini);
 void	echo(t_command *cmd, t_mini *mini);
 void	echo_nl(t_command *cmd, t_mini *mini);
 void	echo_print_args(t_command *cmd, t_mini *mini, int i);

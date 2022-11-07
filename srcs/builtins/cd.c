@@ -110,20 +110,15 @@ void	cd(t_command *cmd, t_mini *mini)
 	chdir_res(curpath, mini);
 }
 
-void	chdir_res(char *curpath, t_mini *mini)
+int	chdir_res(char *curpath, t_mini *mini)
 {
 	if (chdir(curpath) < 0)
 	{
 		g_exit_status = 1;
 		perror(NULL);
+		return (1);
 	}
 	else
 		push_in_env(mini, curpath);
+	return (0);
 }
-
-/* Les erreurs gérées sont : 
-		fichier inexistant
-		non-droit sur un dossier
-		element du path n'est pas un dossier
-Pas de leaks, point et 2points gérés 
-NON GEREE : cd dans un dossier puis le suppr (comportement indefini) */

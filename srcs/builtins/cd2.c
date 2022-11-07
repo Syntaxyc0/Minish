@@ -15,27 +15,29 @@
 char	*get_pwd(t_mini *mini)
 {
 	int		i;
-	char	*path;
+	char	*ret;
 
 	i = 256;
-	path = malloc(i);
-	if (!path)
+	ret = malloc(i);
+	if (!ret)
+		exit_free_status_msg(mini, 1, ERR_MALLOC);
+	while (getcwd(ret, i) == 0)
 	{
-		g_exit_status = 1;
-		free_mini_exit_msg(mini, ERR_MALLOC);
-	}
-	while (getcwd(path, i) == 0)
-	{
-		free(path);
-		i *= 2;
-		path = malloc(i);
-		if (!path)
+		if (errno == EACCES || errno == ENOENT)
 		{
-			g_exit_status = 1;
-			free_mini_exit_msg(mini, ERR_MALLOC);
+			ret = NULL;
+			ret = ft_strdup(get_env_value(mini, "PWD"));
+			return (ret);
+		}
+		if (errno == ERANGE)
+		{
+			i *= 2;
+			ret = malloc(i);
+			if (!ret)
+				exit_free_status_msg(mini, 1, ERR_MALLOC);
 		}
 	}
-	return (path);
+	return (ret);
 }
 
 char	*home_env(t_mini *mini)
@@ -76,6 +78,7 @@ void	old_pwd(t_mini *mini)
 			tmp->value = ft_strdup(path);
 			if (!tmp->value)
 			{
+				free(path);
 				g_exit_status = 1;
 				free_mini_exit_msg(mini, ERR_MALLOC);
 			}
