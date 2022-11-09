@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_signal.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:21:55 by ggobert           #+#    #+#             */
-/*   Updated: 2022/11/09 11:41:18 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/11/09 12:51:15 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,22 @@ void	heredoc_c(int signal)
 	(void)signal;
 	g_exit_status = -1;
 	close(STDIN_FILENO);
+}
+
+void	sigint_process(int signal)
+{
+	printf("\n");
+	(void)signal;
+}
+
+void	sigquit_process(int signal)
+{
+	printf("Quit\n");
+	(void)signal;
+}
+
+void	signals_process(void)
+{
+	signal(SIGINT, sigint_process);
+	signal(SIGQUIT, sigquit_process);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 13:25:17 by ggobert           #+#    #+#             */
-/*   Updated: 2022/11/09 12:02:12 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/11/09 12:44:09 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,10 @@ int	exec(t_mini *mini)
 		return (-1);
 	if (ft_open_all(mini) == -1)
 		return (0);
+	signals_process();
 	if (processes(mini) == -1)
 		return (-1);
 	ft_close_all(mini);
-	process_sig_handle();
 	while (cmd)
 	{
 		if (!is_builtin(cmd->args[0]) || cmd_len(mini) > 1)

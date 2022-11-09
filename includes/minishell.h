@@ -149,6 +149,9 @@ void	heredoc_sig_handle(void);
 void	heredoc_d(int signal);
 void	heredoc_c(int signal);
 void	child_sig_handler(t_mini *mini);
+void	sigint_process(int signal);
+void	sigquit_process(int signal);
+void	signals_process(void);
 
 //error
 
