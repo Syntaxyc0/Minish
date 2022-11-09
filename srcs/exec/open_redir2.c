@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 13:21:50 by ggobert           #+#    #+#             */
-/*   Updated: 2022/11/07 14:39:05 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/11/09 10:28:24 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ int	ft_heredoc(t_command *cmd, t_redir *redir, t_mini *mini)
 	if (g_exit_status == 42)
 	{
 		heredoc_annihilator(mini);
+		g_exit_status = 130;
 		return (-1);
 	}
 	cmd->fd[0] = open(redir->heredoc_name, O_CREAT | O_RDWR, 0666);

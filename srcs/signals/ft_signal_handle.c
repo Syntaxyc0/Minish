@@ -6,13 +6,13 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:22:36 by ggobert           #+#    #+#             */
-/*   Updated: 2022/11/07 16:58:41 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/11/09 12:02:02 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_sigint_handle(void)
+void	ft_sigint_handle(t_mini *mini)
 {
 	struct sigaction	sa[2];
 
@@ -20,11 +20,10 @@ void	ft_sigint_handle(void)
 	sigemptyset(&sa[0].sa_mask);
 	sa[0].sa_flags = 0;
 	sigaction(SIGINT, &sa[0], NULL);
-	// sa[1].sa_handler = SIG_IGN;
-	// sigemptyset(&sa[1].sa_mask);
-	// sa[1].sa_flags = 0;
-	// sigaction(SIGQUIT, &sa[1], NULL);
-	signal(SIGQUIT, SIG_IGN);
+	sa[1].sa_handler = SIG_IGN;
+	sigemptyset(&sa[1].sa_mask);
+	sa[1].sa_flags = 0;
+	sigaction(SIGQUIT, &sa[1], &mini->sig_quit);
 }
 
 void	process_sig_handle(void)
@@ -37,15 +36,9 @@ void	process_sig_handle(void)
 	sigaction(SIGINT, &sac, NULL);
 }
 
-void	child_process_handle(void)
+void	child_sig_handler(t_mini *mini)
 {
-	struct sigaction	sact;
-
-	sact.sa_handler = ft_core_quit;
-	sigemptyset(&sact.sa_mask);bahs
-	sact.sa_flags = 0;
-	sigaction(SIGQUIT, &sact, NULL);
-	// signal(SIGQUIT, &ft_core_quit);
+	sigaction(SIGQUIT, &mini->sig_quit, NULL);
 }
 
 void	heredoc_sig_handle(void)

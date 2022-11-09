@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:50:41 by ggobert           #+#    #+#             */
-/*   Updated: 2022/11/07 16:47:27 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/11/09 12:04:20 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	check_relative(t_mini *mini, t_command *cmd)
 	int		i;
 	char	*tmp;
 	char	*path;
-	
+
 	i = -1;
 	while (mini->all_path && mini->all_path[++i])
 	{
@@ -70,7 +70,6 @@ int	check_relative(t_mini *mini, t_command *cmd)
 			exit_free_status_msg(mini, 1, ERR_MALLOC);
 		if (access(path, X_OK) == 0)
 		{
-			fprintf(stderr, "i = %s\n", mini->all_path[i]);
 			cmd->fullpath = path;
 			return (1);
 		}
@@ -97,7 +96,7 @@ int	ft_access(t_command *cmd, t_mini *mini)
 
 void	execution(t_command *cmd, t_mini *mini)
 {
-	child_process_handle();
+	child_sig_handler(mini);
 	if (!is_builtin(cmd->args[0]))
 	{
 		if (dup_io(cmd) == -1)

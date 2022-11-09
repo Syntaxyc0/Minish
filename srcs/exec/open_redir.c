@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:55:03 by ggobert           #+#    #+#             */
-/*   Updated: 2022/11/07 15:20:26 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/11/09 12:12:57 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ int	access_in(t_command *cmd2)
 					cmd->io = -3;
 					write(2, redir->filename, ft_strlen(redir->filename));
 					write(2, ": ", 3);
-					g_exit_status = 1;
-					perror(NULL);
+					perror_ges(1);
+					break ;
 				}
 			}
 			redir = redir->next;

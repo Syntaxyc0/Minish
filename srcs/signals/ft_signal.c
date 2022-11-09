@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:21:55 by ggobert           #+#    #+#             */
-/*   Updated: 2022/11/07 16:41:53 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/11/09 11:41:18 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	ft_signal(int signal)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
+	g_exit_status = 130;
 }
 
 void	heredoc_c(int signal)
@@ -26,13 +27,4 @@ void	heredoc_c(int signal)
 	(void)signal;
 	g_exit_status = -1;
 	close(STDIN_FILENO);
-}
-
-void	ft_core_quit(int signal)
-{
-	(void)signal;
-	fprintf(stderr, "yoooupi\n");
-	write_error_message("exit(quitcore)\n");
-	g_exit_status = 131;
-	exit(g_exit_status);
 }

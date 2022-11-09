@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 11:22:37 by ggobert           #+#    #+#             */
-/*   Updated: 2022/11/07 14:38:05 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/11/09 10:49:39 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	while (1)
 	{
-		ft_sigint_handle();
+		ft_sigint_handle(mini);
 		line = readline(MINI);
 		if (!line)
 			ft_handle_exit(mini);

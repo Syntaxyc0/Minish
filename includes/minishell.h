@@ -117,13 +117,14 @@ typedef struct s_command
 
 typedef struct s_mini
 {
-	t_env		*myenv;
-	t_export	*myexport;
-	t_token		*tokens;
-	t_sort		*sort;
-	t_command	*commands;
-	char		**all_path;
-	char		**environment;
+	t_env				*myenv;
+	t_export			*myexport;
+	t_token				*tokens;
+	t_sort				*sort;
+	t_command			*commands;
+	char				**all_path;
+	char				**environment;
+	struct sigaction	sig_quit;
 }	t_mini;
 
 enum e_type
@@ -140,14 +141,13 @@ enum e_type
 //signals
 
 void	ft_signal(int signal);
-void	ft_sigint_handle(void);
+void	ft_sigint_handle(t_mini *mini);
 void	process_sig_handle(void);
 void	ft_handle_exit(t_mini *mini);
 void	heredoc_sig_handle(void);
 void	heredoc_d(int signal);
 void	heredoc_c(int signal);
-void	child_process_handle(void);
-void	ft_core_quit(int signal);
+void	child_sig_handler(t_mini *mini);
 
 //error
 
@@ -177,6 +177,8 @@ void	echo(t_command *cmd, t_mini *mini);
 void	echo_nl(t_command *cmd, t_mini *mini);
 void	echo_print_args(t_command *cmd, t_mini *mini, int i);
 void	env(t_mini *mini, t_command *cmd);
+void	exit_one_args(t_command *cmd, t_mini *mini);
+void	exit_no_arg(t_mini *mini);
 void	export(t_mini *mini, t_command *cmd);
 void	ft_exit(t_command *cmd, t_mini *mini);
 void	import(t_mini *mini, int ac, char **av);
