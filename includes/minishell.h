@@ -125,6 +125,7 @@ typedef struct s_mini
 	char		*line;
 	char		**all_path;
 	char		**environment;
+	struct sigaction	sig_quit;
 }	t_mini;
 
 enum e_type
