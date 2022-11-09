@@ -6,13 +6,13 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:22:36 by ggobert           #+#    #+#             */
-/*   Updated: 2022/11/09 12:02:02 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/11/09 13:33:18 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_sigint_handle(t_mini *mini)
+void	ft_sigint_handle(void)
 {
 	struct sigaction	sa[2];
 
@@ -23,7 +23,7 @@ void	ft_sigint_handle(t_mini *mini)
 	sa[1].sa_handler = SIG_IGN;
 	sigemptyset(&sa[1].sa_mask);
 	sa[1].sa_flags = 0;
-	sigaction(SIGQUIT, &sa[1], &mini->sig_quit);
+	sigaction(SIGQUIT, &sa[1], NULL);
 }
 
 void	process_sig_handle(void)
@@ -34,11 +34,6 @@ void	process_sig_handle(void)
 	sigemptyset(&sac.sa_mask);
 	sac.sa_flags = 0;
 	sigaction(SIGINT, &sac, NULL);
-}
-
-void	child_sig_handler(t_mini *mini)
-{
-	sigaction(SIGQUIT, &mini->sig_quit, NULL);
 }
 
 void	heredoc_sig_handle(void)

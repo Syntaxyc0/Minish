@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 11:50:41 by ggobert           #+#    #+#             */
-/*   Updated: 2022/11/09 12:04:20 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/11/09 13:23:13 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ int	ft_access(t_command *cmd, t_mini *mini)
 
 void	execution(t_command *cmd, t_mini *mini)
 {
-	child_sig_handler(mini);
 	if (!is_builtin(cmd->args[0]))
 	{
 		if (dup_io(cmd) == -1)

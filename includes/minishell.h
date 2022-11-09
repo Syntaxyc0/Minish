@@ -125,7 +125,6 @@ typedef struct s_mini
 	char		*line;
 	char		**all_path;
 	char		**environment;
-	struct sigaction	sig_quit;
 }	t_mini;
 
 enum e_type
@@ -142,13 +141,12 @@ enum e_type
 //signals
 
 void	ft_signal(int signal);
-void	ft_sigint_handle(t_mini *mini);
+void	ft_sigint_handle(void);
 void	process_sig_handle(void);
 void	ft_handle_exit(t_mini *mini);
 void	heredoc_sig_handle(void);
 void	heredoc_d(int signal);
 void	heredoc_c(int signal);
-void	child_sig_handler(t_mini *mini);
 void	sigint_process(int signal);
 void	sigquit_process(int signal);
 void	signals_process(void);
