@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 13:21:50 by ggobert           #+#    #+#             */
-/*   Updated: 2022/11/09 10:28:24 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/11/09 13:49:19 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,7 @@ void	heredoc_child(t_redir *redir, t_mini *mini, int fd)
 			close(fd);
 			ft_close_all(mini);
 			if (!line && g_exit_status != -1)
-			{
-				free(line);
-				exit_free_status_msg(mini, 0,
-					"warning : here-document delimited by end-of-file\n");
-			}
+				norminette_command2(mini, line);
 			free(line);
 			exit_free_status(mini, 42);
 		}
@@ -126,11 +122,7 @@ int	ft_heredoc(t_command *cmd, t_redir *redir, t_mini *mini)
 	wait(&g_exit_status);
 	g_exit_status /= 256;
 	if (g_exit_status == 42)
-	{
-		heredoc_annihilator(mini);
-		g_exit_status = 130;
-		return (-1);
-	}
+		return (norminette_command(mini));
 	cmd->fd[0] = open(redir->heredoc_name, O_CREAT | O_RDWR, 0666);
 	if (cmd->fd[0] < 0)
 		return (return_perror(1, 0));

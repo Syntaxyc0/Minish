@@ -262,6 +262,7 @@ void	heredoc_annihilator(t_mini *mini);
 void	heredoc_child(t_redir *redir, t_mini *mini, int fd);
 void	iocondition_heredoc(t_command *cmd);
 void	iocondition_redir_in(t_command *cmd);
+void	norminette_command2(t_mini *mini, char *line);
 void	redir_out(t_command *cmd, t_redir *redir);
 void	which_builtin(t_command *cmd, t_mini *mini);
 void	which_builtin2(t_command *cmd, t_mini *mini);
@@ -276,6 +277,7 @@ int		ft_close_all(t_mini *mini);
 int		ft_heredoc(t_command *cmd, t_redir *redir, t_mini *mini);
 int		ft_open_all(t_mini *mini);
 int		init_pipe(t_mini *mini);
+int		norminette_command(t_mini *mini);
 int		processes(t_mini *mini);
 int		redir_in(t_command *cmd, t_redir *redir);
 
