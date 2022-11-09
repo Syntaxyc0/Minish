@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:55:03 by ggobert           #+#    #+#             */
-/*   Updated: 2022/10/29 12:28:18 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/11/09 12:12:57 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_open_all(t_mini *mini)
 		{
 			if (redir->type == 4)
 				if (redir_in(cmd, redir) == -1)
-					return (-1);
+					break ;
 			if (redir->type == 5)
 				if (ft_heredoc(cmd, redir, mini) == -1)
 					return (-1);
@@ -59,7 +59,8 @@ int	access_in(t_command *cmd2)
 					cmd->io = -3;
 					write(2, redir->filename, ft_strlen(redir->filename));
 					write(2, ": ", 3);
-					return (return_perror(1, 0));
+					perror_ges(1);
+					break ;
 				}
 			}
 			redir = redir->next;

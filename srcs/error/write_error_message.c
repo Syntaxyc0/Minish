@@ -29,6 +29,12 @@ int	return_perror(int ges, int ret)
 	return (0);
 }
 
+void	perror_ges(int ges)
+{
+	g_exit_status = ges;
+	perror(NULL);
+}
+
 int	error_mini(t_mini *mini)
 {
 	free_mini(mini);
