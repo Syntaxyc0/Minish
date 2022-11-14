@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:58:23 by jbesnier          #+#    #+#             */
-/*   Updated: 2022/10/26 15:55:36 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/11/14 11:18:07 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,6 @@ void	free_mini(t_mini *mini)
 		free_allpath(mini);
 	if (mini->commands)
 		free_commands(mini);
+	rl_clear_history();
 	free(mini);
 }

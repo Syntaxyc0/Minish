@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 13:21:50 by ggobert           #+#    #+#             */
-/*   Updated: 2022/11/09 13:49:19 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/11/14 11:06:08 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,11 @@ void	heredoc_child(t_redir *redir, t_mini *mini, int fd)
 			break ;
 		write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
+		free(line);
+		line = NULL;
 	}
 	close(fd);
 	ft_close_all(mini);
-	free(line);
 	exit_free_status(mini, 0);
 }
 
