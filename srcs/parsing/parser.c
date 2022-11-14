@@ -15,7 +15,7 @@
 int	get_newline(t_mini *mini)
 {
 	if (mini->line)
-		free(mini->line);
+		free_line_null(mini->line);
 	free_tokens(mini);
 	return (1);
 }
