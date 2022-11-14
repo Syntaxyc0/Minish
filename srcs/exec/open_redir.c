@@ -6,7 +6,7 @@
 /*   By: ggobert <ggobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:55:03 by ggobert           #+#    #+#             */
-/*   Updated: 2022/11/09 12:12:57 by ggobert          ###   ########.fr       */
+/*   Updated: 2022/11/14 09:55:59 by ggobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ void	redir_out(t_command *cmd, t_redir *redir)
 			O_CREAT | O_WRONLY | O_TRUNC, 0666);
 	if (cmd->fd[1] < 0)
 	{
+		cmd->fd[1] = 0;
+		cmd->io = -3;
 		g_exit_status = 1;
 		perror(NULL);
 	}
